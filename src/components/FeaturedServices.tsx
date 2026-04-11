@@ -16,7 +16,7 @@ export default function FeaturedServices({ onServiceClick }: Props) {
       <div className="flex items-end justify-between mb-6">
         <div>
           <h2 className="text-xl font-extrabold text-gray-900 tracking-tight">Serviços em destaque</h2>
-          <p className="text-sm text-[#6B8B73] mt-1">Os serviços mais acessados pelos cidadãos do DF</p>
+          <p className="text-sm text-gray-600 mt-1">Os serviços mais acessados pelos cidadãos do DF</p>
         </div>
         <a href="#" className="hidden sm:flex items-center gap-1 text-sm font-semibold text-verde hover:underline whitespace-nowrap">
           Ver todos <ArrowRight size={13} />
@@ -31,7 +31,7 @@ export default function FeaturedServices({ onServiceClick }: Props) {
             <button
               key={s.title}
               onClick={() => onServiceClick(s.query)}
-              className="bg-white border border-gdf-border rounded-2xl p-5 text-left hover:shadow-md hover:border-[#B8D9C5] hover:-translate-y-0.5 transition-all duration-200 flex flex-col"
+              className="bg-white border border-gdf-border rounded-2xl p-5 text-left hover:shadow-md hover:border-verde-light hover:-translate-y-0.5 transition-all duration-200 flex flex-col"
             >
               <div className="flex items-start justify-between mb-3.5">
                 <div className="w-10 h-10 rounded-xl bg-verde-light text-verde flex items-center justify-center">
@@ -46,9 +46,9 @@ export default function FeaturedServices({ onServiceClick }: Props) {
                 </div>
               </div>
               <div className="font-bold text-sm text-gray-900 mb-1.5 leading-snug">{s.title}</div>
-              <div className="text-xs text-[#6B8B73] leading-relaxed flex-1">{s.desc}</div>
-              <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-[#EAF2ED]">
-                <span className="flex items-center gap-1 text-xs text-[#6B8B73]">
+              <div className="text-xs text-gray-600 leading-relaxed flex-1">{s.desc}</div>
+              <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-gdf-border">
+                <span className="flex items-center gap-1 text-xs text-gray-600">
                   {StatIcon && <StatIcon size={12} />}
                   {s.stat.text}
                 </span>

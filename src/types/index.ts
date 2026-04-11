@@ -20,6 +20,7 @@ export type LocationType =
   | 'cras'
   | 'sedet'
   | 'inss'
+  | 'hospital'
   | 'other'
 
 export interface ServiceLocation {
@@ -33,6 +34,15 @@ export interface ServiceLocation {
   services?: string[]
   online?: string
   distance?: number
+  hospitalData?: {
+    totalWaiting: number
+    bedsAvailable: number
+    green: number
+    blue: number
+    yellow: number
+    orange: number
+    red: number
+  }
 }
 export interface AIResponse {
   keys?: string[]

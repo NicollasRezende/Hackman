@@ -14,6 +14,7 @@ const TYPE_BADGE: Record<string, { label: string; color: string }> = {
   'cras':    { label: 'CRAS',    color: 'bg-purple-50 text-purple-700 border-purple-200' },
   'inss':    { label: 'INSS',    color: 'bg-red-50 text-red-700 border-red-200' },
   'ubs':     { label: 'UBS/SUS', color: 'bg-green-50 text-green-700 border-green-200' },
+  'hospital':{ label: 'Hospital',color: 'bg-blue-50 text-[#1351b4] border-[#1351b4]/30' },
   'other':   { label: 'Posto',   color: 'bg-gray-50 text-gray-600 border-gray-200' },
 }
 
@@ -25,6 +26,7 @@ const TYPE_PIN_COLOR: Record<string, string> = {
   'cras':    '#7E22CE',
   'inss':    '#B91C1C',
   'ubs':     '#15803D',
+  'hospital':'#1351b4',
   'other':   '#6B7280',
 }
 
@@ -71,16 +73,47 @@ export default function LocationsMap({ locations }: Props) {
       // Pins para cada local
       locations.forEach(loc => {
         const color = TYPE_PIN_COLOR[loc.type] ?? '#6B7280'
-        const icon = L.divIcon({
-          html: `<div style="
+        let htmlContent = ''
+        
+        if (loc.type === 'hospital' && loc.hospitalData) {
+          // Custom marker for hospital based on the gov image
+          const d = loc.hospitalData
+          htmlContent = `
+            <div style="background:white; border: 2px solid ${color}; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); width: 140px; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+              <div style="background: ${color}; color: white; font-weight: bold; font-size: 11px; padding: 4px 8px; text-align: center;">
+                + ${loc.name}
+              </div>
+              <div style="display: flex; padding: 8px;">
+                <div style="flex: 1; text-align: center; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid #eee; padding-right: 4px;">
+                  <div style="font-size: 10px; color: #555; line-height: 1.1; margin-bottom: 4px;">Pacientes Aguardando Atendimento</div>
+                  <div style="font-size: 20px; font-weight: 800; color: #333;">${d.totalWaiting}</div>
+                  <div style="font-size: 9px; color: #d97706; font-weight: bold;">agora</div>
+                  <div style="font-size: 9px; color: #2563eb; font-weight: 700; margin-top: 2px;">Vagas: ${d.bedsAvailable}</div>
+                </div>
+                <div style="width: 30px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding-left: 4px;">
+                  ${d.green > 0 ? `<div style="border: 1px solid #16a34a; color: #16a34a; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold;">${d.green}</div>` : ''}
+                  ${d.blue > 0 ? `<div style="border: 1px solid #2563eb; color: #2563eb; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold;">${d.blue}</div>` : ''}
+                  ${d.orange > 0 ? `<div style="border: 1px solid #ea580c; color: #ea580c; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold;">${d.orange}</div>` : ''}
+                  ${d.yellow > 0 ? `<div style="border: 1px solid #eab308; color: #ca8a04; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold;">${d.yellow}</div>` : ''}
+                  ${d.red > 0 ? `<div style="border: 1px solid #dc2626; color: #dc2626; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold;">${d.red}</div>` : ''}
+                </div>
+              </div>
+            </div>
+          `
+        } else {
+          htmlContent = `<div style="
             width:28px;height:28px;border-radius:50% 50% 50% 0;
             background:${color};border:2px solid white;
             box-shadow:0 2px 6px rgba(0,0,0,.3);
             transform:rotate(-45deg);
-          "></div>`,
+          "></div>`
+        }
+
+        const icon = L.divIcon({
+          html: htmlContent,
           className: '',
-          iconSize: [28, 28],
-          iconAnchor: [14, 28],
+          iconSize: loc.type === 'hospital' ? [140, 90] : [28, 28],
+          iconAnchor: loc.type === 'hospital' ? [70, 90] : [14, 28],
         })
 
         const badge = TYPE_BADGE[loc.type]?.label ?? 'Posto'
@@ -156,7 +189,7 @@ export default function LocationsMap({ locations }: Props) {
       <div className="flex items-center justify-between px-4 py-3 bg-gdf-soft border-b border-gdf-border">
         <div className="flex items-center gap-2">
           <MapPin size={14} className="text-verde" />
-          <span className="text-[11px] font-bold tracking-widest uppercase text-[#6B8B73]">
+          <span className="text-[11px] font-bold tracking-widest uppercase text-gray-600">
             Locais de atendimento ({locations.length})
           </span>
         </div>
@@ -171,7 +204,7 @@ export default function LocationsMap({ locations }: Props) {
       </div>
 
       {/* Mapa Leaflet */}
-      <div ref={mapRef} className="w-full h-52" />
+      <div ref={mapRef} className={locations.some(l => l.type === 'hospital') ? 'w-full h-96' : 'w-full h-52'} />
 
       {/* Lista de locais */}
       <div className="divide-y divide-gdf-border max-h-72 overflow-y-auto">
@@ -199,15 +232,15 @@ export default function LocationsMap({ locations }: Props) {
                       {badge.label}
                     </span>
                     {dist && (
-                      <span className="text-[10px] font-semibold text-[#6B8B73] bg-gdf-soft px-1.5 py-0.5 rounded-full">
+                      <span className="text-[10px] font-semibold text-gray-600 bg-gdf-soft px-1.5 py-0.5 rounded-full">
                         {dist}
                       </span>
                     )}
                   </div>
-                  <div className="text-xs text-[#6B8B73] mt-0.5 truncate">{loc.address}</div>
+                  <div className="text-xs text-gray-600 mt-0.5 truncate">{loc.address}</div>
                 </div>
 
-                <div className="text-[#6B8B73] flex-shrink-0">
+                <div className="text-gray-500 flex-shrink-0">
                   {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 </div>
               </div>
@@ -215,14 +248,39 @@ export default function LocationsMap({ locations }: Props) {
               {/* Detalhe expandido */}
               {open && (
                 <div className="mt-3 pl-[34px] space-y-2">
+                  {loc.type === 'hospital' && loc.hospitalData && (
+                    <div className="flex items-center gap-2 text-xs text-gray-800">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg">
+                        Fila: {loc.hospitalData.totalWaiting}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg">
+                        Vagas: {loc.hospitalData.bedsAvailable}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg text-green-700">
+                        Verde: {loc.hospitalData.green}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg text-blue-700">
+                        Azul: {loc.hospitalData.blue}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg text-yellow-700">
+                        Amarelo: {loc.hospitalData.yellow}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg text-orange-700">
+                        Laranja: {loc.hospitalData.orange}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg text-red-700">
+                        Vermelho: {loc.hospitalData.red}
+                      </span>
+                    </div>
+                  )}
                   {loc.hours && (
-                    <div className="flex items-center gap-2 text-xs text-[#3D5445]">
+                    <div className="flex items-center gap-2 text-xs text-gray-800">
                       <Clock size={12} className="text-verde flex-shrink-0" />
                       {loc.hours}
                     </div>
                   )}
                   {loc.phone && (
-                    <div className="flex items-center gap-2 text-xs text-[#3D5445]">
+                    <div className="flex items-center gap-2 text-xs text-gray-800">
                       <Phone size={12} className="text-verde flex-shrink-0" />
                       {loc.phone}
                     </div>
@@ -230,7 +288,7 @@ export default function LocationsMap({ locations }: Props) {
                   {loc.services && loc.services.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1">
                       {loc.services.map(s => (
-                        <span key={s} className="text-[10px] px-2 py-0.5 bg-gdf-soft border border-gdf-border rounded-full text-[#3D5445]">
+                        <span key={s} className="text-[10px] px-2 py-0.5 bg-gdf-soft border border-gdf-border rounded-full text-gray-800">
                           {s}
                         </span>
                       ))}

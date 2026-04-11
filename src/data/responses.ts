@@ -5,9 +5,25 @@ import {
   LOCATIONS_TRABALHO,
   LOCATIONS_SOCIAL,
   LOCATIONS_PREVIDENCIA,
+  LOCATIONS_HOSPITAIS,
 } from './locations'
 
 export const DB: AIResponse[] = [
+  {
+    keys: ['hospital', 'unidades hospitalares', 'hospitais', 'quantidade na fila'],
+    tag: { cls: 'tag-health', icon: 'HeartPulse', txt: 'Saúde' },
+    intro: 'Aqui estão as informações de atendimento das unidades hospitalares no momento. O mapa abaixo mostra os hospitais e a quantidade de pacientes aguardando atendimento.',
+    blocks: [
+      { icon: 'Info', title: 'Como funciona a triagem?', body: 'As cores indicam a gravidade: <strong class="text-red-600">Vermelho</strong> (Emergência), <strong class="text-orange-500">Laranja</strong> (Muito Urgente), <strong class="text-yellow-500">Amarelo</strong> (Urgente), <strong class="text-green-600">Verde</strong> (Pouco Urgente), <strong class="text-blue-600">Azul</strong> (Não Urgente).' },
+    ],
+    steps: [
+      'Clique nos marcadores no mapa abaixo para ver os detalhes da unidade.',
+      'O número central indica o total de pacientes aguardando.',
+      'A lista lateral indica os pacientes por cor de triagem.'
+    ],
+    tip: 'Lembre-se: Casos menos urgentes (verde e azul) podem ser atendidos mais rapidamente em uma UBS.',
+    locations: LOCATIONS_HOSPITAIS,
+  },
   {
     keys: ['demiti', 'seguro desemprego', 'fui mandado', 'dispensad', 'demissão', 'seguro-desemprego'],
     tag: { cls: 'tag-work', icon: 'Briefcase', txt: 'Trabalho & Renda' },

@@ -16,13 +16,13 @@ export default function DefaultMessage({ onRelated }: Props) {
   return (
     <div className="animate-msg-in self-start max-w-full bg-white border border-gdf-border rounded-tl rounded-2xl overflow-hidden">
       <div className="p-5">
-        <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-[#EAF2ED]">
+        <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-gdf-border">
           <div className="w-8 h-8 rounded-lg bg-verde-light text-verde flex items-center justify-center">
             <Bot size={17} />
           </div>
           <div>
             <div className="text-sm font-bold text-verde">Guia Cidadão IA · GDF</div>
-            <div className="text-[11px] text-[#6B8B73]">Assistente oficial de serviços públicos</div>
+            <div className="text-[11px] text-gray-600">Assistente oficial de serviços públicos</div>
           </div>
         </div>
 
@@ -44,22 +44,22 @@ export default function DefaultMessage({ onRelated }: Props) {
           <span>Ou clique em uma das categorias abaixo para ir direto ao serviço.</span>
         </div>
 
-        <div className="flex items-center gap-2 mt-5 pt-4 border-t border-[#EAF2ED]">
-          <span className="text-xs text-[#6B8B73] flex-1">Isso te ajudou?</span>
-          <button onClick={() => setFeedback('pos')} className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${feedback === 'pos' ? 'bg-verde-light border-verde text-verde' : 'bg-white border-gdf-border text-[#6B8B73] hover:border-verde hover:text-verde'}`}>
+        <div className="flex items-center gap-2 mt-5 pt-4 border-t border-gdf-border">
+          <span className="text-xs text-gray-600 flex-1">Isso te ajudou?</span>
+          <button onClick={() => setFeedback('pos')} className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${feedback === 'pos' ? 'bg-verde-light border-verde text-verde' : 'bg-white border-gdf-border text-gray-600 hover:border-verde hover:text-verde'}`}>
             <ThumbsUp size={12} /> Sim
           </button>
-          <button onClick={() => setFeedback('neg')} className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${feedback === 'neg' ? 'bg-red-50 border-red-400 text-red-600' : 'bg-white border-gdf-border text-[#6B8B73] hover:border-red-400 hover:text-red-600'}`}>
+          <button onClick={() => setFeedback('neg')} className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${feedback === 'neg' ? 'bg-red-50 border-red-400 text-red-600' : 'bg-white border-gdf-border text-gray-600 hover:border-red-400 hover:text-red-600'}`}>
             <ThumbsDown size={12} /> Não
           </button>
         </div>
       </div>
 
       <div className="bg-gdf-soft border-t border-gdf-border px-5 py-4">
-        <div className="text-[10px] font-bold tracking-widest uppercase text-[#6B8B73] mb-2.5">Serviços populares</div>
+        <div className="text-[10px] font-bold tracking-widest uppercase text-gray-600 mb-2.5">Serviços populares</div>
         <div className="flex flex-wrap gap-1.5">
           {POPULAR.map(p => (
-            <button key={p.query} onClick={() => onRelated(p.query)} className="inline-flex items-center gap-1 text-xs font-medium text-[#3D5445] bg-white border border-gdf-border px-3 py-1.5 rounded-full hover:bg-verde-light hover:border-verde hover:text-verde transition-all">
+            <button key={p.query} onClick={() => onRelated(p.query)} className="inline-flex items-center gap-1 text-xs font-medium text-gray-800 bg-white border border-gdf-border px-3 py-1.5 rounded-full hover:bg-verde-light hover:border-verde hover:text-verde transition-all">
               <MessageCircle size={11} /> {p.label}
             </button>
           ))}

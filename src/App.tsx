@@ -9,6 +9,7 @@ import FAQ from './components/FAQ'
 import Footer from './components/Footer'
 import ChatSection from './components/Chat'
 import BottomBar from './components/Chat/BottomBar'
+import AllServices from './components/AllServices'
 import type { Message } from './types'
 
 let msgId = 0
@@ -26,10 +27,12 @@ function getSessionId(): string {
 
 export default function App() {
   const [chatStarted, setChatStarted] = useState(false)
+  const [showAllServices, setShowAllServices] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const sessionId = useRef(getSessionId())
 
   const send = useCallback(async (text: string) => {
+    if (showAllServices) setShowAllServices(false)
     if (!chatStarted) setChatStarted(true)
 
     // Add user message
@@ -65,16 +68,29 @@ export default function App() {
         )
       )
     }
-  }, [chatStarted])
+  }, [chatStarted, showAllServices])
+
+  const handleNavServicesClick = () => {
+    setChatStarted(false)
+    setShowAllServices(true)
+  }
+
+  const handleHomeClick = () => {
+    setChatStarted(false)
+    setShowAllServices(false)
+  }
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <AlertBar />
       <IdentityBar />
-      <Nav />
-      <Hero compact={chatStarted} onSend={send} />
+      <Nav onServicesClick={handleNavServicesClick} onHomeClick={handleHomeClick} />
+      
+      {!showAllServices && <Hero compact={chatStarted} onSend={send} />}
 
-      {chatStarted ? (
+      {showAllServices ? (
+        <AllServices onServiceClick={send} onBack={handleHomeClick} />
+      ) : chatStarted ? (
         <>
           <ChatSection messages={messages} onRelated={send} />
           <BottomBar onSend={send} />
@@ -82,7 +98,7 @@ export default function App() {
       ) : (
         <>
           <FeaturedServices onServiceClick={send} />
-          <StatusDashboard />
+          <StatusDashboard onCardClick={send} />
           <FAQ onQuery={send} />
           <Footer />
         </>

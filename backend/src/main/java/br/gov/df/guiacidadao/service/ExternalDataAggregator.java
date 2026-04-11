@@ -20,18 +20,20 @@ public class ExternalDataAggregator {
     private final FarmaciaPopularService farmacia;
     private final AnvisaService anvisa;
     private final TransparenciaService transparencia;
-    private final ExecutorService executor = Executors.newFixedThreadPool(5);
+    private final TcuService tcu;
+    private final ExecutorService executor = Executors.newFixedThreadPool(6);
 
     public ExternalDataAggregator(
             BrasilApiService brasilApi, CnesService cnes,
             FarmaciaPopularService farmacia, AnvisaService anvisa,
-            TransparenciaService transparencia
+            TransparenciaService transparencia, TcuService tcu
     ) {
         this.brasilApi = brasilApi;
         this.cnes = cnes;
         this.farmacia = farmacia;
         this.anvisa = anvisa;
         this.transparencia = transparencia;
+        this.tcu = tcu;
     }
 
     public Map<String, Object> aggregate(DetectedIntent intent) {
@@ -59,6 +61,18 @@ public class ExternalDataAggregator {
         if ("bolsa_familia".equals(intent.category()) && intent.nis() != null) {
             futures.put("bolsa_familia", CompletableFuture.supplyAsync(
                     () -> transparencia.consultarBolsaFamiliaPorNis(intent.nis()), executor));
+        }
+
+        if ("tcu".equals(intent.category()) || "transparencia".equals(intent.category())) {
+            if (intent.cnpj() != null) {
+                futures.put("tcu_inidoneo", CompletableFuture.supplyAsync(
+                        () -> tcu.consultarLicitanteInidoneoPorCnpj(intent.cnpj()), executor));
+                futures.put("tcu_certidao", CompletableFuture.supplyAsync(
+                        () -> tcu.consultarCertidao(intent.cnpj()), executor));
+            } else {
+                futures.put("tcu_inidoneos_lista", CompletableFuture.supplyAsync(
+                        () -> tcu.consultarLicitantesInidoneos(), executor));
+            }
         }
 
         Map<String, Object> results = new LinkedHashMap<>();

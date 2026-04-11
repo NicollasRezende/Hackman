@@ -1,6 +1,8 @@
 package br.gov.df.guiacidadao.service;
 
 import br.gov.df.guiacidadao.model.dto.*;
+import br.gov.df.guiacidadao.model.dto.TcuLicitanteInidoneDTO;
+import br.gov.df.guiacidadao.model.dto.TcuCertidaoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -42,7 +44,7 @@ public class ContextBuilder {
         - blocks: minimo 1, maximo 4. Cada block tem body OU docs, nunca ambos.
         - steps: minimo 2, maximo 6.
         - related: maximo 4 perguntas.
-        - tag.cls deve ser um de: tag-health, tag-work, tag-social, tag-transit.
+        - tag.cls deve ser um de: tag-health, tag-work, tag-social, tag-transit, tag-tcu.
         - tag.icon deve ser um nome de icone Lucide React valido (ex: HeartPulse, Briefcase, Users, Car, IdCard, ShieldCheck).
         - Responda em portugues brasileiro, tom informal e acolhedor.
         - Se a pergunta estiver fora do escopo de servicos publicos do GDF, retorne tag.cls="tag-social", tag.txt="Fora do escopo" e oriente ligar para 156.
@@ -131,6 +133,55 @@ public class ContextBuilder {
                         .append(", Valor: R$ ").append(b.valor())
                         .append(" (").append(b.municipio()).append("/").append(b.uf()).append(")")
                         .append("\n");
+            }
+            ctx.append("\n");
+        }
+
+        if (data.containsKey("tcu_inidoneo")) {
+            List<TcuLicitanteInidoneDTO> inidoneos = (List<TcuLicitanteInidoneDTO>) data.get("tcu_inidoneo");
+            ctx.append("Resultado TCU — Licitantes Inidoneos para o CNPJ consultado:\n");
+            if (inidoneos.isEmpty()) {
+                ctx.append("- CNPJ NAO consta na lista de licitantes inidoneos do TCU.\n");
+            } else {
+                for (TcuLicitanteInidoneDTO li : inidoneos) {
+                    ctx.append("- ").append(li.nome())
+                            .append(" (").append(li.cpfCnpj()).append(")")
+                            .append(" — Deliberacao: ").append(li.deliberacao())
+                            .append(", Processo: ").append(li.processo())
+                            .append(", Periodo: ").append(li.dataInicio()).append(" a ").append(li.dataFinal())
+                            .append("\n");
+                }
+            }
+            ctx.append("\n");
+        }
+
+        if (data.containsKey("tcu_certidao")) {
+            TcuCertidaoDTO certidao = (TcuCertidaoDTO) data.get("tcu_certidao");
+            ctx.append("Resultado TCU — Certidao de Contas:\n")
+                    .append("- CPF/CNPJ: ").append(certidao.cpfCnpj()).append("\n")
+                    .append("- Situacao: ").append(certidao.situacao()).append("\n")
+                    .append("- Possui contas julgadas: ").append(certidao.possuiContas() ? "Sim" : "Nao").append("\n")
+                    .append("- Irregularidades: ").append(certidao.possuiIrregularidades() ? "Sim" : "Nao").append("\n");
+            if (certidao.mensagem() != null) {
+                ctx.append("- Mensagem: ").append(certidao.mensagem()).append("\n");
+            }
+            ctx.append("\n");
+        }
+
+        if (data.containsKey("tcu_inidoneos_lista")) {
+            List<TcuLicitanteInidoneDTO> lista = (List<TcuLicitanteInidoneDTO>) data.get("tcu_inidoneos_lista");
+            ctx.append("Lista de Licitantes Inidoneos do TCU (amostra recente):\n");
+            int limit = Math.min(lista.size(), 10);
+            for (int i = 0; i < limit; i++) {
+                TcuLicitanteInidoneDTO li = lista.get(i);
+                ctx.append("- ").append(li.nome())
+                        .append(" (").append(li.cpfCnpj()).append(")")
+                        .append(" — Processo: ").append(li.processo())
+                        .append(", Periodo: ").append(li.dataInicio()).append(" a ").append(li.dataFinal())
+                        .append("\n");
+            }
+            if (lista.size() > 10) {
+                ctx.append("- ... e mais ").append(lista.size() - 10).append(" registros.\n");
             }
             ctx.append("\n");
         }

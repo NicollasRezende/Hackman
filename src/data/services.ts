@@ -55,6 +55,15 @@ export const FEATURED_SERVICES: ServiceCard[] = [
     cta: 'Solicitar',
     query: 'fui demitido e preciso de ajuda com seguro desemprego',
   },
+  {
+    icon: 'Scale',
+    title: 'TCU — Controle e Fiscalização',
+    desc: 'Certidão negativa, licitantes inidôneos, consulta consolidada e dados abertos do Tribunal de Contas da União.',
+    badges: [{ label: 'Gratuito', variant: 'green' }, { label: 'Online', variant: 'blue' }],
+    stat: { icon: 'Phone', text: '0800 644 1500' },
+    cta: 'Consultar',
+    query: 'como consultar certidão negativa do TCU',
+  },
 ]
 
 export const STATUS_CARDS: StatusCard[] = [
@@ -103,6 +112,8 @@ export const SUGGESTIONS = [
   { icon: 'Car', label: 'Tirar primeira CNH', query: 'quero tirar minha primeira CNH' },
   { icon: 'HandHeart', label: 'Inscrição no Bolsa Família', query: 'como me inscrever no Bolsa Família' },
   { icon: 'ShieldCheck', label: 'Aposentadoria pelo INSS', query: 'quero me aposentar pelo INSS' },
+  { icon: 'Scale', label: 'Certidão TCU', query: 'como consultar certidão negativa do TCU' },
+  { icon: 'Scale', label: 'Licitantes inidôneos TCU', query: 'como verificar se uma empresa está na lista de inidôneos do TCU' },
 ]
 
 export const CHIPS = [
@@ -113,4 +124,5 @@ export const CHIPS = [
   { icon: 'Accessibility', label: 'PCD', query: 'tenho deficiência e quero saber meus direitos' },
   { icon: 'Car', label: 'CNH', query: 'quero tirar minha primeira CNH' },
   { icon: 'IdCard', label: 'RG', query: 'como emitir segunda via do RG?' },
+  { icon: 'Scale', label: 'TCU', query: 'como consultar certidão negativa do TCU' },
 ]

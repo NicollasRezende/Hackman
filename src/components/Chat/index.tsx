@@ -31,9 +31,9 @@ export default function ChatSection({ messages, onRelated }: Props) {
             return (
               <div key={msg.id} className="self-start bg-white border border-gdf-border rounded-2xl rounded-tl-sm px-5 py-4">
                 <div className="flex gap-1 items-center">
-                  <span className="typing-dot w-1.5 h-1.5 rounded-full bg-[#6B8B73]" />
-                  <span className="typing-dot w-1.5 h-1.5 rounded-full bg-[#6B8B73]" />
-                  <span className="typing-dot w-1.5 h-1.5 rounded-full bg-[#6B8B73]" />
+                  <span className="typing-dot w-1.5 h-1.5 rounded-full bg-gray-500" />
+                  <span className="typing-dot w-1.5 h-1.5 rounded-full bg-gray-500" />
+                  <span className="typing-dot w-1.5 h-1.5 rounded-full bg-gray-500" />
                 </div>
               </div>
             )

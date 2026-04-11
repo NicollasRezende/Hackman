@@ -13,5 +13,10 @@
     {"q":"Quem tem direito ao Bolsa Familia?","a":"Familias com renda per capita de ate R$ 218/mes. E necessario estar inscrito no CadUnico.","query":"quero saber se tenho direito ao Bolsa Familia"},
     {"q":"O que e o BPC e quem pode receber?","a":"O BPC paga 1 salario minimo a idosos com 65+ anos ou pessoas com deficiencia.","query":"tenho deficiencia e quero saber sobre o BPC"},
     {"q":"Como conseguir cesta basica emergencial?","a":"Procure o CRAS da sua regiao com RG, CPF e comprovante de residencia.","query":"preciso de cesta basica emergencial"}
+  ]},
+  {"category":"TCU e Fiscalizacao","icon":"Scale","items":[
+    {"q":"Como emitir certidao negativa do TCU?","a":"Acesse contas.tcu.gov.br/certidao, informe o CPF ou CNPJ e a certidao e gerada automaticamente, de forma gratuita.","query":"como consultar certidao negativa do TCU"},
+    {"q":"Como verificar se uma empresa esta na lista de inidoneos?","a":"Consulte a lista de licitantes inidoneos no portal de dados abertos do TCU ou na Consulta Consolidada (certidoes-apf.apps.tcu.gov.br).","query":"como verificar se uma empresa esta na lista de inidoneos do TCU"},
+    {"q":"Como denunciar irregularidade com dinheiro publico?","a":"Use a ouvidoria do TCU: portal.tcu.gov.br/ouvidoria ou ligue para 0800 644 1500.","query":"como denunciar irregularidade com dinheiro publico ao TCU"}
   ]}
 ]

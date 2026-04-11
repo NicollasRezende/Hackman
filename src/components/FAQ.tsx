@@ -70,16 +70,16 @@ const FAQ_DATA = [
 function FAQItem({ q, a, query, onQuery }: { q: string; a: string; query: string; onQuery: (q: string) => void }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="border-b border-[#EAF2ED]">
+    <div className="border-b border-gdf-border">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between gap-2 py-3 text-left text-sm font-medium text-[#3D5445] hover:text-verde transition-colors"
+        className="w-full flex items-center justify-between gap-2 py-3 text-left text-sm font-medium text-gray-800 hover:text-verde transition-colors"
       >
         {q}
-        <ChevronDown size={14} className={`flex-shrink-0 text-[#6B8B73] transition-transform ${open ? 'rotate-180 text-verde' : ''}`} />
+        <ChevronDown size={14} className={`flex-shrink-0 text-gray-500 transition-transform ${open ? 'rotate-180 text-verde' : ''}`} />
       </button>
       {open && (
-        <div className="pb-3 text-sm text-[#6B8B73] leading-relaxed">
+        <div className="pb-3 text-sm text-gray-600 leading-relaxed">
           {a}
           <br />
           <button
@@ -101,7 +101,7 @@ export default function FAQ({ onQuery }: Props) {
     <section className="max-w-6xl mx-auto px-6 md:px-10 py-14">
       <div className="mb-7">
         <h2 className="text-xl font-extrabold text-gray-900 tracking-tight">Dúvidas frequentes</h2>
-        <p className="text-sm text-[#6B8B73] mt-1">Clique para expandir ou pergunte ao Guia Cidadão</p>
+        <p className="text-sm text-gray-600 mt-1">Clique para expandir ou pergunte ao Guia Cidadão</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {FAQ_DATA.map(col => (

@@ -1,39 +1,54 @@
 import { Landmark, LayoutGrid, MapPin, FileText, Phone, LogIn } from 'lucide-react'
 
 const NAV_LINKS = [
-  { icon: LayoutGrid, label: 'Serviços' },
-  { icon: MapPin,     label: 'Unidades' },
-  { icon: FileText,   label: 'Documentos' },
-  { icon: Phone,      label: 'Contato' },
+  { icon: LayoutGrid, label: 'Serviços', action: 'services' },
+  { icon: MapPin,     label: 'Unidades', action: 'units' },
+  { icon: FileText,   label: 'Documentos', action: 'docs' },
+  { icon: Phone,      label: 'Contato', action: 'contact' },
 ]
 
-export default function Nav() {
+interface Props {
+  onServicesClick?: () => void
+  onHomeClick?: () => void
+}
+
+export default function Nav({ onServicesClick, onHomeClick }: Props) {
   return (
-    <nav className="bg-verde sticky top-0 z-50 shadow-md flex items-center justify-between px-6 md:px-10 h-14">
-      <div className="flex items-center gap-3.5">
-        <div className="flex items-center gap-2 text-white font-extrabold text-base">
-          <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center">
-            <Landmark size={15} className="text-white" />
-          </div>
-          Guia Cidadão
-        </div>
-        <div className="w-px h-5 bg-white/25 hidden md:block" />
-        <div className="hidden md:flex items-center gap-0.5">
-          {NAV_LINKS.map(({ icon: Icon, label }) => (
-            <button
-              key={label}
-              className="flex items-center gap-1.5 text-white/80 hover:text-white hover:bg-white/10 text-xs font-medium px-3 py-1.5 rounded-lg transition-all"
-            >
-              <Icon size={13} />
-              {label}
+    <nav className="bg-white sticky top-0 z-50 border-b border-gray-200 shadow-sm font-sans">
+      <div className="max-w-[1215px] mx-auto w-full">
+        {/* Top Row: Logo & Links & Button */}
+        <div className="h-[88px] flex items-center justify-between px-4 md:px-7">
+          
+          {/* Logo Area */}
+          <button onClick={onHomeClick} className="flex items-center gap-2 font-extrabold text-3xl tracking-tight text-[#1351b4] hover:opacity-90 transition-opacity">
+            <Landmark size={32} className="text-[#1351b4]" />
+            <span>Guia Cidadão</span>
+          </button>
+
+          {/* Right Actions */}
+          <div className="hidden lg:flex items-center gap-5 text-sm text-[#1351b4]">
+            <div className="flex items-center gap-4">
+              {NAV_LINKS.map(({ icon: Icon, label, action }) => (
+                <button 
+                  key={label} 
+                  onClick={() => action === 'services' ? onServicesClick?.() : undefined}
+                  className="flex items-center gap-1.5 hover:underline hover:text-[#0c326f] transition-colors"
+                >
+                  <Icon size={16} />
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            <div className="w-px h-6 bg-gray-300 mx-2" />
+
+            <button className="flex items-center gap-2 bg-[#1351b4] text-white font-bold px-6 py-2.5 rounded-full hover:bg-[#0c326f] transition-colors">
+              <LogIn size={16} strokeWidth={2.5} />
+              Acessar gov.br
             </button>
-          ))}
+          </div>
         </div>
       </div>
-      <button className="flex items-center gap-1.5 text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg border border-white/40 bg-white/10 hover:bg-white/20 transition-all">
-        <LogIn size={13} />
-        Acessar gov.br
-      </button>
     </nav>
   )
 }

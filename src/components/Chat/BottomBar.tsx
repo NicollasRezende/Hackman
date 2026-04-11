@@ -47,7 +47,7 @@ export default function BottomBar({ onSend }: Props) {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-white via-white/95 to-transparent pt-8 pb-4 px-5">
       <div className="max-w-2xl mx-auto">
-        <div className="relative bg-white border-[1.5px] border-gdf-border rounded-2xl shadow-lg focus-within:border-verde focus-within:shadow-[0_0_0_3px_rgba(0,132,61,.1)] transition-all">
+        <div className="relative bg-white border-[1.5px] border-gdf-border rounded-2xl shadow-lg focus-within:border-verde focus-within:shadow-[0_0_0_3px_rgba(38,112,232,.18)] transition-all">
           <textarea
             ref={textareaRef}
             value={value}
@@ -55,7 +55,7 @@ export default function BottomBar({ onSend }: Props) {
             onKeyDown={handleKey}
             placeholder="Continue a conversa..."
             rows={1}
-            className="w-full bg-transparent border-none outline-none text-sm text-gray-800 placeholder-[#6B8B73] px-5 pt-4 pb-4 pr-28 resize-none leading-relaxed"
+            className="w-full bg-transparent border-none outline-none text-sm text-gray-800 placeholder-gray-500 px-5 pt-4 pb-4 pr-28 resize-none leading-relaxed"
           />
           <div className="absolute right-2 bottom-2 flex gap-1.5">
             <button
@@ -63,7 +63,7 @@ export default function BottomBar({ onSend }: Props) {
               className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all border ${
                 recording
                   ? 'border-red-600 text-red-600 bg-red-50 recording'
-                  : 'border-gdf-border text-[#6B8B73] bg-gdf-soft hover:border-verde hover:text-verde'
+                  : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-verde hover:text-verde'
               }`}
             >
               {recording ? <Square size={14} /> : <Mic size={14} />}

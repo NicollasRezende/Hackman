@@ -61,7 +61,13 @@ public class IntentDetector {
                 "identidade", "cin", "titulo de eleitor", "segunda via")) {
             return "documentos";
         }
-        if (containsAny(text, "gastos", "licitacao", "contrato governo", "transparencia")) {
+        if (containsAny(text, "tcu", "tribunal de contas", "licitante inidoneo", "inidoneo",
+                "inabilitado", "certidao negativa tcu", "contas publicas", "fiscalizacao tcu",
+                "inidoneos", "sancionado", "impedido de licitar", "certidao tcu")) {
+            return "tcu";
+        }
+        if (containsAny(text, "gastos", "licitacao", "contrato governo", "transparencia",
+                "portal transparencia", "contas publicas", "fiscalizacao")) {
             return "transparencia";
         }
         return "geral";

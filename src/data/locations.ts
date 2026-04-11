@@ -303,6 +303,93 @@ export const INSS: ServiceLocation[] = [
 ]
 
 // ─────────────────────────────────────────────────────────
+// HOSPITAIS — Unidades Hospitalares
+// ─────────────────────────────────────────────────────────
+export const HOSPITAIS: ServiceLocation[] = [
+  {
+    name: 'HRC',
+    type: 'hospital',
+    address: 'QNM 17, Ceilândia, Brasília/DF',
+    lat: -15.8239,
+    lng: -48.1130,
+    services: ['Emergência', 'Clínica médica', 'Pediatria', 'Ortopedia'],
+    hospitalData: { totalWaiting: 92, bedsAvailable: 12, green: 47, blue: 18, orange: 16, red: 8, yellow: 3 },
+  },
+  {
+    name: 'HRT',
+    type: 'hospital',
+    address: 'QNC, Setor C Norte, Taguatinga, Brasília/DF',
+    lat: -15.8155,
+    lng: -48.0592,
+    services: ['Emergência', 'Clínica médica', 'Traumatologia', 'Imagem'],
+    hospitalData: { totalWaiting: 81, bedsAvailable: 9, green: 27, blue: 24, orange: 12, red: 9, yellow: 9 },
+  },
+  {
+    name: 'HRSam',
+    type: 'hospital',
+    address: 'QS 614, Samambaia, Brasília/DF',
+    lat: -15.8770,
+    lng: -48.0855,
+    services: ['Emergência', 'Clínica médica'],
+    hospitalData: { totalWaiting: 8, bedsAvailable: 4, green: 7, blue: 0, orange: 1, red: 0, yellow: 0 },
+  },
+  {
+    name: 'HRGu',
+    type: 'hospital',
+    address: 'Área Especial, Guará II, Brasília/DF',
+    lat: -15.8322,
+    lng: -47.9860,
+    services: ['Emergência', 'Clínica médica', 'Pediatria'],
+    hospitalData: { totalWaiting: 20, bedsAvailable: 6, green: 15, blue: 5, orange: 0, red: 0, yellow: 0 },
+  },
+  {
+    name: 'HSVP',
+    type: 'hospital',
+    address: 'Área Especial 1, Taguatinga Sul, Brasília/DF',
+    lat: -15.8500,
+    lng: -48.0400,
+    services: ['Emergência', 'Clínica médica'],
+    hospitalData: { totalWaiting: 6, bedsAvailable: 3, green: 6, blue: 0, orange: 0, red: 0, yellow: 0 },
+  },
+  {
+    name: 'HRAN',
+    type: 'hospital',
+    address: 'SMHN, Quadra 101, Asa Norte, Brasília/DF',
+    lat: -15.7865,
+    lng: -47.8860,
+    services: ['Emergência', 'Clínica médica', 'Cardiologia', 'Neurologia'],
+    hospitalData: { totalWaiting: 9, bedsAvailable: 8, green: 4, blue: 2, orange: 2, red: 1, yellow: 0 },
+  },
+  {
+    name: 'HMIB',
+    type: 'hospital',
+    address: 'SGAS 608, Asa Sul, Brasília/DF',
+    lat: -15.8190,
+    lng: -47.9080,
+    services: ['Emergência', 'Maternidade', 'Pediatria'],
+    hospitalData: { totalWaiting: 14, bedsAvailable: 7, green: 12, blue: 2, orange: 0, red: 0, yellow: 0 },
+  },
+  {
+    name: 'HRL',
+    type: 'hospital',
+    address: 'Paranoá, Brasília/DF',
+    lat: -15.7760,
+    lng: -47.7850,
+    services: ['Emergência', 'Clínica médica', 'Ortopedia'],
+    hospitalData: { totalWaiting: 60, bedsAvailable: 10, green: 23, blue: 14, orange: 10, red: 10, yellow: 3 },
+  },
+  {
+    name: 'Planaltina',
+    type: 'hospital',
+    address: 'Setor Hospitalar, Planaltina, Brasília/DF',
+    lat: -15.6150,
+    lng: -47.6530,
+    services: ['Emergência', 'Clínica médica', 'Pediatria', 'Ortopedia'],
+    hospitalData: { totalWaiting: 101, bedsAvailable: 5, green: 65, blue: 21, orange: 10, red: 3, yellow: 2 },
+  },
+]
+
+// ─────────────────────────────────────────────────────────
 // Helpers — conjuntos por caso de uso
 // ─────────────────────────────────────────────────────────
 
@@ -333,6 +420,10 @@ export const LOCATIONS_SOCIAL: ServiceLocation[] = [
 export const LOCATIONS_PREVIDENCIA: ServiceLocation[] = [
   ...INSS,
   ...NA_HORA.filter(l => l.services?.includes('INSS')),
+]
+
+export const LOCATIONS_HOSPITAIS: ServiceLocation[] = [
+  ...HOSPITAIS,
 ]
 
 /** Calcula distância em km entre duas coordenadas (Haversine) */

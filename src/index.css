@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,7 +7,7 @@
 @layer base {
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  body { font-family: Rawline, Raleway, ui-sans-serif, system-ui, sans-serif; }
 
   textarea {
     font-family: inherit;

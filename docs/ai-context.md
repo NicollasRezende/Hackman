@@ -231,7 +231,77 @@
 
 ---
 
-## 9. POSTOS DE ATENDIMENTO PRESENCIAL
+## 9. TRIBUNAL DE CONTAS DA UNIAO (TCU)
+
+### Sobre o TCU
+- **O que e:** Orgao de controle externo do Governo Federal, responsavel por fiscalizar o uso dos recursos publicos
+- **Portal:** https://portal.tcu.gov.br
+- **Dados Abertos:** https://portal.tcu.gov.br/dados-abertos/
+- **Certidoes:** https://contas.tcu.gov.br/certidao
+- **Consulta Consolidada (APF):** https://certidoes-apf.apps.tcu.gov.br
+- **Ouvidoria TCU:** https://portal.tcu.gov.br/ouvidoria/
+- **Telefone:** 0800 644 1500 (seg a sex, 8h–18h)
+
+### Servicos Disponiveis ao Cidadao
+
+#### Certidao Negativa de Contas (TCU)
+- **Portal:** https://contas.tcu.gov.br/certidao
+- **O que e:** Documento que atesta se uma pessoa fisica ou juridica possui contas julgadas irregulares pelo TCU
+- **Quem precisa:** Empresas participantes de licitacoes, gestores publicos, fornecedores do governo
+- **Como consultar:**
+  1. Acessar https://contas.tcu.gov.br/certidao
+  2. Informar CPF ou CNPJ
+  3. A certidao e gerada automaticamente e gratuita
+
+#### Consulta de Licitantes Inidoneos
+- **Portal:** https://portal.tcu.gov.br/licitantes-inidoneos/
+- **Dados Abertos:** https://rest.tcu.gov.br/rest/recursos/licitante_inidoneo/.json
+- **O que e:** Lista de empresas e pessoas declaradas inidoneas pelo TCU para participar de licitacoes com a Administracao Publica
+- **Importancia:** Antes de contratar com o governo, e essencial verificar se a empresa nao esta nessa lista
+- **Como consultar:**
+  1. Acessar o portal de dados abertos do TCU
+  2. Pesquisar por CNPJ ou nome da empresa
+  3. Verificar se ha registro de inidoneidade vigente
+
+#### Consulta Consolidada de Pessoa Juridica (APF)
+- **Portal:** https://certidoes-apf.apps.tcu.gov.br
+- **O que e:** Consulta unificada que verifica a situacao de uma empresa em multiplos cadastros de sancoes:
+  - **CEIS** — Cadastro Nacional de Empresas Inidoneas e Suspensas
+  - **CNEP** — Cadastro Nacional de Empresas Punidas
+  - **CEPIM** — Cadastro de Entidades Privadas Sem Fins Lucrativos Impedidas
+  - **Lista de Inidoneos do TCU**
+  - **Lista de Inabilitados do TCU**
+- **Como consultar:**
+  1. Acessar https://certidoes-apf.apps.tcu.gov.br
+  2. Informar o CNPJ da empresa
+  3. O sistema retorna a situacao em todos os cadastros
+
+#### Dados Abertos do TCU
+- **Portal:** https://portal.tcu.gov.br/dados-abertos/
+- **Webservices REST:** https://rest.tcu.gov.br
+- **Dados disponiveis:**
+  - Deliberacoes e acordaos
+  - Processos e fiscalizacoes
+  - Licitantes inidoneos e inabilitados
+  - Responsaveis com contas julgadas irregulares
+  - Jurisprudencia selecionada
+
+### Duvidas Frequentes sobre o TCU
+
+- **"Minha empresa esta impedida de licitar?"** → Consultar lista de inidoneos + Consulta Consolidada APF
+- **"Preciso de certidao negativa do TCU para licitacao"** → Acessar https://contas.tcu.gov.br/certidao
+- **"Como denunciar irregularidade com dinheiro publico?"** → Ouvidoria TCU: https://portal.tcu.gov.br/ouvidoria/ ou 0800 644 1500
+- **"O que e o TCU?"** → Tribunal que fiscaliza o uso do dinheiro publico federal, incluindo no DF
+
+### Informacoes Importantes
+- Os servicos de certidao e consulta sao **gratuitos** e publicos
+- Alguns servicos podem ficar indisponiveis entre **20h e 21h** (manutencao programada)
+- A certidao do TCU e diferente da CND (Certidao Negativa de Debitos) da Receita Federal
+- Para licitacoes, geralmente sao exigidas ambas as certidoes (TCU + Receita Federal)
+
+---
+
+## 10. POSTOS DE ATENDIMENTO PRESENCIAL
 
 ### Na Hora — Rede de Atendimento Integrado
 - **Site:** https://www.nahora.df.gov.br
@@ -254,7 +324,7 @@
 
 ---
 
-## 10. CANAIS DE ATENDIMENTO RÁPIDO
+## 11. CANAIS DE ATENDIMENTO RÁPIDO
 
 | Serviço | Contato |
 |---------|---------|
@@ -309,11 +379,15 @@ Os dados podem incluir:
 - **Bolsa Família:** Pagamentos/saques do mês pelo NIS do cidadão (via Portal da Transparência)
 - **Pessoa Física:** Benefícios vinculados ao CPF/NIS (via Portal da Transparência)
 - **Benefícios por Município:** Totais de Bolsa Família, PETI, Safra em Brasília no mês atual (via Portal da Transparência)
+- **TCU — Licitantes Inidôneos:** Verificação se um CNPJ consta na lista de inidôneos do TCU (via Dados Abertos TCU)
+- **TCU — Certidão de Contas:** Situação de contas de CPF/CNPJ no TCU (via API Certidão TCU)
+- **TCU — Consulta Consolidada:** Situação do CNPJ nos cadastros CEIS, CNEP, CEPIM e listas do TCU
 
 Quando esses dados estiverem disponíveis no contexto, use-os para:
 1. Indicar unidades de atendimento com nome e telefone real
 2. Confirmar endereços de serviços próximos ao cidadão
 3. Dar informações específicas sobre medicamentos, veículos ou empresas
+4. Informar a situação de empresas perante o TCU (inidoneidade, certidão, sanções)
 
 ---
 
@@ -362,4 +436,4 @@ Centro/Asa Sul, Taguatinga — tel. 135 — Seg–Sex 7h–17h
 ---
 
 *Última atualização da base de contexto: Abril 2026*
-*Fontes de dados em tempo real: BrasilAPI, CNES/DataSUS, Farmácia Popular, ANVISA, APIBrasil MCP*
+*Fontes de dados em tempo real: BrasilAPI, CNES/DataSUS, Farmácia Popular, ANVISA, TCU Dados Abertos, APIBrasil MCP*

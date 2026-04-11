@@ -6,24 +6,24 @@ export default {
     extend: {
       colors: {
         verde: {
-          DEFAULT: '#006633',
-          med: '#00843D',
-          light: '#E8F5EE',
-          dim: '#F0FAF4',
+          DEFAULT: '#1351b4',
+          med: '#2670e8',
+          light: '#dbe8fb',
+          dim: '#f8f8f8',
         },
         ouro: {
-          DEFAULT: '#E6A817',
-          bg: '#FFFBEB',
-          border: '#FDE68A',
+          DEFAULT: '#ffcd07',
+          bg: '#fff8db',
+          border: '#f3d96a',
         },
         gdf: {
-          dark: '#111C14',
-          border: '#D3E6DA',
-          soft: '#F7FAF8',
+          dark: '#071d41',
+          border: '#ededed',
+          soft: '#f8f8f8',
         },
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        sans: ['Rawline', 'Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
     },
   },

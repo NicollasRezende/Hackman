@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./mvnw compile:*)",
+      "Bash(ls \"C:/Trabalho/Hackman/backend/\"mvn*)",
+      "Bash(mvn compile:*)"
+    ]
+  }
+}
