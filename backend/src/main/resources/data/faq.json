@@ -1,0 +1,17 @@
+[
+  {"category":"Documentos e Identificacao","icon":"IdCard","items":[
+    {"q":"Como tirar a segunda via do RG?","a":"Acesse o portal SSP-DF, agende um horario e compareca com certidao de nascimento ou casamento e comprovante de residencia.","query":"como emitir segunda via do RG?"},
+    {"q":"Como emitir a certidao de nascimento online?","a":"Pelo Portal da Transparencia dos Cartorios ou no cartorio onde foi registrado.","query":"como emitir certidao de nascimento pela internet"},
+    {"q":"Onde solicitar a Carteira de Trabalho Digital?","a":"Pelo aplicativo Carteira de Trabalho Digital (Android e iOS) ou pelo portal gov.br.","query":"como solicitar carteira de trabalho digital"}
+  ]},
+  {"category":"Saude e Educacao","icon":"HeartPulse","items":[
+    {"q":"Como me cadastrar no SUS no DF?","a":"Compareca a UBS mais proxima com RG, CPF e comprovante de residencia.","query":"como me cadastrar no SUS"},
+    {"q":"Meu filho pode se matricular na escola publica a qualquer momento?","a":"Sim. Fora do periodo regular, va a escola mais proxima com certidao de nascimento e RG dos responsaveis.","query":"como matricular filho na escola publica"},
+    {"q":"Quais vacinas sao oferecidas gratuitamente em 2026?","a":"O calendario nacional inclui gripe, COVID-19, febre amarela, hepatite B, entre outras.","query":"quais vacinas gratuitas estao disponiveis"}
+  ]},
+  {"category":"Beneficios e Assistencia","icon":"HandCoins","items":[
+    {"q":"Quem tem direito ao Bolsa Familia?","a":"Familias com renda per capita de ate R$ 218/mes. E necessario estar inscrito no CadUnico.","query":"quero saber se tenho direito ao Bolsa Familia"},
+    {"q":"O que e o BPC e quem pode receber?","a":"O BPC paga 1 salario minimo a idosos com 65+ anos ou pessoas com deficiencia.","query":"tenho deficiencia e quero saber sobre o BPC"},
+    {"q":"Como conseguir cesta basica emergencial?","a":"Procure o CRAS da sua regiao com RG, CPF e comprovante de residencia.","query":"preciso de cesta basica emergencial"}
+  ]}
+]

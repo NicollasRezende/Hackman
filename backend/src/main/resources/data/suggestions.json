@@ -1,0 +1,8 @@
+[
+  {"icon":"TrendingUp","label":"Segunda via do RG","query":"como emitir segunda via do RG?"},
+  {"icon":"TrendingUp","label":"Agendamento de consulta","query":"quero agendar uma consulta medica"},
+  {"icon":"TrendingUp","label":"Seguro-desemprego","query":"como solicitar seguro desemprego"},
+  {"icon":"Car","label":"Tirar primeira CNH","query":"quero tirar minha primeira CNH"},
+  {"icon":"HandHeart","label":"Inscricao no Bolsa Familia","query":"como me inscrever no Bolsa Familia"},
+  {"icon":"ShieldCheck","label":"Aposentadoria pelo INSS","query":"quero me aposentar pelo INSS"}
+]

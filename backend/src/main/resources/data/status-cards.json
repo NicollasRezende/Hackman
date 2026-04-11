@@ -1,0 +1,6 @@
+[
+  {"icon":"HeartPulse","iconBg":"rgba(239,68,68,.12)","iconColor":"#F87171","label":"Fila — UPAs do DF","pill":{"text":"Espera moderada","variant":"yellow"},"value":"47 min","detail":"Media geral - Santa Maria: 1h12 - Ceilandia: 38 min"},
+  {"icon":"Droplets","iconBg":"rgba(34,197,94,.12)","iconColor":"#4ADE80","label":"Abastecimento de Agua","pill":{"text":"Normal","variant":"green"},"value":"98%","detail":"Restricao pontual: Sol Nascente"},
+  {"icon":"Wind","iconBg":"rgba(234,179,8,.12)","iconColor":"#FDE047","label":"Qualidade do Ar","pill":{"text":"Boa","variant":"green"},"value":"IQA 42","detail":"Umidade relativa: 28%"},
+  {"icon":"Construction","iconBg":"rgba(59,130,246,.12)","iconColor":"#60A5FA","label":"Obras e Interdicoes","pill":{"text":"3 ativas","variant":"yellow"},"value":"EPNB","detail":"W3 Sul, Eixo Monumental e EPNB"}
+]
