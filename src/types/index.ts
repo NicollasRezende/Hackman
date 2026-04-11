@@ -28,7 +28,7 @@ export interface ServiceLocation {
 }
 
 export interface AIResponse {
-  keys: string[]
+  keys?: string[]
   tag: { cls: string; icon: string; txt: string }
   intro: string
   blocks: InfoBlock[]

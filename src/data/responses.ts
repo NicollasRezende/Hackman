@@ -139,7 +139,7 @@ export const DB: AIResponse[] = [
 export function matchResponse(text: string): AIResponse | null {
   const t = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   for (const r of DB) {
-    const hit = r.keys.some(k =>
+    const hit = r.keys?.some(k =>
       t.includes(k.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
     )
     if (hit) return r

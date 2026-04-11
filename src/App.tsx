@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import AlertBar from './components/AlertBar'
 import IdentityBar from './components/IdentityBar'
 import Nav from './components/Nav'
@@ -9,15 +9,25 @@ import FAQ from './components/FAQ'
 import Footer from './components/Footer'
 import ChatSection from './components/Chat'
 import BottomBar from './components/Chat/BottomBar'
-import { matchResponse } from './data/responses'
 import type { Message } from './types'
 
 let msgId = 0
 const uid = () => String(++msgId)
 
+const SESSION_KEY = 'guia-cidadao-session'
+function getSessionId(): string {
+  let id = sessionStorage.getItem(SESSION_KEY)
+  if (!id) {
+    id = crypto.randomUUID()
+    sessionStorage.setItem(SESSION_KEY, id)
+  }
+  return id
+}
+
 export default function App() {
   const [chatStarted, setChatStarted] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
+  const sessionId = useRef(getSessionId())
 
   const send = useCallback(async (text: string) => {
     if (!chatStarted) setChatStarted(true)
@@ -29,19 +39,32 @@ export default function App() {
 
     setMessages(prev => [...prev, userMsg, typingMsg])
 
-    // Scroll happens in ChatSection via useEffect
+    try {
+      const res = await fetch('/api/v1/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, sessionId: sessionId.current }),
+      })
 
-    await new Promise(r => setTimeout(r, 900 + Math.random() * 700))
+      const data = await res.json()
 
-    const data = matchResponse(text)
-
-    setMessages(prev =>
-      prev.map(m =>
-        m.id === typingMsg.id
-          ? { ...m, data: data ?? null } // null = default message
-          : m
+      setMessages(prev =>
+        prev.map(m =>
+          m.id === typingMsg.id
+            ? { ...m, data: data ?? null }
+            : m
+        )
       )
-    )
+    } catch (error) {
+      console.error('Erro ao chamar API:', error)
+      setMessages(prev =>
+        prev.map(m =>
+          m.id === typingMsg.id
+            ? { ...m, data: null }
+            : m
+        )
+      )
+    }
   }, [chatStarted])
 
   return (
