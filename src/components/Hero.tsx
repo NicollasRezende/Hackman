@@ -1,26 +1,34 @@
 import { useRef, useState, useEffect } from 'react'
-import { Sparkles, Mic, ArrowUp, Square, TrendingUp } from 'lucide-react'
+import { Sparkles, Mic, ArrowUp, Square, TrendingUp, Search, MapPin } from 'lucide-react'
 import { getIcon } from '../utils/icon'
+import { spotlight } from '../utils/search'
 import { CHIPS, SUGGESTIONS } from '../data/services'
-
-const VOICE_DEMOS = [
-  'tô precisando de um médico',
-  'fui demitido essa semana, e agora?',
-  'quero me inscrever no Bolsa Família',
-  'como emitir segunda via do RG?',
-]
+import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 
 interface HeroProps {
   compact: boolean
   onSend: (text: string) => void
 }
 
+const TYPE_ICONS: Record<string, typeof Search> = {
+  service: Search,
+  suggestion: TrendingUp,
+  location: MapPin,
+  faq: Search,
+  chip: Search,
+}
+
 export default function Hero({ compact, onSend }: HeroProps) {
   const [value, setValue] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
-  const [recording, setRecording] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
+
+  const { recording, supported: micSupported, toggle: toggleMic } = useSpeechRecognition({
+    onResult(text) {
+      setValue(text)
+    },
+  })
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -53,14 +61,9 @@ export default function Hero({ compact, onSend }: HeroProps) {
     }
   }
 
-  const handleVoice = () => {
-    if (recording) { setRecording(false); return }
-    setRecording(true)
-    setTimeout(() => {
-      setRecording(false)
-      setValue(VOICE_DEMOS[Math.floor(Math.random() * VOICE_DEMOS.length)])
-    }, 2200)
-  }
+  // Spotlight: live search results or fallback to static suggestions
+  const searchResults = value.trim().length >= 2 ? spotlight(value) : []
+  const hasSearch = searchResults.length > 0
 
   return (
     <section
@@ -97,18 +100,22 @@ export default function Hero({ compact, onSend }: HeroProps) {
               className="w-full bg-transparent border-none outline-none text-sm text-gray-800 placeholder-gray-500 px-5 pt-[18px] pb-[18px] pr-28 resize-none leading-relaxed"
             />
             <div className="absolute right-2 bottom-2 flex gap-1.5">
-              <button
-                onClick={handleVoice}
-                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all border ${
-                  recording
-                    ? 'border-red-600 text-red-600 bg-red-50 recording'
-                    : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-verde hover:text-verde hover:bg-verde-dim'
-                }`}
-              >
-                {recording ? <Square size={15} /> : <Mic size={15} />}
-              </button>
+              {micSupported && (
+                <button
+                  onClick={toggleMic}
+                  aria-label={recording ? 'Parar gravação de voz' : 'Iniciar gravação de voz'}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all border ${
+                    recording
+                      ? 'border-red-600 text-red-600 bg-red-50 recording'
+                      : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-verde hover:text-verde hover:bg-verde-dim'
+                  }`}
+                >
+                  {recording ? <Square size={15} /> : <Mic size={15} />}
+                </button>
+              )}
               <button
                 onClick={handleSend}
+                aria-label="Enviar mensagem"
                 className="w-10 h-10 rounded-xl bg-verde text-white flex items-center justify-center hover:bg-verde-med transition-all shadow-sm hover:shadow-verde/25"
               >
                 <ArrowUp size={17} strokeWidth={2.5} />
@@ -116,38 +123,71 @@ export default function Hero({ compact, onSend }: HeroProps) {
             </div>
           </div>
 
+          {/* Spotlight dropdown */}
           {showSuggestions && (
-            <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gdf-border rounded-xl shadow-xl z-50 overflow-hidden">
-              <div className="text-[10px] font-bold tracking-widest uppercase text-gray-600 px-4 pt-3 pb-1.5">
-                Mais buscados hoje
-              </div>
-              {SUGGESTIONS.slice(0, 3).map(s => (
-                <button
-                  key={s.query}
-                  onClick={() => { onSend(s.query); setShowSuggestions(false) }}
-                  className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gdf-soft text-gray-800 text-sm text-left transition-colors"
-                >
-                  <TrendingUp size={13} className="text-gray-500 flex-shrink-0" />
-                  {s.label}
-                </button>
-              ))}
-              <div className="h-px bg-gdf-border/50 my-1" />
-              <div className="text-[10px] font-bold tracking-widest uppercase text-gray-600 px-4 pt-1.5 pb-1.5">
-                Sugestões
-              </div>
-              {SUGGESTIONS.slice(3).map(s => {
-                const Icon = getIcon(s.icon) ?? TrendingUp
-                return (
-                  <button
-                    key={s.query}
-                    onClick={() => { onSend(s.query); setShowSuggestions(false) }}
-                    className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gdf-soft text-gray-800 text-sm text-left transition-colors"
-                  >
-                    <Icon size={13} className="text-gray-500 flex-shrink-0" />
-                    {s.label}
-                  </button>
-                )
-              })}
+            <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gdf-border rounded-xl shadow-xl z-50 overflow-hidden max-h-80 overflow-y-auto">
+              {hasSearch ? (
+                <>
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-gray-600 px-4 pt-3 pb-1.5">
+                    Resultados para &ldquo;{value.trim()}&rdquo;
+                  </div>
+                  {searchResults.map(r => {
+                    const FallbackIcon = TYPE_ICONS[r.type] ?? Search
+                    const Icon = getIcon(r.icon) ?? FallbackIcon
+                    return (
+                      <button
+                        key={r.query + r.label}
+                        onClick={() => { onSend(r.query); setValue(''); setShowSuggestions(false) }}
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gdf-soft text-left transition-colors"
+                      >
+                        <Icon size={13} className="text-gray-500 flex-shrink-0" />
+                        <div className="min-w-0">
+                          <div className="text-sm text-gray-800 truncate">{r.label}</div>
+                          {r.detail && (
+                            <div className="text-[11px] text-gray-500 truncate">{r.detail}</div>
+                          )}
+                        </div>
+                        <span className="ml-auto text-[9px] font-bold tracking-wide uppercase text-gray-400 flex-shrink-0">
+                          {r.type === 'location' ? 'Local' : r.type === 'service' ? 'Serviço' : ''}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </>
+              ) : (
+                <>
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-gray-600 px-4 pt-3 pb-1.5">
+                    Mais buscados hoje
+                  </div>
+                  {SUGGESTIONS.slice(0, 3).map(s => (
+                    <button
+                      key={s.query}
+                      onClick={() => { onSend(s.query); setShowSuggestions(false) }}
+                      className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gdf-soft text-gray-800 text-sm text-left transition-colors"
+                    >
+                      <TrendingUp size={13} className="text-gray-500 flex-shrink-0" />
+                      {s.label}
+                    </button>
+                  ))}
+                  <div className="h-px bg-gdf-border/50 my-1" />
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-gray-600 px-4 pt-1.5 pb-1.5">
+                    Sugestões
+                  </div>
+                  {SUGGESTIONS.slice(3).map(s => {
+                    const Icon = getIcon(s.icon) ?? TrendingUp
+                    return (
+                      <button
+                        key={s.query}
+                        onClick={() => { onSend(s.query); setShowSuggestions(false) }}
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gdf-soft text-gray-800 text-sm text-left transition-colors"
+                      >
+                        <Icon size={13} className="text-gray-500 flex-shrink-0" />
+                        {s.label}
+                      </button>
+                    )
+                  })}
+                </>
+              )}
             </div>
           )}
         </div>

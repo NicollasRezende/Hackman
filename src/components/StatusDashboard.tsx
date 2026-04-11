@@ -1,5 +1,3 @@
-import { MousePointerClick } from 'lucide-react'
-
 const DASHBOARD_STATS = [
   {
     value: '14',
@@ -29,10 +27,11 @@ const DASHBOARD_STATS = [
 ]
 
 interface Props {
-  onCardClick?: (query: string) => void
+  onHospitalsClick?: () => void
+  onMetricClick?: (query: string) => void
 }
 
-export default function StatusDashboard({ onCardClick }: Props) {
+export default function StatusDashboard({ onHospitalsClick, onMetricClick }: Props) {
   return (
     <section className="bg-[#0c326f] py-14 px-6 md:px-10 text-center font-sans">
       <div className="max-w-[1215px] mx-auto">
@@ -45,7 +44,7 @@ export default function StatusDashboard({ onCardClick }: Props) {
           {DASHBOARD_STATS.map((stat) => (
             <button
               key={stat.label}
-              onClick={() => onCardClick?.(stat.query)}
+              onClick={() => stat.label === 'Unidades de Hospitais' ? onHospitalsClick?.() : onMetricClick?.(stat.query)}
               className="flex flex-col items-center group cursor-pointer w-40"
             >
               <div className="text-[44px] font-bold text-white leading-none mb-3 group-hover:scale-105 transition-transform">

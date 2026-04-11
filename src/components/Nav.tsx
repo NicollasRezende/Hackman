@@ -9,10 +9,11 @@ const NAV_LINKS = [
 
 interface Props {
   onServicesClick?: () => void
+  onUnitsClick?: () => void
   onHomeClick?: () => void
 }
 
-export default function Nav({ onServicesClick, onHomeClick }: Props) {
+export default function Nav({ onServicesClick, onUnitsClick, onHomeClick }: Props) {
   return (
     <nav className="bg-white sticky top-0 z-50 border-b border-gray-200 shadow-sm font-sans">
       <div className="max-w-[1215px] mx-auto w-full">
@@ -31,7 +32,7 @@ export default function Nav({ onServicesClick, onHomeClick }: Props) {
               {NAV_LINKS.map(({ icon: Icon, label, action }) => (
                 <button 
                   key={label} 
-                  onClick={() => action === 'services' ? onServicesClick?.() : undefined}
+                  onClick={() => action === 'services' ? onServicesClick?.() : action === 'units' ? onUnitsClick?.() : undefined}
                   className="flex items-center gap-1.5 hover:underline hover:text-[#0c326f] transition-colors"
                 >
                   <Icon size={16} />
