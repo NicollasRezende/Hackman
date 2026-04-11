@@ -317,5 +317,49 @@ Quando esses dados estiverem disponíveis no contexto, use-os para:
 
 ---
 
+## Locais de Atendimento (Mapa Interativo)
+
+O frontend exibe automaticamente um **mapa interativo** (Leaflet + OpenStreetMap) na resposta sempre que o serviço exige comparecimento presencial. O backend popula o campo `locations[]` da resposta com os postos adequados para cada serviço.
+
+### Locais cadastrados no sistema
+
+**Rede Na Hora — 9 postos (Seg–Sex 7h30–19h | Sáb 7h30–13h):**
+Rodoviária, Taguatinga/Águas Claras, Ceilândia, Gama, Sobradinho, Samambaia, Riacho Fundo, Brazlândia, Venâncio 2000
+→ Serviços: RG/CIN, CPF, CNH, Trabalho, INSS (Venâncio)
+
+**PCDF / SSP-DF — Emissão de Identidade (RG/CIN):**
+- Instituto de Identificação Central — SDS, Brasília — (61) 3362-6950 — Seg–Sex 7h–17h
+- Delegacia Eletrônica — online 24h — tel. 197
+
+**DETRAN-DF — 4 postos:**
+Central (SEPN 515), Taguatinga, Ceilândia, Gama — tel. 154 — Seg–Sex 7h–17h
+→ Serviços: CNH, vistoria, licenciamento, renovação
+
+**SEDET/SINE — 3 Agências do Trabalhador:**
+Brasília (Venâncio 2000), Taguatinga, Ceilândia — tel. 158 — Seg–Sex 7h–17h
+→ Serviços: Seguro-Desemprego, Emprego, Qualificação, CTPS
+
+**CRAS — 5 unidades:**
+Asa Norte, Asa Sul, Ceilândia Norte, Taguatinga Norte, Samambaia — tel. 156 — Seg–Sex 8h–17h
+→ Serviços: CadÚnico, Bolsa Família, BPC, Assistência Social
+
+**INSS — 2 agências:**
+Centro/Asa Sul, Taguatinga — tel. 135 — Seg–Sex 7h–17h
+→ Serviços: Aposentadoria, BPC, Auxílio Doença, Salário Maternidade
+→ Online: meu.inss.gov.br
+
+### Regra de seleção de locais por serviço
+
+| Serviço solicitado | Locais exibidos no mapa |
+|-------------------|------------------------|
+| RG / CIN / Identidade | PCDF + todos os postos Na Hora |
+| CNH / DETRAN | DETRAN-DF + postos Na Hora com CNH |
+| Seguro-Desemprego / Emprego | SEDET/SINE + postos Na Hora com Trabalho |
+| Bolsa Família / CadÚnico / BPC | CRAS do DF |
+| Aposentadoria / INSS | INSS + Na Hora Venâncio |
+| Saúde / SUS | UBS/UPA via CNES API (dados dinâmicos) |
+
+---
+
 *Última atualização da base de contexto: Abril 2026*
 *Fontes de dados em tempo real: BrasilAPI, CNES/DataSUS, Farmácia Popular, ANVISA, APIBrasil MCP*

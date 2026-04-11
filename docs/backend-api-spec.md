@@ -80,6 +80,30 @@ Content-Type: application/json
     "phone": "160",
     "hours": "Seg–Sex, 8h–18h"
   },
+  "locations": [
+    {
+      "name": "Na Hora Rodoviária",
+      "type": "na-hora",
+      "address": "Plataforma Inferior, Rodoviária do Plano Piloto, Brasília",
+      "lat": -15.7943,
+      "lng": -47.8826,
+      "phone": "(61) 2244-1146",
+      "hours": "Seg–Sex 7h30–19h | Sáb 7h30–13h",
+      "services": ["RG/CIN", "CPF", "CNH", "Trabalho"],
+      "online": "https://agenda.df.gov.br"
+    },
+    {
+      "name": "Instituto de Identificação — PCDF",
+      "type": "pcdf",
+      "address": "SDS — Setor de Diversões Sul, Brasília",
+      "lat": -15.7987,
+      "lng": -47.8938,
+      "phone": "(61) 3362-6950",
+      "hours": "Seg–Sex 7h–17h",
+      "services": ["RG/CIN (primeira via)", "RG/CIN (segunda via)"],
+      "online": "https://agenda.df.gov.br"
+    }
+  ],
   "related": [
     "Como conseguir medicamentos gratuitos?",
     "Onde fica a UPA mais próxima de mim?",
@@ -115,7 +139,35 @@ Content-Type: application/json
 | `contact.addr` | `string` | — | Endereço |
 | `contact.phone` | `string` | — | Telefone |
 | `contact.hours` | `string` | — | Horário de funcionamento |
+| `locations` | `ServiceLocation[]` | ✅ | Postos de atendimento com coordenadas para o mapa (ver tipo abaixo) |
 | `related` | `string[]` | ✅ | Perguntas relacionadas (máx. 4) |
+
+#### Tipo `ServiceLocation`
+
+| Campo | Tipo | Nullable | Descrição |
+|-------|------|----------|-----------|
+| `name` | `string` | ❌ | Nome do posto (ex: "Na Hora Rodoviária") |
+| `type` | `string` | ❌ | `na-hora` \| `pcdf` \| `detran` \| `ubs` \| `cras` \| `sedet` \| `inss` \| `other` |
+| `address` | `string` | ❌ | Endereço completo legível |
+| `lat` | `number` | ❌ | Latitude WGS84 |
+| `lng` | `number` | ❌ | Longitude WGS84 |
+| `phone` | `string` | ✅ | Telefone de contato |
+| `hours` | `string` | ✅ | Horário de funcionamento |
+| `services` | `string[]` | ✅ | Lista de serviços disponíveis neste posto |
+| `online` | `string` | ✅ | URL para agendamento online equivalente |
+| `distance` | `number` | ✅ | Distância em km — **calculada no frontend** após geolocalização, **não enviar pelo backend** |
+
+**Regra de negócio — quando incluir `locations`:**
+O backend deve popular `locations` sempre que o serviço exige comparecimento presencial. Mapeamento por categoria:
+
+| Categoria detectada | `locations` a incluir |
+|--------------------|-----------------------|
+| `documentos` (RG, CIN, CPF) | PCDF/SSP-DF + todos os postos Na Hora |
+| `transito` (CNH, DETRAN) | DETRAN-DF + postos Na Hora com CNH |
+| `trabalho` (seguro-desemprego, emprego) | SEDET/SINE + postos Na Hora com Trabalho |
+| `social` (Bolsa Família, CRAS, BPC) | CRAS do DF |
+| `previdencia` (INSS, aposentadoria) | INSS + postos Na Hora com INSS |
+| `saude` | UBS/UPA via CNES API (dados dinâmicos) |
 | `meta.sessionId` | `string` | ✅ | ID da sessão passado pelo cliente |
 | `meta.responseId` | `string` | ❌ | ID único da resposta (UUID) |
 | `meta.model` | `string` | ❌ | Modelo LLM usado |
@@ -603,6 +655,107 @@ public List<Estabelecimento> buscarUBSProximas(String municipioIbge) {
 
 ---
 
+### LocationService — Postos de Atendimento com Mapa
+
+O backend mantém um banco estático de locais de atendimento e os injeta na resposta quando o serviço exige presença. O frontend renderiza um mapa Leaflet (OpenStreetMap) com os locais e botões de rota para Google Maps e Waze.
+
+#### Locais cadastrados (dados estáticos — `locations.json` ou classe Java)
+
+**Na Hora (9 unidades):**
+
+| Nome | Lat | Lng | Telefone | Serviços |
+|------|-----|-----|----------|----------|
+| Rodoviária | -15.7943 | -47.8826 | (61) 2244-1146 | RG, CPF, CNH, Trabalho |
+| Taguatinga / Águas Claras | -15.8344 | -48.0288 | (61) 2244-1158 | RG, CPF, CNH, Trabalho |
+| Ceilândia | -15.8178 | -48.1043 | (61) 2244-1164 | RG, CPF, CNH, Trabalho |
+| Gama | -16.0108 | -48.0620 | (61) 2104-1563 | RG, CPF, CNH, Trabalho |
+| Sobradinho | -15.6538 | -47.7908 | (61) 2244-1170 | RG, CPF, CNH, Trabalho |
+| Samambaia | -15.8769 | -48.0800 | (61) 2244-1172 | RG, CPF, CNH, Trabalho |
+| Riacho Fundo | -15.8897 | -48.0239 | (61) 2244-1143 | RG, CPF, CNH, Trabalho |
+| Brazlândia | -15.6736 | -48.2016 | (61) 2244-1176 | RG, CPF, Trabalho |
+| Venâncio 2000 | -15.8042 | -47.9021 | (61) 2244-1148 | RG, CPF, CNH, INSS |
+
+**PCDF / SSP-DF (2 unidades):**
+
+| Nome | Lat | Lng | Telefone | Serviços |
+|------|-----|-----|----------|----------|
+| Instituto de Identificação — Central | -15.7987 | -47.8938 | (61) 3362-6950 | RG/CIN 1ª e 2ª via |
+| Delegacia Eletrônica (online) | — | — | 197 | BO online, certidão |
+
+**DETRAN-DF (4 unidades):**
+
+| Nome | Lat | Lng | Serviços |
+|------|-----|-----|----------|
+| DETRAN Central (SEPN 515) | -15.7540 | -47.8910 | CNH, vistoria, licenciamento |
+| DETRAN Taguatinga | -15.8427 | -48.0552 | CNH, vistoria |
+| DETRAN Ceilândia | -15.8090 | -48.1038 | CNH, vistoria |
+| DETRAN Gama | -16.0142 | -48.0596 | CNH, vistoria |
+
+**SEDET/SINE (3 agências):** Brasília, Taguatinga, Ceilândia — Seguro-Desemprego, Emprego, Qualificação
+
+**CRAS (5 unidades):** Asa Norte, Asa Sul, Ceilândia, Taguatinga, Samambaia — CadÚnico, Bolsa Família, BPC
+
+**INSS (2 unidades):** Centro (Asa Sul) e Taguatinga — Aposentadoria, BPC, Auxílio
+
+#### LocationService.java
+
+```java
+@Service
+public class LocationService {
+
+    // Carregado de locations.json no classpath (ou hardcoded para hackathon)
+    private final Map<String, List<ServiceLocation>> locationsByCategory;
+
+    public List<ServiceLocation> getForCategory(String category) {
+        return locationsByCategory.getOrDefault(category, List.of());
+    }
+}
+```
+
+```java
+// ServiceLocation.java (modelo)
+public record ServiceLocation(
+    String name,
+    String type,          // "na-hora" | "pcdf" | "detran" | "sedet" | "cras" | "inss" | "ubs"
+    String address,
+    double lat,
+    double lng,
+    String phone,         // nullable
+    String hours,         // nullable
+    List<String> services,// nullable
+    String online         // URL agendamento — nullable
+) {}
+```
+
+#### Fluxo de seleção de locais no ChatService
+
+```java
+// ChatService.java — após detectar intent, antes de chamar OpenRouter
+List<ServiceLocation> locations = locationService.getForCategory(intent.category());
+
+// Para saúde: busca UBS dinâmicas via CNES (complementa com estáticos)
+if ("saude".equals(intent.category())) {
+    List<ServiceLocation> ubs = cnesService.buscarUBSProximas("530010");
+    locations = new ArrayList<>(ubs);
+}
+
+// Inclui na resposta final
+chatResponse.setLocations(locations);
+```
+
+#### Frontend — renderização do mapa
+
+O frontend recebe `locations[]` na resposta do `/chat` e renderiza automaticamente o componente `LocationsMap`:
+
+- **Mapa:** Leaflet + OpenStreetMap (sem API key, gratuito)
+- **Pins coloridos:** verde = Na Hora | azul = PCDF | laranja = DETRAN | roxo = CRAS | vermelho = INSS
+- **"Perto de mim":** geolocalização do browser → reordena lista por distância (Haversine) → pin azul do usuário no mapa
+- **"Como chegar":** abre `google.com/maps/dir/?destination=LAT,LNG&travelmode=transit`
+- **"Waze":** abre `waze.com/ul?ll=LAT,LNG&navigate=yes`
+- **Popup no pin:** nome, tipo, telefone, horário, link "Como chegar"
+
+---
+
 ### APIBrasil MCP (Comercial)
 
 **MCP Server:** https://mcp.apibrasil.cloud/mcp
@@ -990,21 +1143,38 @@ PORTAL_TRANSPARENCIA_API_KEY=sua-chave-aqui
 ### Estrutura de Pacotes (Atualizada)
 
 ```
-service/external/
-├── BrasilApiService.java          # CEP, CNPJ (gratuito)
-├── CnesService.java               # Estabelecimentos de saúde
-├── FarmaciaPopularService.java    # Farmácias gratuitas
-├── ApiBrasilService.java          # APIBrasil MCP (clima, veículos)
-└── TransparenciaService.java      # Portal da Transparência (BF, pessoa, sanções)
+service/
+├── ChatService.java               # Orquestra tudo: intent → contexto → LLM → locais → resposta
+├── IntentDetector.java            # Detecta categoria + extrai CEP, NIS, CNPJ, placa
+├── ContextBuilder.java            # Monta system prompt com ai-context.md + dados reais
+├── OpenRouterService.java         # POST para openrouter.ai/api/v1/chat/completions
+├── ResponseParser.java            # Valida e parseia JSON do LLM → ChatResponse
+├── LocationService.java           # Retorna ServiceLocation[] por categoria
+└── external/
+    ├── BrasilApiService.java      # CEP, CNPJ (gratuito, sem auth)
+    ├── CnesService.java           # UBS/UPA por município IBGE (gratuito)
+    ├── FarmaciaPopularService.java# Farmácias com remédios gratuitos (gratuito)
+    ├── ApiBrasilService.java      # APIBrasil MCP: clima, FIPE, SMS (auth)
+    └── TransparenciaService.java  # Portal da Transparência: BF por NIS, sanções (chave gratuita)
 
-model/external/
-├── CepResponse.java
-├── CnesEstabelecimento.java
-├── VeiculoResponse.java
-├── BolsaFamiliaDTO.java
-├── PessoaFisicaDTO.java
-├── PessoaJuridicaDTO.java
-└── BeneficioMunicipioDTO.java
+model/
+├── ChatRequest.java               # { message, sessionId }
+├── ChatResponse.java              # AIResponse completo + meta + locations
+├── ServiceLocation.java           # { name, type, address, lat, lng, phone, hours, services, online }
+├── DetectedIntent.java            # { category, cep, nis, cnpj, placa, cidade }
+└── external/
+    ├── CepResponse.java
+    ├── CnesEstabelecimento.java
+    ├── VeiculoResponse.java
+    ├── BolsaFamiliaDTO.java
+    ├── PessoaFisicaDTO.java
+    ├── PessoaJuridicaDTO.java
+    └── BeneficioMunicipioDTO.java
+
+resources/
+├── application.properties
+├── locations.json                 # Banco estático de postos (Na Hora, PCDF, DETRAN, CRAS, INSS, SEDET)
+└── ai-context.md                  # Copiado de docs/ai-context.md — carregado como system prompt base
 ```
 
 ---
@@ -1024,4 +1194,4 @@ model/external/
 ---
 
 *Especificação elaborada para Hackathon Brasília Virtual 2026 — Desafio 1*
-*Versão: 1.2 — Abril 2026 (+ Portal da Transparência API)*
+*Versão: 1.3 — Abril 2026 (+ LocationService, mapa Leaflet, ServiceLocation no response)*
