@@ -8,8 +8,14 @@
   body { font-family: 'Plus Jakarta Sans', sans-serif; }
 
   textarea {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: inherit;
     field-sizing: content;
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
   }
 }
 

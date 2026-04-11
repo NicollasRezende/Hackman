@@ -22,7 +22,6 @@ export default function Hero({ compact, onSend }: HeroProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
-  // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'
@@ -30,7 +29,6 @@ export default function Hero({ compact, onSend }: HeroProps) {
     }
   }, [value])
 
-  // Close suggestions on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (!wrapperRef.current?.contains(e.target as Node)) {
@@ -86,7 +84,6 @@ export default function Hero({ compact, onSend }: HeroProps) {
       )}
 
       <div className="max-w-2xl mx-auto" ref={wrapperRef}>
-        {/* Search box */}
         <div className="relative">
           <div className="relative bg-white border-[1.5px] border-gdf-border rounded-2xl shadow-[0_4px_16px_rgba(0,102,51,.08)] focus-within:border-verde focus-within:shadow-[0_0_0_3px_rgba(0,132,61,.1)] transition-all">
             <textarea
@@ -119,7 +116,6 @@ export default function Hero({ compact, onSend }: HeroProps) {
             </div>
           </div>
 
-          {/* Suggestions dropdown */}
           {showSuggestions && (
             <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gdf-border rounded-xl shadow-xl z-50 overflow-hidden">
               <div className="text-[10px] font-bold tracking-widest uppercase text-[#6B8B73] px-4 pt-3 pb-1.5">
@@ -156,7 +152,6 @@ export default function Hero({ compact, onSend }: HeroProps) {
           )}
         </div>
 
-        {/* Live stats */}
         {!compact && (
           <div className="flex items-center justify-center gap-4 mt-3 text-xs text-[#6B8B73]">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-blink flex-shrink-0" />
@@ -168,7 +163,6 @@ export default function Hero({ compact, onSend }: HeroProps) {
           </div>
         )}
 
-        {/* Chips */}
         <div className="flex flex-wrap gap-1.5 justify-center mt-4">
           {CHIPS.map(c => {
             const Icon = getIcon(c.icon) ?? TrendingUp

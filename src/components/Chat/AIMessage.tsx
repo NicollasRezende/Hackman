@@ -113,11 +113,9 @@ export default function AIMessage({ data, onRelated }: Props) {
           </div>
         )}
 
-        {/* Mapa de locais de atendimento */}
         {data.locations && data.locations.length > 0 && (
           <LocationsMap locations={data.locations} />
         )}
-
         {/* CTAs */}
         <div className="flex gap-2 flex-wrap mt-4">
           <a href="#" className="inline-flex items-center gap-1.5 text-sm font-bold bg-verde text-white px-4 py-2.5 rounded-xl hover:bg-verde-med transition-all shadow-sm">
