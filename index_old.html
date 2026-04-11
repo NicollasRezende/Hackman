@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia Cidadão — GDF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:      #006633;
+      --verde-med:  #00843D;
+      --verde-light:#E8F5EE;
+      --verde-dim:  #F0FAF4;
+      --ouro:       #E6A817;
+      --ouro-bg:    #FFFBEB;
+      --ouro-border:#FDE68A;
+      --text:       #1A2B1F;
+      --text-med:   #3D5445;
+      --text-soft:  #6B8B73;
+      --border:     #D3E6DA;
+      --border-soft:#EAF2ED;
+      --bg:         #FFFFFF;
+      --bg-soft:    #F7FAF8;
+      --bg-dark:    #111C14;
+      --red:        #B91C1C;
+      --red-light:  #FEE2E2;
+      --blue:       #1D4ED8;
+      --blue-light: #EFF6FF;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+    }
+
+    .lucide { width: 16px; height: 16px; stroke-width: 1.75; flex-shrink: 0; }
+
+    /* ─────────────── ALERT BAR ─────────────── */
+    #alert-bar {
+      background: var(--ouro-bg);
+      border-bottom: 1px solid var(--ouro-border);
+      padding: 9px 40px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px;
+    }
+    .alert-items { display: flex; gap: 28px; align-items: center; flex: 1; overflow: hidden; }
+    .alert-item  { display: flex; align-items: center; gap: 7px; white-space: nowrap; color: #78350F; }
+    .alert-item .lucide { color: var(--ouro); width: 14px; height: 14px; }
+    .alert-item strong { font-weight: 700; }
+    .alert-sep { color: var(--ouro-border); }
+    .alert-close {
+      background: none; border: none; cursor: pointer;
+      color: #92400E; padding: 2px;
+      display: flex; align-items: center;
+    }
+    .alert-close .lucide { width: 15px; height: 15px; }
+
+    /* ─────────────── TOP IDENTITY BAR ─────────────── */
+    .identity-bar {
+      background: var(--bg-soft);
+      border-bottom: 1px solid var(--border);
+      padding: 7px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: var(--text-soft);
+    }
+    .identity-left { display: flex; align-items: center; gap: 10px; }
+    .gdf-seal {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 12px; color: var(--verde);
+      border-right: 1px solid var(--border); padding-right: 10px;
+    }
+    .gdf-seal-icon {
+      width: 24px; height: 24px; border-radius: 5px;
+      background: var(--verde); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gdf-seal-icon .lucide { width: 13px; height: 13px; }
+    .identity-right { display: flex; align-items: center; gap: 16px; }
+    .identity-link {
+      display: flex; align-items: center; gap: 5px;
+      color: var(--text-soft); text-decoration: none;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px;
+      transition: color .15s;
+    }
+    .identity-link:hover { color: var(--verde); }
+    .identity-link .lucide { width: 13px; height: 13px; }
+
+    /* ─────────────── NAV ─────────────── */
+    nav {
+      background: var(--verde);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 56px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+    .nav-left { display: flex; align-items: center; gap: 14px; }
+    .nav-logo {
+      font-size: 16px; font-weight: 800;
+      color: #fff; display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo-icon {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center; color: #fff;
+    }
+    .nav-logo-icon .lucide { width: 16px; height: 16px; }
+    .nav-divider { width: 1px; height: 22px; background: rgba(255,255,255,.25); }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-link {
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,.8);
+      background: none; border: none; cursor: pointer;
+      padding: 6px 12px; border-radius: 7px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex; align-items: center; gap: 6px;
+      transition: background .15s, color .15s;
+    }
+    .nav-link .lucide { width: 14px; height: 14px; }
+    .nav-link:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .nav-btn {
+      font-size: 13px; font-weight: 600;
+      padding: 7px 14px; border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,.4);
+      background: rgba(255,255,255,.12); color: #fff;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex; align-items: center; gap: 6px;
+      transition: all .15s;
+    }
+    .nav-btn .lucide { width: 14px; height: 14px; }
+    .nav-btn:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.6); }
+
+    /* ─────────────── HERO ─────────────── */
+    #hero {
+      background: linear-gradient(180deg, var(--verde-dim) 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border-soft);
+      padding: 60px 24px 48px;
+      text-align: center;
+      transition: padding .4s ease;
+    }
+    #hero.compact { padding: 28px 24px 24px; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--verde-med);
+      background: var(--verde-light);
+      border: 1px solid #B8D9C5;
+      padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow .lucide { width: 12px; height: 12px; }
+
+    .hero-title {
+      font-size: clamp(28px, 5vw, 46px);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -1px; color: var(--text);
+      margin-bottom: 12px;
+    }
+    .hero-title span { color: var(--verde); }
+    #hero.compact .hero-title { font-size: 22px; }
+
+    .hero-sub {
+      font-size: 15px; font-weight: 400;
+      color: var(--text-soft); max-width: 440px;
+      margin: 0 auto 32px; line-height: 1.7;
+    }
+    #hero.compact .hero-sub { display: none; }
+
+    /* Search */
+    .search-wrap { max-width: 640px; margin: 0 auto; }
+    .search-box {
+      position: relative; background: var(--bg);
+      border: 1.5px solid var(--border); border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,102,51,.08), 0 1px 4px rgba(0,0,0,.05);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .search-box:focus-within {
+      border-color: var(--verde-med);
+      box-shadow: 0 0 0 3px rgba(0,132,61,.1), 0 4px 16px rgba(0,102,51,.1);
+    }
+    .search-input {
+      width: 100%; background: transparent; border: none; outline: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 400; color: var(--text);
+      padding: 18px 110px 18px 20px;
+      line-height: 1.5; resize: none;
+      min-height: 62px; max-height: 160px; border-radius: 14px;
+    }
+    .search-input::placeholder { color: var(--text-soft); }
+    .search-btns {
+      position: absolute; right: 8px; bottom: 8px; display: flex; gap: 6px;
+    }
+    .btn-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .15s; border: none;
+    }
+    .btn-voice {
+      border: 1.5px solid var(--border) !important;
+      background: var(--bg-soft); color: var(--text-soft);
+    }
+    .btn-voice:hover { border-color: var(--verde-med) !important; color: var(--verde); background: var(--verde-dim); }
+    .btn-voice.recording {
+      border-color: var(--red) !important; color: var(--red); background: var(--red-light);
+      animation: pulse-r 1s ease infinite;
+    }
+    .btn-send { background: var(--verde); color: #fff; }
+    .btn-send:hover { background: var(--verde-med); box-shadow: 0 2px 10px rgba(0,102,51,.3); }
+    .btn-send .lucide { width: 18px; height: 18px; stroke-width: 2.5; }
+    .btn-voice .lucide { width: 16px; height: 16px; }
+
+    /* Search suggestions */
+    .search-suggestions {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.1);
+      z-index: 50; overflow: hidden; display: none;
+    }
+    .search-suggestions.open { display: block; }
+    .suggestion-group-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text-soft);
+      padding: 10px 16px 6px;
+    }
+    .suggestion-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 16px; cursor: pointer;
+      transition: background .1s; color: var(--text-med); font-size: 13.5px;
+    }
+    .suggestion-item:hover { background: var(--bg-soft); }
+    .suggestion-item .lucide { width: 14px; height: 14px; color: var(--text-soft); }
+    .suggestion-divider { height: 1px; background: var(--border-soft); margin: 4px 0; }
+
+    /* Live stats */
+    .live-stats {
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+      margin-top: 14px; font-size: 12px; color: var(--text-soft);
+    }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #22C55E;
+      animation: blink 2s ease infinite; flex-shrink: 0;
+    }
+    .live-sep { color: var(--border); }
+
+    /* Chips */
+    .chips {
+      display: flex; flex-wrap: wrap; gap: 7px;
+      justify-content: center; margin-top: 16px;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12.5px; font-weight: 500; color: var(--text-med);
+      background: var(--bg); border: 1px solid var(--border);
+      padding: 7px 13px; border-radius: 100px;
+      cursor: pointer; transition: all .15s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .chip .lucide { width: 13px; height: 13px; }
+    .chip:hover { background: var(--verde-light); border-color: #B0D4BF; color: var(--verde); }
+
+    /* ─────────────── FEATURED SERVICES ─────────────── */
+    #featured {
+      padding: 52px 40px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .section-title {
+      font-size: 20px; font-weight: 800; color: var(--text);
+      letter-spacing: -.3px;
+    }
+    .section-sub {
+      font-size: 13px; color: var(--text-soft); margin-top: 3px;
+    }
+    .section-link {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 13px; font-weight: 600; color: var(--verde);
+      text-decoration: none; white-space: nowrap;
+    }
+    .section-link .lucide { width: 14px; height: 14px; }
+    .section-link:hover { text-decoration: underline; }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .service-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px;
+      display: flex; flex-direction: column;
+      transition: box-shadow .2s, border-color .2s, transform .2s;
+      cursor: pointer; text-decoration: none; color: inherit;
+    }
+    .service-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      border-color: #B8D9C5; transform: translateY(-2px);
+    }
+    .service-card-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .service-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--verde-light); color: var(--verde);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .service-icon .lucide { width: 20px; height: 20px; }
+    .service-badges { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+    .badge {
+      font-size: 10px; font-weight: 700; letter-spacing: .5px;
+      padding: 3px 8px; border-radius: 100px;
+    }
+    .badge-green  { background: var(--verde-light); color: var(--verde); }
+    .badge-blue   { background: var(--blue-light); color: var(--blue); }
+    .badge-ouro   { background: var(--ouro-bg); color: #92400E; border: 1px solid var(--ouro-border); }
+
+    .service-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      margin-bottom: 6px; line-height: 1.3;
+    }
+    .service-desc { font-size: 13px; color: var(--text-soft); line-height: 1.6; flex: 1; }
+    .service-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .service-stat {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--text-soft);
+    }
+    .service-stat .lucide { width: 13px; height: 13px; }
+    .service-cta {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 12.5px; font-weight: 700; color: var(--verde);
+    }
+    .service-cta .lucide { width: 13px; height: 13px; }
+
+    /* ─────────────── STATUS DASHBOARD ─────────────── */
+    #status-dashboard {
+      background: var(--bg-dark);
+      padding: 40px;
+    }
+    .status-inner { max-width: 1100px; margin: 0 auto; }
+    .status-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(255,255,255,.4);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .status-live-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #22C55E;
+      animation: blink 2s ease infinite;
+    }
+    .status-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .status-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; padding: 20px;
+    }
+    .status-card-header {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 12px;
+    }
+    .status-card-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .status-card-icon .lucide { width: 16px; height: 16px; }
+    .status-card-label {
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,.6);
+    }
+    .status-value {
+      font-size: 22px; font-weight: 800; color: #fff;
+      line-height: 1; margin-bottom: 6px;
+    }
+    .status-detail { font-size: 12px; color: rgba(255,255,255,.4); line-height: 1.5; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600; padding: 3px 9px;
+      border-radius: 100px; margin-bottom: 8px;
+    }
+    .status-pill .lucide { width: 11px; height: 11px; }
+    .pill-green  { background: rgba(34,197,94,.2); color: #4ADE80; }
+    .pill-yellow { background: rgba(234,179,8,.2); color: #FDE047; }
+    .pill-red    { background: rgba(239,68,68,.2); color: #F87171; }
+
+    /* ─────────────── FAQ ─────────────── */
+    #faq {
+      padding: 52px 40px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .faq-col-title {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700; color: var(--text);
+      margin-bottom: 14px; padding-bottom: 12px;
+      border-bottom: 2px solid var(--verde-light);
+    }
+    .faq-col-title .lucide { width: 15px; height: 15px; color: var(--verde); }
+    .faq-item { border-bottom: 1px solid var(--border-soft); }
+    .faq-question {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 0; cursor: pointer;
+      font-size: 13px; font-weight: 500; color: var(--text-med);
+      gap: 8px; width: 100%; text-align: left;
+      background: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .faq-question:hover { color: var(--verde); }
+    .faq-question .lucide { width: 14px; height: 14px; flex-shrink: 0; color: var(--text-soft); transition: transform .2s; }
+    .faq-item.open .faq-question .lucide { transform: rotate(180deg); color: var(--verde); }
+    .faq-answer {
+      display: none; padding: 0 0 12px;
+      font-size: 13px; color: var(--text-soft); line-height: 1.6;
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-cta {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 600; color: var(--verde);
+      margin-top: 8px; cursor: pointer; background: none; border: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .faq-cta .lucide { width: 12px; height: 12px; }
+    .faq-cta:hover { text-decoration: underline; }
+
+    /* ─────────────── FOOTER ─────────────── */
+    footer {
+      background: var(--bg-dark);
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-main {
+      max-width: 1100px; margin: 0 auto;
+      padding: 48px 40px 36px;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    }
+    .footer-brand { }
+    .footer-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 16px; font-weight: 800; color: #fff;
+      margin-bottom: 12px;
+    }
+    .footer-logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--verde); display: flex; align-items: center; justify-content: center;
+    }
+    .footer-logo-icon .lucide { width: 17px; height: 17px; color: #fff; }
+    .footer-brand-desc {
+      font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.7;
+      max-width: 260px;
+    }
+    .footer-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 14px; font-size: 11px; color: rgba(255,255,255,.3);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 5px 10px; border-radius: 7px;
+    }
+    .footer-badge .lucide { width: 12px; height: 12px; }
+    .footer-col-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(255,255,255,.4);
+      margin-bottom: 14px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-links li a,
+    .footer-links li button {
+      font-size: 13px; color: rgba(255,255,255,.55); text-decoration: none;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; padding: 0;
+      transition: color .15s;
+    }
+    .footer-links li a:hover,
+    .footer-links li button:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: rgba(255,255,255,.3);
+      max-width: 1100px; margin: 0 auto;
+    }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a {
+      color: rgba(255,255,255,.3); text-decoration: none;
+    }
+    .footer-bottom-links a:hover { color: rgba(255,255,255,.6); }
+
+    /* ─────────────── CHAT ─────────────── */
+    .content {
+      max-width: 700px; margin: 0 auto;
+      padding: 0 20px 140px;
+    }
+    .messages { display: flex; flex-direction: column; gap: 14px; padding-top: 28px; }
+
+    .msg-user {
+      align-self: flex-end; max-width: 80%;
+      background: var(--verde); color: #fff;
+      padding: 12px 16px; border-radius: 16px 16px 4px 16px;
+      font-size: 14px; font-weight: 500; line-height: 1.5;
+      animation: msgIn .3s ease both;
+    }
+    .msg-ai {
+      align-self: flex-start; max-width: 100%;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 4px 16px 16px 16px;
+      font-size: 14px; line-height: 1.65; color: var(--text);
+      animation: msgIn .3s ease both; overflow: hidden;
+    }
+    .msg-ai-body { padding: 18px 20px; }
+
+    .ai-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .ai-avatar {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--verde-light); color: var(--verde);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ai-avatar .lucide { width: 17px; height: 17px; }
+    .ai-name { font-size: 13px; font-weight: 700; color: var(--verde); }
+    .ai-sub  { font-size: 11px; color: var(--text-soft); }
+
+    .resp-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 100px; margin-bottom: 10px;
+    }
+    .resp-tag .lucide { width: 12px; height: 12px; }
+    .tag-work    { background: #FEF3E2; color: #B45309; }
+    .tag-health  { background: var(--red-light); color: var(--red); }
+    .tag-social  { background: var(--verde-light); color: var(--verde); }
+    .tag-transit { background: var(--blue-light); color: var(--blue); }
+
+    .info-block {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px; margin: 10px 0;
+    }
+    .info-block h4 {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-soft); margin-bottom: 8px;
+    }
+    .info-block h4 .lucide { width: 13px; height: 13px; }
+    .info-block p  { font-size: 13.5px; color: var(--text); line-height: 1.5; }
+    .info-block a  { color: var(--verde); font-weight: 600; text-decoration: none; }
+    .info-block a:hover { text-decoration: underline; }
+
+    .doc-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .doc-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; padding: 4px 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; color: var(--text-med);
+    }
+    .doc-chip .lucide { width: 12px; height: 12px; color: var(--text-soft); }
+
+    .steps-list { list-style: none; display: flex; flex-direction: column; gap: 7px; margin: 10px 0; }
+    .steps-list li { display: flex; gap: 10px; font-size: 13.5px; align-items: flex-start; }
+    .step-n {
+      min-width: 22px; height: 22px; background: var(--verde); color: #fff;
+      border-radius: 6px; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; flex-shrink: 0;
+    }
+
+    .tip-box {
+      display: flex; gap: 10px; align-items: flex-start;
+      margin: 12px 0; padding: 11px 14px;
+      background: var(--ouro-bg);
+      border: 1px solid var(--ouro-border);
+      border-radius: 10px; font-size: 13px;
+      color: #78350F; line-height: 1.55;
+    }
+    .tip-box .lucide { width: 15px; height: 15px; color: var(--ouro); flex-shrink: 0; margin-top: 1px; }
+
+    /* Contact card */
+    .contact-card {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px; margin: 10px 0;
+    }
+    .contact-card-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+    .contact-rows { display: flex; flex-direction: column; gap: 7px; }
+    .contact-row {
+      display: flex; align-items: flex-start; gap: 9px;
+      font-size: 13px; color: var(--text-med);
+    }
+    .contact-row .lucide { width: 14px; height: 14px; color: var(--verde); flex-shrink: 0; margin-top: 1px; }
+
+    /* CTA button */
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 14px; font-weight: 700;
+      background: var(--verde); color: #fff;
+      border: none; border-radius: 10px;
+      padding: 11px 18px; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background .15s, box-shadow .15s;
+      text-decoration: none; margin-top: 4px;
+    }
+    .cta-btn:hover { background: var(--verde-med); box-shadow: 0 2px 12px rgba(0,102,51,.25); }
+    .cta-btn .lucide { width: 15px; height: 15px; }
+    .cta-btn-outline {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 600;
+      background: var(--bg); color: var(--verde);
+      border: 1.5px solid var(--verde); border-radius: 10px;
+      padding: 9px 15px; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background .15s;
+    }
+    .cta-btn-outline:hover { background: var(--verde-light); }
+    .cta-btn-outline .lucide { width: 14px; height: 14px; }
+    .cta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+    /* Related questions */
+    .related-section {
+      background: var(--bg-soft);
+      border-top: 1px solid var(--border-soft);
+      padding: 14px 20px;
+    }
+    .related-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; color: var(--text-soft);
+      margin-bottom: 9px;
+    }
+    .related-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .related-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12.5px; font-weight: 500; color: var(--text-med);
+      background: var(--bg); border: 1px solid var(--border);
+      padding: 6px 12px; border-radius: 100px;
+      cursor: pointer; transition: all .15s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .related-chip:hover { background: var(--verde-light); border-color: #B0D4BF; color: var(--verde); }
+    .related-chip .lucide { width: 12px; height: 12px; }
+
+    /* Feedback */
+    .feedback-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .feedback-label { font-size: 12px; color: var(--text-soft); flex: 1; }
+    .btn-fb {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12.5px; font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 6px 12px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--bg);
+      color: var(--text-soft); cursor: pointer; transition: all .15s;
+    }
+    .btn-fb .lucide { width: 13px; height: 13px; }
+    .btn-fb.pos:hover, .btn-fb.pos.active { background: var(--verde-light); border-color: #B0D4BF; color: var(--verde); }
+    .btn-fb.neg:hover, .btn-fb.neg.active { background: var(--red-light); border-color: #FECACA; color: var(--red); }
+
+    /* Typing */
+    .typing { display: flex; gap: 4px; padding: 18px 20px; align-items: center; }
+    .typing span {
+      width: 6px; height: 6px;
+      background: var(--text-soft); border-radius: 50%;
+      animation: bounce 1.2s ease infinite;
+    }
+    .typing span:nth-child(2) { animation-delay: .18s; }
+    .typing span:nth-child(3) { animation-delay: .36s; }
+
+    /* Bottom bar */
+    #bottom-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      background: linear-gradient(to top, rgba(255,255,255,1) 55%, transparent);
+      padding: 24px 20px 16px; display: none;
+    }
+    #bottom-bar.visible { display: block; }
+    .bottom-inner { max-width: 700px; margin: 0 auto; }
+
+    /* ─────────────── ANIMATIONS ─────────────── */
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(.7); opacity: .5; }
+      40%           { transform: scale(1.2); opacity: 1; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; } 50% { opacity: .3; }
+    }
+    @keyframes pulse-r {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(185,28,28,.3); }
+      50%      { box-shadow: 0 0 0 6px rgba(185,28,28,0); }
+    }
+
+    /* ─────────────── RESPONSIVE ─────────────── */
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .status-grid   { grid-template-columns: repeat(2, 1fr); }
+      .faq-grid      { grid-template-columns: 1fr; }
+      .footer-main   { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+    @media (max-width: 640px) {
+      #alert-bar  { padding: 9px 16px; }
+      .identity-bar { display: none; }
+      nav { padding: 0 16px; }
+      #hero { padding: 36px 16px 32px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .status-grid   { grid-template-columns: 1fr 1fr; }
+      #featured, #faq { padding: 32px 16px; }
+      #status-dashboard { padding: 28px 16px; }
+      .footer-main   { grid-template-columns: 1fr; padding: 32px 16px 24px; }
+      .footer-bottom { padding: 16px; flex-direction: column; gap: 10px; align-items: flex-start; }
+      .nav-links { display: none; }
+      .alert-items .alert-item:not(:first-child) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ALERT BAR -->
+<div id="alert-bar">
+  <div class="alert-items">
+    <div class="alert-item">
+      <i data-lucide="megaphone"></i>
+      <span><strong>IPTU 2026:</strong> Parcela de abril vence em 30/04. Emita seu boleto aqui.</span>
+    </div>
+    <div class="alert-sep">·</div>
+    <div class="alert-item">
+      <i data-lucide="calendar"></i>
+      <span><strong>IR 2026:</strong> Prazo final para declaração: 30 de maio.</span>
+    </div>
+    <div class="alert-sep">·</div>
+    <div class="alert-item">
+      <i data-lucide="info"></i>
+      <span>Novo: Agendamento de Habite-se 100% online.</span>
+    </div>
+  </div>
+  <button class="alert-close" onclick="this.parentElement.style.display='none'">
+    <i data-lucide="x"></i>
+  </button>
+</div>
+
+<!-- IDENTITY BAR -->
+<div class="identity-bar">
+  <div class="identity-left">
+    <div class="gdf-seal">
+      <div class="gdf-seal-icon"><i data-lucide="landmark"></i></div>
+      Governo do Distrito Federal
+    </div>
+    <span>Portal Oficial de Serviços ao Cidadão</span>
+  </div>
+  <div class="identity-right">
+    <button class="identity-link"><i data-lucide="contrast"></i> Alto contraste</button>
+    <button class="identity-link"><i data-lucide="type"></i> Libras</button>
+    <button class="identity-link"><i data-lucide="log-in"></i> Entrar com gov.br</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <div class="nav-logo">
+      <div class="nav-logo-icon"><i data-lucide="landmark"></i></div>
+      Guia Cidadão
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-links">
+      <button class="nav-link"><i data-lucide="layout-grid"></i> Serviços</button>
+      <button class="nav-link"><i data-lucide="map-pin"></i> Unidades</button>
+      <button class="nav-link"><i data-lucide="file-text"></i> Documentos</button>
+      <button class="nav-link"><i data-lucide="phone"></i> Contato</button>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-btn"><i data-lucide="log-in"></i> Acessar gov.br</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">
+    <i data-lucide="sparkles"></i>
+    Assistente com Inteligência Artificial
+  </div>
+  <h1 class="hero-title">Como podemos <span>ajudar você</span> hoje?</h1>
+  <p class="hero-sub">
+    Serviços do GDF, documentos e agendamentos — em linguagem simples, sem burocracia.
+  </p>
+
+  <div class="search-wrap">
+    <div style="position:relative;">
+      <div class="search-box">
+        <textarea
+          id="hero-input"
+          class="search-input"
+          placeholder='Ex: "perdi meu emprego", "quero me aposentar", "preciso de atendimento médico"'
+          rows="1"
+        ></textarea>
+        <div class="search-btns">
+          <button class="btn-icon btn-voice" id="voice-hero" title="Falar"><i data-lucide="mic"></i></button>
+          <button class="btn-icon btn-send" id="send-hero"><i data-lucide="arrow-up"></i></button>
+        </div>
+      </div>
+      <div class="search-suggestions" id="suggestions">
+        <div class="suggestion-group-title">Mais buscados hoje</div>
+        <div class="suggestion-item" data-msg="como emitir segunda via do RG?"><i data-lucide="trending-up"></i> Segunda via do RG</div>
+        <div class="suggestion-item" data-msg="quero agendar uma consulta médica"><i data-lucide="trending-up"></i> Agendamento de consulta</div>
+        <div class="suggestion-item" data-msg="como solicitar seguro desemprego"><i data-lucide="trending-up"></i> Seguro-desemprego</div>
+        <div class="suggestion-divider"></div>
+        <div class="suggestion-group-title">Sugestões</div>
+        <div class="suggestion-item" data-msg="quero tirar minha primeira CNH"><i data-lucide="car"></i> Tirar primeira CNH</div>
+        <div class="suggestion-item" data-msg="como me inscrever no Bolsa Família"><i data-lucide="hand-heart"></i> Inscrição no Bolsa Família</div>
+        <div class="suggestion-item" data-msg="quero me aposentar pelo INSS"><i data-lucide="shield-check"></i> Aposentadoria pelo INSS</div>
+      </div>
+    </div>
+
+    <div class="live-stats">
+      <div class="live-dot"></div>
+      <span>1.247 consultas respondidas hoje</span>
+      <span class="live-sep">·</span>
+      <span>Tempo médio: 4 segundos</span>
+      <span class="live-sep">·</span>
+      <span>Atualizado às 09:15 de 11/04/2026</span>
+    </div>
+
+    <div class="chips">
+      <button class="chip" data-msg="preciso de atendimento médico urgente"><i data-lucide="heart-pulse"></i> Saúde</button>
+      <button class="chip" data-msg="fui demitido e preciso saber o que fazer"><i data-lucide="briefcase"></i> Trabalho</button>
+      <button class="chip" data-msg="quero me aposentar pelo INSS"><i data-lucide="shield-check"></i> Previdência</button>
+      <button class="chip" data-msg="sou mãe solo e preciso de auxílio"><i data-lucide="users"></i> Família</button>
+      <button class="chip" data-msg="tenho deficiência e quero saber meus direitos"><i data-lucide="accessibility"></i> PCD</button>
+      <button class="chip" data-msg="quero tirar minha primeira CNH"><i data-lucide="car"></i> CNH</button>
+      <button class="chip" data-msg="como emitir segunda via do RG?"><i data-lucide="id-card"></i> RG</button>
+    </div>
+  </div>
+</section>
+
+<!-- CHAT -->
+<div class="content" id="chat-content" style="display:none;">
+  <div class="messages" id="messages"></div>
+</div>
+
+<!-- FEATURED SERVICES -->
+<section id="featured">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Serviços em destaque</div>
+      <div class="section-sub">Os serviços mais acessados pelos cidadãos do DF</div>
+    </div>
+    <a href="#" class="section-link">Ver todos os serviços <i data-lucide="arrow-right"></i></a>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card" onclick="sendMsg('quero agendar uma consulta médica')">
+      <div class="service-card-top">
+        <div class="service-icon"><i data-lucide="stethoscope"></i></div>
+        <div class="service-badges">
+          <span class="badge badge-green">Gratuito</span>
+          <span class="badge badge-blue">Online</span>
+        </div>
+      </div>
+      <div class="service-title">Agendamento de Saúde</div>
+      <div class="service-desc">Consultas, exames e vacinas nas UBSs e policlínicas do DF. Sem filas, sem complicação.</div>
+      <div class="service-footer">
+        <div class="service-stat"><i data-lucide="map-pin"></i> 327 unidades disponíveis</div>
+        <div class="service-cta">Agendar <i data-lucide="arrow-right"></i></div>
+      </div>
+    </div>
+
+    <div class="service-card" onclick="sendMsg('quero tirar minha primeira CNH')">
+      <div class="service-card-top">
+        <div class="service-icon"><i data-lucide="car"></i></div>
+        <div class="service-badges">
+          <span class="badge badge-blue">Online</span>
+          <span class="badge badge-ouro">Presencial</span>
+        </div>
+      </div>
+      <div class="service-title">CNH e DETRAN-DF</div>
+      <div class="service-desc">Habilitação, licenciamento, multas, transferência de veículos e muito mais.</div>
+      <div class="service-footer">
+        <div class="service-stat"><i data-lucide="building-2"></i> 4 postos no DF</div>
+        <div class="service-cta">Acessar <i data-lucide="arrow-right"></i></div>
+      </div>
+    </div>
+
+    <div class="service-card" onclick="sendMsg('como emitir segunda via do RG?')">
+      <div class="service-card-top">
+        <div class="service-icon"><i data-lucide="id-card"></i></div>
+        <div class="service-badges">
+          <span class="badge badge-green">Gratuito</span>
+          <span class="badge badge-ouro">Presencial</span>
+        </div>
+      </div>
+      <div class="service-title">Documento de Identidade</div>
+      <div class="service-desc">Emissão e renovação da carteira de identidade (RG / CIN). Agende sem sair de casa.</div>
+      <div class="service-footer">
+        <div class="service-stat"><i data-lucide="clock"></i> Próximo: amanhã, 08:00</div>
+        <div class="service-cta">Agendar <i data-lucide="arrow-right"></i></div>
+      </div>
+    </div>
+
+    <div class="service-card" onclick="sendMsg('quero me aposentar pelo INSS')">
+      <div class="service-card-top">
+        <div class="service-icon"><i data-lucide="shield-check"></i></div>
+        <div class="service-badges">
+          <span class="badge badge-green">Gratuito</span>
+          <span class="badge badge-blue">Online</span>
+        </div>
+      </div>
+      <div class="service-title">Previdência Social — INSS</div>
+      <div class="service-desc">Aposentadoria, benefício por incapacidade, salário-maternidade e outros serviços do INSS.</div>
+      <div class="service-footer">
+        <div class="service-stat"><i data-lucide="phone"></i> Meu INSS · Telefone 135</div>
+        <div class="service-cta">Simular <i data-lucide="arrow-right"></i></div>
+      </div>
+    </div>
+
+    <div class="service-card" onclick="sendMsg('como me inscrever no Bolsa Família')">
+      <div class="service-card-top">
+        <div class="service-icon"><i data-lucide="hand-heart"></i></div>
+        <div class="service-badges">
+          <span class="badge badge-green">Gratuito</span>
+        </div>
+      </div>
+      <div class="service-title">Bolsa Família e Benefícios</div>
+      <div class="service-desc">Cadastro único (CadÚnico), Bolsa Família, BPC e mais de 30 programas sociais federais e distritais.</div>
+      <div class="service-footer">
+        <div class="service-stat"><i data-lucide="map-pin"></i> CRAS mais próximo</div>
+        <div class="service-cta">Cadastrar <i data-lucide="arrow-right"></i></div>
+      </div>
+    </div>
+
+    <div class="service-card" onclick="sendMsg('fui demitido e preciso de ajuda com seguro desemprego')">
+      <div class="service-card-top">
+        <div class="service-icon"><i data-lucide="briefcase"></i></div>
+        <div class="service-badges">
+          <span class="badge badge-green">Gratuito</span>
+          <span class="badge badge-blue">Online</span>
+        </div>
+      </div>
+      <div class="service-title">Trabalho e Emprego</div>
+      <div class="service-desc">Seguro-desemprego, FGTS, vagas de emprego no SINE-DF e carteira de trabalho digital.</div>
+      <div class="service-footer">
+        <div class="service-stat"><i data-lucide="phone"></i> Central: 158</div>
+        <div class="service-cta">Solicitar <i data-lucide="arrow-right"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS DASHBOARD -->
+<section id="status-dashboard">
+  <div class="status-inner">
+    <div class="status-title">
+      <div class="status-live-dot"></div>
+      Painel de situação do DF — atualizado em tempo real
+    </div>
+    <div class="status-grid">
+      <div class="status-card">
+        <div class="status-card-header">
+          <div class="status-card-icon" style="background:rgba(239,68,68,.15);color:#F87171;">
+            <i data-lucide="heart-pulse"></i>
+          </div>
+          <div class="status-card-label">Fila — UPAs do DF</div>
+        </div>
+        <div class="status-pill pill-yellow"><i data-lucide="clock"></i> Espera moderada</div>
+        <div class="status-value">47 min</div>
+        <div class="status-detail">Média geral · Santa Maria: 1h12 · Ceilândia: 38 min · Taguatinga: 52 min</div>
+      </div>
+
+      <div class="status-card">
+        <div class="status-card-header">
+          <div class="status-card-icon" style="background:rgba(34,197,94,.15);color:#4ADE80;">
+            <i data-lucide="droplets"></i>
+          </div>
+          <div class="status-card-label">Abastecimento de Água</div>
+        </div>
+        <div class="status-pill pill-green"><i data-lucide="check-circle"></i> Normal</div>
+        <div class="status-value">98%</div>
+        <div class="status-detail">Restrição pontual: Sol Nascente — manutenção até 16h de hoje</div>
+      </div>
+
+      <div class="status-card">
+        <div class="status-card-header">
+          <div class="status-card-icon" style="background:rgba(234,179,8,.15);color:#FDE047;">
+            <i data-lucide="wind"></i>
+          </div>
+          <div class="status-card-label">Qualidade do Ar</div>
+        </div>
+        <div class="status-pill pill-green"><i data-lucide="check-circle"></i> Boa</div>
+        <div class="status-value">IQA 42</div>
+        <div class="status-detail">Umidade relativa: 28% — baixa. Hidrate-se. Fonte: IBRAM · 09:00</div>
+      </div>
+
+      <div class="status-card">
+        <div class="status-card-header">
+          <div class="status-card-icon" style="background:rgba(59,130,246,.15);color:#60A5FA;">
+            <i data-lucide="construction"></i>
+          </div>
+          <div class="status-card-label">Obras e Interdições</div>
+        </div>
+        <div class="status-pill pill-yellow"><i data-lucide="alert-triangle"></i> 3 ativas</div>
+        <div class="status-value">EPNB</div>
+        <div class="status-detail">W3 Sul, Eixo Monumental e EPNB. Previsão de conclusão: 25/04/2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-header" style="margin-bottom:28px;">
+    <div>
+      <div class="section-title">Dúvidas frequentes</div>
+      <div class="section-sub">Clique para expandir ou pergunte ao Guia Cidadão</div>
+    </div>
+  </div>
+  <div class="faq-grid">
+    <div>
+      <div class="faq-col-title"><i data-lucide="id-card"></i> Documentos e Identificação</div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Como tirar a segunda via do RG? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          Acesse o site da SSP-DF, agende um horário e compareça com sua certidão de nascimento ou casamento e comprovante de residência. A primeira emissão é gratuita.
+          <br><button class="faq-cta" onclick="sendMsg('como emitir segunda via do RG?')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Como emitir a certidão de nascimento online? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          Pelo Portal da Transparência dos Cartórios ou diretamente no cartório onde foi registrado. Para registros recentes, o sistema SIRC permite emissão eletrônica gratuita.
+          <br><button class="faq-cta" onclick="sendMsg('como emitir certidão de nascimento pela internet')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Onde solicitar a Carteira de Trabalho Digital? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          Pelo aplicativo "Carteira de Trabalho Digital" (disponível para Android e iOS) ou pelo portal gov.br. O processo é 100% online e gratuito.
+          <br><button class="faq-cta" onclick="sendMsg('como solicitar carteira de trabalho digital')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="faq-col-title"><i data-lucide="heart-pulse"></i> Saúde e Educação</div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Como me cadastrar no SUS no DF? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          Compareça à UBS (posto de saúde) mais próxima com RG, CPF e comprovante de residência. O cartão SUS é emitido gratuitamente na hora.
+          <br><button class="faq-cta" onclick="sendMsg('como me cadastrar no SUS')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Meu filho pode se matricular na escola pública a qualquer momento? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          Sim. Fora do período regular de matrículas, a família deve comparecer à escola mais próxima com certidão de nascimento, comprovante de residência e RG dos responsáveis.
+          <br><button class="faq-cta" onclick="sendMsg('como matricular filho na escola pública')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Quais vacinas são oferecidas gratuitamente em 2026? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          O calendário nacional inclui vacinas contra gripe, COVID-19, febre amarela, hepatite B, entre outras. Consulte a UBS mais próxima para ver o estoque disponível em sua região.
+          <br><button class="faq-cta" onclick="sendMsg('quais vacinas gratuitas estão disponíveis')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="faq-col-title"><i data-lucide="hand-coins"></i> Benefícios e Assistência</div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Quem tem direito ao Bolsa Família? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          Famílias com renda per capita de até R$ 218/mês. É necessário estar inscrito no CadÚnico. Prioridade para famílias com crianças, gestantes e pessoas com deficiência.
+          <br><button class="faq-cta" onclick="sendMsg('quero saber se tenho direito ao Bolsa Família')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          O que é o BPC e quem pode receber? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          O BPC (Benefício de Prestação Continuada) paga 1 salário mínimo a idosos com 65+ anos ou pessoas com deficiência com renda familiar per capita abaixo de 1/4 do salário mínimo.
+          <br><button class="faq-cta" onclick="sendMsg('tenho deficiência e quero saber sobre o BPC')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Como conseguir cesta básica emergencial? <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          Procure o CRAS da sua região com RG, CPF e comprovante de residência. A assistência emergencial é avaliada pela equipe de assistência social no mesmo dia do atendimento.
+          <br><button class="faq-cta" onclick="sendMsg('preciso de cesta básica emergencial')"><i data-lucide="message-circle"></i> Perguntar ao Guia Cidadão</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-icon"><i data-lucide="landmark"></i></div>
+        Guia Cidadão
+      </div>
+      <p class="footer-brand-desc">
+        Assistente digital oficial do Governo do Distrito Federal. Desenvolvido pela Secretaria de Ciência, Tecnologia e Inovação do GDF para simplificar o acesso aos serviços públicos.
+      </p>
+      <div class="footer-badge">
+        <i data-lucide="shield-check"></i>
+        Portal oficial · gov.df.br
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Portais Oficiais</div>
+      <ul class="footer-links">
+        <li><a href="#">GOV.BR</a></li>
+        <li><a href="#">DETRAN-DF</a></li>
+        <li><a href="#">Secretaria de Saúde</a></li>
+        <li><a href="#">Secretaria de Educação</a></li>
+        <li><a href="#">Secretaria de Fazenda</a></li>
+        <li><a href="#">Câmara Legislativa do DF</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Atendimento</div>
+      <ul class="footer-links">
+        <li><button onclick="sendMsg('preciso de atendimento')">Fale com o Guia Cidadão</button></li>
+        <li><a href="#">Ouvidoria GDF — 162</a></li>
+        <li><a href="#">SAMU — 192</a></li>
+        <li><a href="#">Bombeiros — 193</a></li>
+        <li><a href="#">Central 156 — GDF</a></li>
+        <li><a href="#">Suporte técnico</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Acessibilidade</div>
+      <ul class="footer-links">
+        <li><a href="#">Alto contraste</a></li>
+        <li><a href="#">Libras (VLibras)</a></li>
+        <li><a href="#">Atendimento por voz</a></li>
+        <li><a href="#">Mapa do site</a></li>
+        <li><a href="#">Política de privacidade</a></li>
+        <li><a href="#">Termos de uso</a></li>
+      </ul>
+      <div style="margin-top:16px;font-size:11px;color:rgba(255,255,255,.25);line-height:1.6;">
+        Segue as diretrizes do eMAG — Modelo de Acessibilidade em Governo Eletrônico
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Governo do Distrito Federal · CNPJ 00.394.934/0001-04 · Todos os direitos reservados</span>
+    <div class="footer-bottom-links">
+      <a href="#">Privacidade</a>
+      <a href="#">Termos de Uso</a>
+      <a href="#">Mapa do Site</a>
+      <a href="#">v1.0.0 — abril 2026</a>
+    </div>
+  </div>
+</footer>
+
+<!-- BOTTOM BAR -->
+<div id="bottom-bar">
+  <div class="bottom-inner">
+    <div class="search-box">
+      <textarea id="chat-input" class="search-input" placeholder="Continue a conversa..." rows="1"></textarea>
+      <div class="search-btns">
+        <button class="btn-icon btn-voice" id="voice-chat"><i data-lucide="mic"></i></button>
+        <button class="btn-icon btn-send" id="send-chat"><i data-lucide="arrow-up"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── DB ──
+  const DB = [
+    {
+      keys:['demiti','seguro desemprego','fui mandado','dispensad','demissão','seguro-desemprego'],
+      tag:{cls:'tag-work',icon:'briefcase',txt:'Trabalho & Renda'},
+      intro:'Você pode solicitar o <strong>Seguro-Desemprego</strong>, que garante renda enquanto você busca um novo emprego.',
+      blocks:[
+        {icon:'map-pin',title:'Onde solicitar',body:'Agências do <strong>SINE-DF</strong> ou pelo portal <a href="#">gov.br/seguro-desemprego</a>'},
+        {icon:'file-text',title:'Documentos necessários',docs:['RG ou CNH','CPF','Carteira de Trabalho','Termo de rescisão (TRCT)','Extrato FGTS']},
+      ],
+      steps:['Acesse gov.br/seguro-desemprego ou vá a uma agência SINE','Solicite em até <strong>120 dias</strong> após a data de demissão','Acompanhe o status pelo app SINE Fácil ou ligue 158'],
+      tip:'Você também pode ter direito ao saque do FGTS. Quer que eu explique como funciona?',
+      contact:{title:'SINE-DF — Agência Central',addr:'SEPN 510, Bloco A — Asa Norte, Brasília/DF',phone:'(61) 3362-1600',hours:'Seg–Sex, 7h30–17h30',maps:'#'},
+      related:['Como funciona o saque do FGTS?','Onde encontrar vagas de emprego no DF?','Quais são meus direitos na demissão?']
+    },
+    {
+      keys:['passando mal','doente','médico','atendimento médico','consulta','remédio','ubs','upa','dor','agendar consulta'],
+      tag:{cls:'tag-health',icon:'heart-pulse',txt:'Saúde'},
+      intro:'Para atendimento de saúde, o caminho depende da urgência. Vou te orientar para o lugar certo.',
+      blocks:[
+        {icon:'map-pin',title:'Casos comuns — sem urgência',body:'Procure a <strong>UBS (Unidade Básica de Saúde)</strong> do seu bairro. Gratuita, resolve a maioria dos casos e tem menor espera.'},
+        {icon:'alert-circle',title:'Emergências e urgências',body:'Vá à <strong>UPA</strong> mais próxima ou ligue <strong>192 (SAMU)</strong> — gratuito, 24 horas por dia.'},
+      ],
+      steps:['Para consultas: vá à UBS mais próxima com seu cartão SUS','Sem cartão SUS? Leve RG e CPF — emitem na hora, gratuitamente','Para agendar online: acesse o portal <a href="#">saude.df.gov.br</a>'],
+      tip:'Evite ir ao hospital para casos simples — a espera na UBS é bem menor e você é atendido por médico de família.',
+      contact:{title:'Saúde DF — Central de Regulação',addr:'Ligue 160 para UBS mais próxima ou 192 (SAMU)',phone:'160 (regulação) · 192 (SAMU)',hours:'24 horas, 7 dias por semana',maps:'#'},
+      related:['Como tirar o cartão SUS?','Quais vacinas estão disponíveis no DF?','Como acessar saúde mental pelo SUS?']
+    },
+    {
+      keys:['aposentar','aposentadoria','previdência','inss','me aposentar'],
+      tag:{cls:'tag-work',icon:'shield-check',txt:'Previdência Social'},
+      intro:'A aposentadoria pelo <strong>INSS</strong> pode ser solicitada 100% online, sem precisar ir a uma agência.',
+      blocks:[
+        {icon:'globe',title:'Como solicitar',body:'Portal <a href="#">Meu INSS (gov.br/meu-inss)</a> ou ligue <strong>135</strong> (gratuito, seg–sáb 7h–22h)'},
+        {icon:'file-text',title:'Documentos básicos',docs:['RG ou CNH','CPF','Carteira de Trabalho','Comprovante de residência','Extratos do CNIS (opcional)']},
+      ],
+      steps:['Acesse <strong>Meu INSS</strong> e crie sua conta gov.br (CPF + celular)','Clique em "Simular aposentadoria" para ver quando e quanto você receberá','Se a simulação for favorável, solicite direto pelo app ou ligue 135'],
+      tip:'A simulação é gratuita e mostra exatamente sua data e valor — sem precisar ir a nenhuma agência.',
+      contact:{title:'INSS — Agência Brasília',addr:'SEPS 702/902, Conjunto B — Asa Sul, Brasília/DF',phone:'135 (gratuito)',hours:'Seg–Sex, 7h–22h · Sáb, 7h–14h',maps:'#'},
+      related:['O que é o BPC para idosos?','Como funciona a aposentadoria por incapacidade?','Como verificar meu CNIS?']
+    },
+    {
+      keys:['mãe solo','mãe solteira','auxílio','bolsa família','família','filho','benefício social'],
+      tag:{cls:'tag-social',icon:'users',txt:'Benefícios Sociais'},
+      intro:'Existem vários benefícios disponíveis. Vou te mostrar os principais e como acessar cada um.',
+      blocks:[
+        {icon:'hand-heart',title:'Bolsa Família',body:'Para famílias com renda per capita de até R$ 218/mês. Cadastro gratuito no <strong>CRAS</strong> ou pelo CadÚnico.'},
+        {icon:'baby',title:'Salário-maternidade',body:'Pago pelo INSS para trabalhadoras com carteira assinada, MEI ou contribuinte individual. Duração: 4 meses.'},
+      ],
+      steps:['Vá ao <strong>CRAS</strong> mais próximo com RG, CPF e comprovante de renda de todos da família','Faça o cadastro no <strong>CadÚnico</strong> — gratuito e abre acesso a mais de 30 programas','Aguarde análise do benefício — prazo médio: 45 dias'],
+      tip:'O CadÚnico é a porta de entrada para dezenas de programas sociais federais e distritais. Vale sempre ter atualizado.',
+      contact:{title:'CRAS — Central de Informações',addr:'Consulte o CRAS mais próximo pelo portal da SEDESTMIDH',phone:'(61) 3901-6500',hours:'Seg–Sex, 8h–17h',maps:'#'},
+      related:['Tenho direito ao Auxílio Gás?','Como atualizar o CadÚnico?','Quais são os benefícios para mãe solo no DF?']
+    },
+    {
+      keys:['deficiência','pcd','deficiente','bpc','loas','pessoa com deficiência','meus direitos'],
+      tag:{cls:'tag-social',icon:'accessibility',txt:'Direitos PCD'},
+      intro:'Pessoa com deficiência tem direitos garantidos por lei. Vou listar os principais e como acessar cada um.',
+      blocks:[
+        {icon:'hand-coins',title:'BPC / LOAS — Benefício Assistencial',body:'1 salário mínimo/mês para PCD com renda familiar per capita até 1/4 do salário mínimo. Solicite no <strong>INSS</strong> ou <strong>CRAS</strong>.'},
+        {icon:'receipt-text',title:'Isenções fiscais',body:'Isenção de IPI e IOF na compra de veículos adaptados. Isenção de IPTU e IPVA em muitos casos. Consulte a Secretaria de Fazenda.'},
+      ],
+      steps:['Obtenha o laudo médico oficial comprovando a deficiência','Leve o laudo ao INSS (pelo app Meu INSS ou pessoalmente) ou ao CRAS','Busque também isenção de IPTU na SEFAZ-DF e no DETRAN-DF'],
+      tip:'Você tem direito a 5% das vagas em concursos públicos e ao saque integral do FGTS a qualquer momento.',
+      contact:{title:'GDF — Central de Atendimento PCD',addr:'SGAS 613/614, Conjunto D — Asa Sul, Brasília/DF',phone:'(61) 3901-6500',hours:'Seg–Sex, 8h–17h',maps:'#'},
+      related:['Como solicitar passe livre para PCD?','Tenho direito a vaga em concurso público?','Como funciona a aposentadoria por incapacidade?']
+    },
+    {
+      keys:['cnh','habilitação','carteira de motorista','primeira cnh','tirar cnh'],
+      tag:{cls:'tag-transit',icon:'car',txt:'DETRAN-DF — Trânsito'},
+      intro:'Para tirar a CNH pela primeira vez, o processo começa em uma auto escola credenciada pelo DETRAN-DF.',
+      blocks:[
+        {icon:'map-pin',title:'Onde começar',body:'Procure uma <strong>auto escola credenciada</strong> no portal <a href="#">detran.df.gov.br</a>. Elas cuidam de toda a parte burocrática.'},
+        {icon:'file-text',title:'Documentos',docs:['RG ou CPF original','Comprovante de residência','Foto 3x4 recente (fundo branco)']},
+      ],
+      steps:['Escolha auto escola credenciada no portal DETRAN-DF','Faça os exames médico e psicológico obrigatórios','Estude para a prova teórica — use os simulados gratuitos no app DETRAN-DF','Faça as 20 aulas práticas mínimas e a prova de direção'],
+      tip:'O custo varia entre R$ 1.200 e R$ 2.000. Muitas auto escolas oferecem parcelamento — consulte antes de assinar.',
+      contact:{title:'DETRAN-DF — Atendimento ao Cidadão',addr:'SEPN 515, Bloco D — Asa Norte, Brasília/DF',phone:'(61) 3901-3400',hours:'Seg–Sex, 7h30–17h30',maps:'#'},
+      related:['Como renovar minha CNH vencida?','Como transferir veículo para meu nome?','Como consultar multas pelo DETRAN-DF?']
+    },
+    {
+      keys:['inscrever no bolsa','bolsa família','cadúnico','cras','cadastro único','segunda via do rg','rg'],
+      tag:{cls:'tag-social',icon:'id-card',txt:'Documentos e Registro'},
+      intro:'Para emitir ou dar entrada na segunda via do RG (agora chamado CIN — Carteira de Identidade Nacional), o processo é simples e gratuito.',
+      blocks:[
+        {icon:'map-pin',title:'Onde atender',body:'Postos da <strong>SSP-DF</strong> (Secretaria de Segurança Pública) — agende online pelo portal <a href="#">portalservicos.ssp.df.gov.br</a>'},
+        {icon:'file-text',title:'Documentos necessários',docs:['Certidão de nascimento ou casamento (original)','Comprovante de residência','Foto 3x4 recente (se solicitado)']},
+      ],
+      steps:['Acesse o portal SSP-DF e escolha "Identidade — Agendamento"','Selecione o posto mais próximo e um horário disponível','Compareça no dia com os documentos originais','O documento é entregue na hora ou em até 10 dias úteis'],
+      tip:'A emissão da 1ª via e da 2ª via por roubo/furto são gratuitas. Para perda, pode haver taxa simbólica.',
+      contact:{title:'SSP-DF — Instituto de Identificação',addr:'SEPN 514, Bloco D — Asa Norte, Brasília/DF',phone:'(61) 3449-1400',hours:'Seg–Sex, 8h–17h',maps:'#'},
+      related:['Como tirar passaporte em Brasília?','Como registrar um boletim de ocorrência?','O que é o CIN (nova carteira de identidade)?']
+    },
+  ];
+
+  function match(text) {
+    const t = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    for (const r of DB) {
+      if (r.keys.some(k => t.includes(k.normalize('NFD').replace(/[\u0300-\u036f]/g,'')))) return r;
+    }
+    return null;
+  }
+
+  function buildAI(data) {
+    let h = `
+      <div class="msg-ai-body">
+        <div class="ai-header">
+          <div class="ai-avatar"><i data-lucide="bot"></i></div>
+          <div>
+            <div class="ai-name">Guia Cidadão IA · GDF</div>
+            <div class="ai-sub">Assistente oficial de serviços públicos</div>
+          </div>
+        </div>
+        <span class="resp-tag ${data.tag.cls}"><i data-lucide="${data.tag.icon}"></i>${data.tag.txt}</span>
+        <p style="margin:10px 0 6px;">${data.intro}</p>
+    `;
+    for (const b of data.blocks) {
+      h += `<div class="info-block"><h4><i data-lucide="${b.icon}"></i>${b.title}</h4>`;
+      if (b.docs) h += `<div class="doc-chips">${b.docs.map(d=>`<span class="doc-chip"><i data-lucide="paperclip"></i>${d}</span>`).join('')}</div>`;
+      else h += `<p>${b.body}</p>`;
+      h += `</div>`;
+    }
+    h += `<p style="font-size:10px;color:var(--text-soft);margin:12px 0 5px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Passo a passo</p>`;
+    h += `<ul class="steps-list">${data.steps.map((s,i)=>`<li><span class="step-n">${i+1}</span><span>${s}</span></li>`).join('')}</ul>`;
+    if (data.tip) h += `<div class="tip-box"><i data-lucide="lightbulb"></i><span>${data.tip}</span></div>`;
+    if (data.contact) {
+      h += `
+        <div class="contact-card">
+          <div class="contact-card-title">Onde ir presencialmente</div>
+          <div class="contact-rows">
+            <div class="contact-row"><i data-lucide="building-2"></i><span>${data.contact.title}</span></div>
+            <div class="contact-row"><i data-lucide="map-pin"></i><span>${data.contact.addr}</span></div>
+            <div class="contact-row"><i data-lucide="phone"></i><span>${data.contact.phone}</span></div>
+            <div class="contact-row"><i data-lucide="clock"></i><span>${data.contact.hours}</span></div>
+          </div>
+        </div>
+      `;
+    }
+    h += `
+      <div class="cta-row">
+        <a href="#" class="cta-btn"><i data-lucide="external-link"></i> Acessar serviço oficial</a>
+        <button class="cta-btn-outline" onclick="navigator.share && navigator.share({title:'Guia Cidadão',text:'${data.intro.replace(/<[^>]*>/g,'')}'})"><i data-lucide="share-2"></i> Compartilhar</button>
+      </div>
+      <div class="feedback-row">
+        <span class="feedback-label">Isso te ajudou?</span>
+        <button class="btn-fb pos" onclick="fb(this)"><i data-lucide="thumbs-up"></i> Sim, ajudou</button>
+        <button class="btn-fb neg" onclick="fb(this)"><i data-lucide="thumbs-down"></i> Não funcionou</button>
+      </div>
+      </div>
+    `;
+    if (data.related && data.related.length) {
+      h += `
+        <div class="related-section">
+          <div class="related-label">Você também pode perguntar</div>
+          <div class="related-chips">
+            ${data.related.map(r=>`<button class="related-chip" onclick="sendMsg('${r}')"><i data-lucide="message-circle"></i>${r}</button>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+    return h;
+  }
+
+  function buildDefault() {
+    return `
+      <div class="msg-ai-body">
+        <div class="ai-header">
+          <div class="ai-avatar"><i data-lucide="bot"></i></div>
+          <div>
+            <div class="ai-name">Guia Cidadão IA · GDF</div>
+            <div class="ai-sub">Assistente oficial de serviços públicos</div>
+          </div>
+        </div>
+        <p>Entendi que você precisa de ajuda. Para te direcionar para o serviço certo, me conta um pouco mais:</p>
+        <ul class="steps-list" style="margin-top:12px;">
+          <li><span class="step-n">?</span><span>É sobre saúde, consulta médica ou atendimento de urgência?</span></li>
+          <li><span class="step-n">?</span><span>É sobre trabalho, renda, benefício ou previdência?</span></li>
+          <li><span class="step-n">?</span><span>Precisa de algum documento, licença ou agendamento?</span></li>
+        </ul>
+        <div class="tip-box"><i data-lucide="lightbulb"></i><span>Ou clique em uma das categorias acima para ir direto ao serviço.</span></div>
+        <div class="feedback-row">
+          <span class="feedback-label">Isso te ajudou?</span>
+          <button class="btn-fb pos" onclick="fb(this)"><i data-lucide="thumbs-up"></i> Sim</button>
+          <button class="btn-fb neg" onclick="fb(this)"><i data-lucide="thumbs-down"></i> Não</button>
+        </div>
+      </div>
+      <div class="related-section">
+        <div class="related-label">Serviços populares</div>
+        <div class="related-chips">
+          <button class="related-chip" onclick="sendMsg('como agendar consulta médica')"><i data-lucide="heart-pulse"></i>Consulta médica</button>
+          <button class="related-chip" onclick="sendMsg('fui demitido, o que faço?')"><i data-lucide="briefcase"></i>Seguro-desemprego</button>
+          <button class="related-chip" onclick="sendMsg('quero me aposentar')"><i data-lucide="shield-check"></i>Aposentadoria</button>
+          <button class="related-chip" onclick="sendMsg('como emitir segunda via do RG?')"><i data-lucide="id-card"></i>Segunda via do RG</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function fb(btn) {
+    btn.closest('.feedback-row').querySelectorAll('.btn-fb').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    lucide.createIcons();
+  }
+
+  let started = false;
+
+  function hidePrechat() {
+    document.getElementById('featured').style.display = 'none';
+    document.getElementById('status-dashboard').style.display = 'none';
+    document.getElementById('faq').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
+  }
+
+  function sendMsg(text) { send(text); }
+
+  async function send(text) {
+    text = text.trim(); if (!text) return;
+
+    const chatContent = document.getElementById('chat-content');
+    const bottomBar   = document.getElementById('bottom-bar');
+    const msgs        = document.getElementById('messages');
+    const hero        = document.getElementById('hero');
+    const sugg        = document.getElementById('suggestions');
+
+    if (!started) {
+      started = true;
+      chatContent.style.display = 'block';
+      bottomBar.classList.add('visible');
+      hero.classList.add('compact');
+      hidePrechat();
+    }
+    sugg.classList.remove('open');
+    document.getElementById('hero-input').value = '';
+    document.getElementById('chat-input').value = '';
+
+    // user bubble
+    const u = document.createElement('div');
+    u.className = 'msg-user'; u.textContent = text;
+    msgs.appendChild(u);
+    u.scrollIntoView({behavior:'smooth',block:'end'});
+
+    // typing
+    const t = document.createElement('div');
+    t.className = 'msg-ai';
+    t.innerHTML = `<div class="typing"><span></span><span></span><span></span></div>`;
+    msgs.appendChild(t);
+    setTimeout(() => t.scrollIntoView({behavior:'smooth',block:'end'}), 80);
+
+    await new Promise(r => setTimeout(r, 900 + Math.random() * 700));
+
+    msgs.removeChild(t);
+    const ai = document.createElement('div');
+    ai.className = 'msg-ai';
+    const data = match(text);
+    ai.innerHTML = data ? buildAI(data) : buildDefault();
+    msgs.appendChild(ai);
+    lucide.createIcons();
+    setTimeout(() => ai.scrollIntoView({behavior:'smooth',block:'end'}), 80);
+  }
+
+  function bindSend(inId, btnId) {
+    const inp = document.getElementById(inId);
+    const btn = document.getElementById(btnId);
+    btn.addEventListener('click', () => send(inp.value));
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(inp.value); }
+    });
+    inp.addEventListener('input', () => {
+      inp.style.height = 'auto';
+      inp.style.height = Math.min(inp.scrollHeight, 160) + 'px';
+    });
+    inp.addEventListener('focus', () => {
+      if (inId === 'hero-input') document.getElementById('suggestions').classList.add('open');
+    });
+  }
+  bindSend('hero-input','send-hero');
+  bindSend('chat-input','send-chat');
+
+  // close suggestions on outside click
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-wrap')) {
+      document.getElementById('suggestions').classList.remove('open');
+    }
+  });
+
+  // suggestion clicks
+  document.querySelectorAll('.suggestion-item').forEach(el => {
+    el.addEventListener('click', () => send(el.dataset.msg));
+  });
+
+  // chips
+  document.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => send(c.dataset.msg));
+  });
+
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+
+  // Voice (demo)
+  function bindVoice(btnId, inId) {
+    const btn = document.getElementById(btnId); if (!btn) return;
+    const demos = ['tô precisando de um médico','fui demitido essa semana, e agora?','quero me inscrever no Bolsa Família','como emitir segunda via do RG?'];
+    let rec = false;
+    btn.addEventListener('click', () => {
+      rec = !rec;
+      btn.classList.toggle('recording', rec);
+      btn.innerHTML = rec ? '<i data-lucide="square"></i>' : '<i data-lucide="mic"></i>';
+      lucide.createIcons();
+      if (rec) {
+        setTimeout(() => {
+          rec = false; btn.classList.remove('recording');
+          btn.innerHTML = '<i data-lucide="mic"></i>'; lucide.createIcons();
+          const inp = document.getElementById(inId);
+          inp.value = demos[Math.floor(Math.random() * demos.length)];
+          inp.dispatchEvent(new Event('input'));
+        }, 2200);
+      }
+    });
+  }
+  bindVoice('voice-hero','hero-input');
+  bindVoice('voice-chat','chat-input');
+
+  lucide.createIcons();
+</script>
+</body>
+</html>
