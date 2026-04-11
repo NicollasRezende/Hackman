@@ -1,4 +1,14 @@
 import type { AIResponse } from '../types'
+<<<<<<< HEAD
+=======
+import {
+  LOCATIONS_IDENTIDADE,
+  LOCATIONS_CNH,
+  LOCATIONS_TRABALHO,
+  LOCATIONS_SOCIAL,
+  LOCATIONS_PREVIDENCIA,
+} from './locations'
+>>>>>>> origin/main
 
 export const DB: AIResponse[] = [
   {
@@ -16,6 +26,10 @@ export const DB: AIResponse[] = [
     ],
     tip: 'Você também pode ter direito ao saque do FGTS. Quer que eu explique como funciona?',
     contact: { title: 'SINE-DF — Agência Central', addr: 'SEPN 510, Bloco A — Asa Norte, Brasília/DF', phone: '(61) 3362-1600', hours: 'Seg–Sex, 7h30–17h30' },
+<<<<<<< HEAD
+=======
+    locations: LOCATIONS_TRABALHO,
+>>>>>>> origin/main
     related: ['Como funciona o saque do FGTS?', 'Onde encontrar vagas de emprego no DF?', 'Quais são meus direitos na demissão?'],
   },
   {
@@ -50,6 +64,10 @@ export const DB: AIResponse[] = [
     ],
     tip: 'A simulação é gratuita e mostra exatamente sua data e valor — sem precisar ir a nenhuma agência.',
     contact: { title: 'INSS — Agência Brasília', addr: 'SEPS 702/902, Conjunto B — Asa Sul, Brasília/DF', phone: '135 (gratuito)', hours: 'Seg–Sex, 7h–22h · Sáb, 7h–14h' },
+<<<<<<< HEAD
+=======
+    locations: LOCATIONS_PREVIDENCIA,
+>>>>>>> origin/main
     related: ['O que é o BPC para idosos?', 'Como funciona a aposentadoria por incapacidade?', 'Como verificar meu CNIS?'],
   },
   {
@@ -67,6 +85,10 @@ export const DB: AIResponse[] = [
     ],
     tip: 'O CadÚnico é a porta de entrada para dezenas de programas sociais federais e distritais.',
     contact: { title: 'CRAS — Central de Informações', addr: 'Consulte o CRAS mais próximo pelo portal SEDESTMIDH', phone: '(61) 3901-6500', hours: 'Seg–Sex, 8h–17h' },
+<<<<<<< HEAD
+=======
+    locations: LOCATIONS_SOCIAL,
+>>>>>>> origin/main
     related: ['Tenho direito ao Auxílio Gás?', 'Como atualizar o CadÚnico?', 'Quais benefícios para mãe solo no DF?'],
   },
   {
@@ -102,6 +124,10 @@ export const DB: AIResponse[] = [
     ],
     tip: 'O custo varia entre R$ 1.200 e R$ 2.000. Muitas auto escolas oferecem parcelamento.',
     contact: { title: 'DETRAN-DF — Atendimento ao Cidadão', addr: 'SEPN 515, Bloco D — Asa Norte, Brasília/DF', phone: '(61) 3901-3400', hours: 'Seg–Sex, 7h30–17h30' },
+<<<<<<< HEAD
+=======
+    locations: LOCATIONS_CNH,
+>>>>>>> origin/main
     related: ['Como renovar minha CNH vencida?', 'Como transferir veículo para meu nome?', 'Como consultar multas pelo DETRAN-DF?'],
   },
   {
@@ -120,6 +146,10 @@ export const DB: AIResponse[] = [
     ],
     tip: 'A 1ª via e a 2ª via por roubo/furto são gratuitas. Para perda, pode haver taxa simbólica.',
     contact: { title: 'SSP-DF — Instituto de Identificação', addr: 'SEPN 514, Bloco D — Asa Norte, Brasília/DF', phone: '(61) 3449-1400', hours: 'Seg–Sex, 8h–17h' },
+<<<<<<< HEAD
+=======
+    locations: LOCATIONS_IDENTIDADE,
+>>>>>>> origin/main
     related: ['Como tirar passaporte em Brasília?', 'Como registrar um boletim de ocorrência?', 'O que é o CIN (nova carteira de identidade)?'],
   },
 ]

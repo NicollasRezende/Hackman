@@ -45,7 +45,11 @@ export default function App() {
   }, [chatStarted])
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-gov-bg text-gov-text">
+=======
+    <div className="min-h-screen bg-white text-gray-900">
+>>>>>>> origin/main
       <AlertBar />
       <IdentityBar />
       <Nav />
