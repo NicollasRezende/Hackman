@@ -5,6 +5,7 @@ import {
 } from 'lucide-react'
 import { getIcon } from '../../utils/icon'
 import type { AIResponse } from '../../types'
+import LocationsMap from './LocationsMap'
 
 const TAG_STYLES: Record<string, string> = {
   'tag-work':    'bg-amber-50 text-amber-700',
@@ -110,6 +111,11 @@ export default function AIMessage({ data, onRelated }: Props) {
               ))}
             </div>
           </div>
+        )}
+
+        {/* Mapa de locais de atendimento */}
+        {data.locations && data.locations.length > 0 && (
+          <LocationsMap locations={data.locations} />
         )}
 
         {/* CTAs */}

@@ -12,6 +12,21 @@ export interface ContactInfo {
   hours: string
 }
 
+export type LocationType = 'na-hora' | 'pcdf' | 'detran' | 'ubs' | 'cras' | 'sedet' | 'inss' | 'other'
+
+export interface ServiceLocation {
+  name: string
+  type: LocationType
+  address: string
+  lat: number
+  lng: number
+  phone?: string
+  hours?: string
+  services?: string[]    // ex: ['RG', 'CPF', 'Título de Eleitor']
+  online?: string        // URL para serviço digital equivalente
+  distance?: number      // km — calculado no frontend após geolocalização
+}
+
 export interface AIResponse {
   keys: string[]
   tag: { cls: string; icon: string; txt: string }
@@ -20,6 +35,7 @@ export interface AIResponse {
   steps: string[]
   tip?: string
   contact?: ContactInfo
+  locations?: ServiceLocation[]   // postos de atendimento com mapa
   related?: string[]
 }
 
