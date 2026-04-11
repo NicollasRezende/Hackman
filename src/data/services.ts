@@ -1,0 +1,116 @@
+import type { ServiceCard, StatusCard } from '../types'
+
+export const FEATURED_SERVICES: ServiceCard[] = [
+  {
+    icon: 'Stethoscope',
+    title: 'Agendamento de Saúde',
+    desc: 'Consultas, exames e vacinas nas UBSs e policlínicas do DF. Sem filas, sem complicação.',
+    badges: [{ label: 'Gratuito', variant: 'green' }, { label: 'Online', variant: 'blue' }],
+    stat: { icon: 'MapPin', text: '327 unidades disponíveis' },
+    cta: 'Agendar',
+    query: 'quero agendar uma consulta médica',
+  },
+  {
+    icon: 'Car',
+    title: 'CNH e DETRAN-DF',
+    desc: 'Habilitação, licenciamento, multas e transferência de veículos.',
+    badges: [{ label: 'Online', variant: 'blue' }, { label: 'Presencial', variant: 'ouro' }],
+    stat: { icon: 'Building2', text: '4 postos no DF' },
+    cta: 'Acessar',
+    query: 'quero tirar minha primeira CNH',
+  },
+  {
+    icon: 'IdCard',
+    title: 'Documento de Identidade',
+    desc: 'Emissão e renovação da carteira de identidade (RG / CIN). Agende sem sair de casa.',
+    badges: [{ label: 'Gratuito', variant: 'green' }, { label: 'Presencial', variant: 'ouro' }],
+    stat: { icon: 'Clock', text: 'Próximo: amanhã, 08:00' },
+    cta: 'Agendar',
+    query: 'como emitir segunda via do RG?',
+  },
+  {
+    icon: 'ShieldCheck',
+    title: 'Previdência Social — INSS',
+    desc: 'Aposentadoria, benefício por incapacidade, salário-maternidade e outros serviços do INSS.',
+    badges: [{ label: 'Gratuito', variant: 'green' }, { label: 'Online', variant: 'blue' }],
+    stat: { icon: 'Phone', text: 'Meu INSS · Telefone 135' },
+    cta: 'Simular',
+    query: 'quero me aposentar pelo INSS',
+  },
+  {
+    icon: 'HandHeart',
+    title: 'Bolsa Família e Benefícios',
+    desc: 'CadÚnico, Bolsa Família, BPC e mais de 30 programas sociais federais e distritais.',
+    badges: [{ label: 'Gratuito', variant: 'green' }],
+    stat: { icon: 'MapPin', text: 'CRAS mais próximo' },
+    cta: 'Cadastrar',
+    query: 'como me inscrever no Bolsa Família',
+  },
+  {
+    icon: 'Briefcase',
+    title: 'Trabalho e Emprego',
+    desc: 'Seguro-desemprego, FGTS, vagas de emprego no SINE-DF e carteira de trabalho digital.',
+    badges: [{ label: 'Gratuito', variant: 'green' }, { label: 'Online', variant: 'blue' }],
+    stat: { icon: 'Phone', text: 'Central: 158' },
+    cta: 'Solicitar',
+    query: 'fui demitido e preciso de ajuda com seguro desemprego',
+  },
+]
+
+export const STATUS_CARDS: StatusCard[] = [
+  {
+    icon: 'HeartPulse',
+    iconBg: 'rgba(239,68,68,.12)',
+    iconColor: '#F87171',
+    label: 'Fila — UPAs do DF',
+    pill: { text: 'Espera moderada', variant: 'yellow' },
+    value: '47 min',
+    detail: 'Média geral · Santa Maria: 1h12 · Ceilândia: 38 min · Taguatinga: 52 min',
+  },
+  {
+    icon: 'Droplets',
+    iconBg: 'rgba(34,197,94,.12)',
+    iconColor: '#4ADE80',
+    label: 'Abastecimento de Água',
+    pill: { text: 'Normal', variant: 'green' },
+    value: '98%',
+    detail: 'Restrição pontual: Sol Nascente — manutenção até 16h de hoje',
+  },
+  {
+    icon: 'Wind',
+    iconBg: 'rgba(234,179,8,.12)',
+    iconColor: '#FDE047',
+    label: 'Qualidade do Ar',
+    pill: { text: 'Boa', variant: 'green' },
+    value: 'IQA 42',
+    detail: 'Umidade relativa: 28% — baixa. Hidrate-se. Fonte: IBRAM · 09:00',
+  },
+  {
+    icon: 'Construction',
+    iconBg: 'rgba(59,130,246,.12)',
+    iconColor: '#60A5FA',
+    label: 'Obras e Interdições',
+    pill: { text: '3 ativas', variant: 'yellow' },
+    value: 'EPNB',
+    detail: 'W3 Sul, Eixo Monumental e EPNB. Previsão de conclusão: 25/04/2026',
+  },
+]
+
+export const SUGGESTIONS = [
+  { icon: 'TrendingUp', label: 'Segunda via do RG', query: 'como emitir segunda via do RG?' },
+  { icon: 'TrendingUp', label: 'Agendamento de consulta', query: 'quero agendar uma consulta médica' },
+  { icon: 'TrendingUp', label: 'Seguro-desemprego', query: 'como solicitar seguro desemprego' },
+  { icon: 'Car', label: 'Tirar primeira CNH', query: 'quero tirar minha primeira CNH' },
+  { icon: 'HandHeart', label: 'Inscrição no Bolsa Família', query: 'como me inscrever no Bolsa Família' },
+  { icon: 'ShieldCheck', label: 'Aposentadoria pelo INSS', query: 'quero me aposentar pelo INSS' },
+]
+
+export const CHIPS = [
+  { icon: 'HeartPulse', label: 'Saúde', query: 'preciso de atendimento médico urgente' },
+  { icon: 'Briefcase', label: 'Trabalho', query: 'fui demitido e preciso saber o que fazer' },
+  { icon: 'ShieldCheck', label: 'Previdência', query: 'quero me aposentar pelo INSS' },
+  { icon: 'Users', label: 'Família', query: 'sou mãe solo e preciso de auxílio' },
+  { icon: 'Accessibility', label: 'PCD', query: 'tenho deficiência e quero saber meus direitos' },
+  { icon: 'Car', label: 'CNH', query: 'quero tirar minha primeira CNH' },
+  { icon: 'IdCard', label: 'RG', query: 'como emitir segunda via do RG?' },
+]
