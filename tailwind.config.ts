@@ -5,18 +5,6 @@ export default {
   theme: {
     extend: {
       colors: {
-<<<<<<< HEAD
-        gov: {
-          blue: '#1351b4',
-          'blue-dark': '#0c326f',
-          'blue-soft': '#e8edf7',
-          'blue-line': '#dbe5f5',
-          text: '#1f2a44',
-          muted: '#505f79',
-          bg: '#f8f9fb',
-        },
-=======
->>>>>>> origin/main
         verde: {
           DEFAULT: '#006633',
           med: '#00843D',

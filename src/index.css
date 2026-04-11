@@ -5,12 +5,7 @@
 @layer base {
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-<<<<<<< HEAD
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fb;
-    color: #1f2a44;
-  }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; }
 
   textarea {
     font-family: inherit;
@@ -22,29 +17,14 @@
   textarea {
     font: inherit;
   }
-=======
-  body { font-family: 'Plus Jakarta Sans', sans-serif; }
-
-  textarea {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    field-sizing: content;
-  }
->>>>>>> origin/main
 }
 
 @layer components {
   .chip {
-<<<<<<< HEAD
-    @apply inline-flex items-center gap-1.5 rounded-full border border-gov-blue-line bg-white px-3 py-1.5 text-xs font-medium text-gov-muted cursor-pointer transition-all duration-150;
-  }
-  .chip:hover {
-    @apply border-gov-blue bg-gov-blue-soft text-gov-blue;
-=======
     @apply inline-flex items-center gap-1.5 text-xs font-medium text-gdf-border border border-gdf-border bg-white rounded-full px-3 py-1.5 cursor-pointer transition-all duration-150;
   }
   .chip:hover {
     @apply bg-verde-light border-verde text-verde;
->>>>>>> origin/main
   }
 }
 

@@ -7,14 +7,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-<<<<<<< HEAD
-          react:  ['react', 'react-dom'],
+          react: ['react', 'react-dom'],
           lucide: ['lucide-react'],
-=======
-          react:   ['react', 'react-dom'],
-          lucide:  ['lucide-react'],
           leaflet: ['leaflet', 'react-leaflet'],
->>>>>>> origin/main
         },
       },
     },
