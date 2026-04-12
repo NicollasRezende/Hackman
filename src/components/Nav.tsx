@@ -17,16 +17,12 @@ export default function Nav({ onServicesClick, onUnitsClick, onHomeClick }: Prop
   return (
     <nav className="bg-white sticky top-0 z-50 border-b border-gray-200 shadow-sm font-sans">
       <div className="max-w-[1215px] mx-auto w-full">
-        {/* Top Row: Logo & Links & Button */}
         <div className="h-[88px] flex items-center justify-between px-4 md:px-7">
-          
-          {/* Logo Area */}
           <button onClick={onHomeClick} className="flex items-center gap-2 font-extrabold text-3xl tracking-tight text-[#1351b4] hover:opacity-90 transition-opacity">
             <Landmark size={32} className="text-[#1351b4]" />
             <span>Guia Cidadão</span>
           </button>
 
-          {/* Right Actions */}
           <div className="hidden lg:flex items-center gap-5 text-sm text-[#1351b4]">
             <div className="flex items-center gap-4">
               {NAV_LINKS.map(({ icon: Icon, label, action }) => (

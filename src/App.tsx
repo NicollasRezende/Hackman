@@ -10,6 +10,7 @@ import Footer from './components/Footer'
 import ChatSection from './components/Chat'
 import BottomBar from './components/Chat/BottomBar'
 import AllServices from './components/AllServices'
+import Hospitals from './components/Hospitals'
 import type { Message } from './types'
 
 let msgId = 0
@@ -28,11 +29,13 @@ function getSessionId(): string {
 export default function App() {
   const [chatStarted, setChatStarted] = useState(false)
   const [showAllServices, setShowAllServices] = useState(false)
+  const [showHospitals, setShowHospitals] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const sessionId = useRef(getSessionId())
 
   const send = useCallback(async (text: string) => {
     if (showAllServices) setShowAllServices(false)
+    if (showHospitals) setShowHospitals(false)
     if (!chatStarted) setChatStarted(true)
 
     // Add user message
@@ -68,28 +71,38 @@ export default function App() {
         )
       )
     }
-  }, [chatStarted, showAllServices])
+  }, [chatStarted, showAllServices, showHospitals])
 
   const handleNavServicesClick = () => {
     setChatStarted(false)
+    setShowHospitals(false)
     setShowAllServices(true)
+  }
+
+  const handleNavUnitsClick = () => {
+    setChatStarted(false)
+    setShowAllServices(false)
+    setShowHospitals(true)
   }
 
   const handleHomeClick = () => {
     setChatStarted(false)
     setShowAllServices(false)
+    setShowHospitals(false)
   }
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <AlertBar />
       <IdentityBar />
-      <Nav onServicesClick={handleNavServicesClick} onHomeClick={handleHomeClick} />
+      <Nav onServicesClick={handleNavServicesClick} onUnitsClick={handleNavUnitsClick} onHomeClick={handleHomeClick} />
       
-      {!showAllServices && <Hero compact={chatStarted} onSend={send} />}
+      {!showAllServices && !showHospitals && <Hero compact={chatStarted} onSend={send} />}
 
       {showAllServices ? (
         <AllServices onServiceClick={send} onBack={handleHomeClick} />
+      ) : showHospitals ? (
+        <Hospitals onBack={handleHomeClick} />
       ) : chatStarted ? (
         <>
           <ChatSection messages={messages} onRelated={send} />
@@ -98,7 +111,7 @@ export default function App() {
       ) : (
         <>
           <FeaturedServices onServiceClick={send} />
-          <StatusDashboard onCardClick={send} />
+          <StatusDashboard onHospitalsClick={handleNavUnitsClick} onMetricClick={send} />
           <FAQ onQuery={send} />
           <Footer />
         </>

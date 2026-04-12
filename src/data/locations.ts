@@ -303,6 +303,47 @@ export const INSS: ServiceLocation[] = [
 ]
 
 // ─────────────────────────────────────────────────────────
+// Direitos da Mulher — DEAM, Casa da Mulher Brasileira
+// ─────────────────────────────────────────────────────────
+export const MULHER: ServiceLocation[] = [
+  {
+    name: 'DEAM — Delegacia Especial de Atendimento à Mulher',
+    type: 'other',
+    address: 'EQS 204/205, Bloco B, Asa Sul, Brasília',
+    lat: -15.8195,
+    lng: -47.9082,
+    phone: '(61) 3207-6172',
+    hours: '24 horas (inclusive fins de semana e feriados)',
+    services: ['Boletim de Ocorrência', 'Medida Protetiva', 'Investigação — Violência Doméstica'],
+  },
+  {
+    name: 'Casa da Mulher Brasileira — Brasília',
+    type: 'other',
+    address: 'SGAS 601, Lote 2, Asa Sul, Brasília',
+    lat: -15.8220,
+    lng: -47.9140,
+    phone: '(61) 3223-3690',
+    hours: '24 horas',
+    services: [
+      'Acolhimento', 'Apoio Psicossocial', 'Delegacia (DEAM)',
+      'Defensoria Pública', 'Juizado de Violência Doméstica',
+      'Promotoria', 'Brinquedoteca', 'Autonomia Econômica',
+    ],
+  },
+  {
+    name: 'Secretaria da Mulher do DF',
+    type: 'other',
+    address: 'SIG, Quadra 1, Lote 590, Brasília',
+    lat: -15.7938,
+    lng: -47.9195,
+    phone: '(61) 3255-6003',
+    hours: 'Seg–Sex 8h–18h',
+    services: ['NAFAVD', 'Programas de Autonomia', 'Orientação Jurídica'],
+    online: 'https://www.mulher.df.gov.br',
+  },
+]
+
+// ─────────────────────────────────────────────────────────
 // HOSPITAIS — Unidades Hospitalares
 // ─────────────────────────────────────────────────────────
 export const HOSPITAIS: ServiceLocation[] = [

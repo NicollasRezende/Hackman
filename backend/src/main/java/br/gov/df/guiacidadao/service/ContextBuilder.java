@@ -44,7 +44,7 @@ public class ContextBuilder {
         - blocks: minimo 1, maximo 4. Cada block tem body OU docs, nunca ambos.
         - steps: minimo 2, maximo 6.
         - related: maximo 4 perguntas.
-        - tag.cls deve ser um de: tag-health, tag-work, tag-social, tag-transit, tag-tcu.
+        - tag.cls deve ser um de: tag-health, tag-work, tag-social, tag-transit, tag-tcu, tag-mulher.
         - tag.icon deve ser um nome de icone Lucide React valido (ex: HeartPulse, Briefcase, Users, Car, IdCard, ShieldCheck).
         - Responda em portugues brasileiro, tom informal e acolhedor.
         - Se a pergunta estiver fora do escopo de servicos publicos do GDF, retorne tag.cls="tag-social", tag.txt="Fora do escopo" e oriente ligar para 156.

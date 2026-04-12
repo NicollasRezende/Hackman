@@ -1,19 +1,18 @@
 import { useRef, useEffect, useState } from 'react'
 import { Mic, ArrowUp, Square } from 'lucide-react'
-
-const VOICE_DEMOS = [
-  'tô precisando de um médico',
-  'fui demitido essa semana, e agora?',
-  'quero me inscrever no Bolsa Família',
-  'como emitir segunda via do RG?',
-]
+import { useSpeechRecognition } from '../../hooks/useSpeechRecognition'
 
 interface Props { onSend: (text: string) => void }
 
 export default function BottomBar({ onSend }: Props) {
   const [value, setValue] = useState('')
-  const [recording, setRecording] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const { recording, supported: micSupported, toggle: toggleMic } = useSpeechRecognition({
+    onResult(text) {
+      setValue(text)
+    },
+  })
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -35,15 +34,6 @@ export default function BottomBar({ onSend }: Props) {
     }
   }
 
-  const handleVoice = () => {
-    if (recording) { setRecording(false); return }
-    setRecording(true)
-    setTimeout(() => {
-      setRecording(false)
-      setValue(VOICE_DEMOS[Math.floor(Math.random() * VOICE_DEMOS.length)])
-    }, 2200)
-  }
-
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-white via-white/95 to-transparent pt-8 pb-4 px-5">
       <div className="max-w-2xl mx-auto">
@@ -58,18 +48,22 @@ export default function BottomBar({ onSend }: Props) {
             className="w-full bg-transparent border-none outline-none text-sm text-gray-800 placeholder-gray-500 px-5 pt-4 pb-4 pr-28 resize-none leading-relaxed"
           />
           <div className="absolute right-2 bottom-2 flex gap-1.5">
-            <button
-              onClick={handleVoice}
-              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all border ${
-                recording
-                  ? 'border-red-600 text-red-600 bg-red-50 recording'
-                  : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-verde hover:text-verde'
-              }`}
-            >
-              {recording ? <Square size={14} /> : <Mic size={14} />}
-            </button>
+            {micSupported && (
+              <button
+                onClick={toggleMic}
+                aria-label={recording ? 'Parar gravação de voz' : 'Iniciar gravação de voz'}
+                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all border ${
+                  recording
+                    ? 'border-red-600 text-red-600 bg-red-50 recording'
+                    : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-verde hover:text-verde'
+                }`}
+              >
+                {recording ? <Square size={14} /> : <Mic size={14} />}
+              </button>
+            )}
             <button
               onClick={handleSend}
+              aria-label="Enviar mensagem"
               className="w-10 h-10 rounded-xl bg-verde text-white flex items-center justify-center hover:bg-verde-med transition-all"
             >
               <ArrowUp size={17} strokeWidth={2.5} />

@@ -231,7 +231,82 @@
 
 ---
 
-## 9. TRIBUNAL DE CONTAS DA UNIAO (TCU)
+## 9. DIREITOS DA MULHER E LEI MARIA DA PENHA
+
+### Canais de Emergencia — Ligue AGORA
+- **Central de Atendimento a Mulher:** 180 (24h, gratuito, sigiloso — funciona em todo o Brasil)
+- **Policia Militar:** 190 (emergencia imediata, risco de vida)
+- **SAMU:** 192 (atendimento medico de emergencia)
+
+### Lei Maria da Penha (Lei 11.340/2006)
+- **O que e:** Lei federal que protege mulheres contra violencia domestica e familiar
+- **Tipos de violencia previstos:** Fisica, psicologica, sexual, patrimonial e moral
+- **Portal:** https://www.gov.br/mdh/pt-br/navegue-por-temas/politicas-para-mulheres
+- **Texto da lei:** https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm
+
+### Medida Protetiva de Urgencia
+- **O que e:** Ordem judicial que afasta o agressor e protege a vitima
+- **Como solicitar:**
+  1. Va a uma delegacia (qualquer delegacia ou DEAM) e registre o Boletim de Ocorrencia
+  2. Solicite a medida protetiva na hora do registro
+  3. O juiz tem 48 horas para decidir
+  4. A medida pode incluir: afastamento do agressor do lar, proibicao de contato, distancia minima
+- **Importante:** NAO e necessario advogado para solicitar a medida protetiva
+- **Delegacia Eletronica:** https://www.pcdf.df.gov.br/servicos/delegacia-eletronica (BO online 24h)
+
+### DEAM — Delegacia Especial de Atendimento a Mulher (DF)
+- **Endereco:** EQS 204/205, Bloco B, Asa Sul, Brasilia
+- **Telefone:** (61) 3207-6172 / (61) 3207-6195
+- **Horario:** 24 horas — funciona inclusive fins de semana e feriados
+- **Servicos:** Registro de BO, medida protetiva, investigacao de violencia domestica, acompanhamento
+
+### Casa da Mulher Brasileira — Brasilia
+- **Endereco:** SGAS 601, Lote 2, Asa Sul, Brasilia
+- **Telefone:** (61) 3223-3690
+- **Horario:** 24 horas
+- **Servicos integrados:**
+  - Acolhimento e triagem
+  - Apoio psicossocial
+  - Delegacia especializada (DEAM)
+  - Defensoria Publica
+  - Juizado de Violencia Domestica
+  - Promotoria de Justica
+  - Cuidado com filhos (brinquedoteca)
+  - Autonomia economica (encaminhamento para emprego e capacitacao)
+
+### Nucleo de Atendimento a Familia e Autores de Violencia Domestica (NAFAVD)
+- **Orgao:** Secretaria da Mulher do DF
+- **Portal:** https://www.mulher.df.gov.br
+- **Servicos:** Atendimento psicossocial para vitimas e autores de violencia domestica
+- **Unidades:** Diversas cidades do DF (consultar portal)
+
+### Saude da Mulher — SES-DF
+- **Pre-natal e parto:** UBS do DF — gratuito pelo SUS
+- **Portal:** https://www.saude.df.gov.br/saude-da-mulher
+- **Maternidades de referencia:**
+  - HMIB (Hospital Materno Infantil de Brasilia) — (61) 3905-1700
+  - HRC (Hospital Regional de Ceilandia) — Maternidade
+  - HRG (Hospital Regional do Gama) — Maternidade
+- **Exames preventivos:** Papanicolaou, mamografia — solicitar na UBS
+- **Planejamento familiar:** Orientacao e metodos contraceptivos gratuitos na UBS
+
+### Programas e Beneficios para Mulheres no DF
+- **Salario Maternidade:** INSS — tel. 135 / meu.inss.gov.br
+- **Estabilidade gestante:** Protecao contra demissao durante a gestacao e ate 5 meses apos o parto
+- **Creches publicas:** SEEDF — https://www.se.df.gov.br
+- **Qualificacao profissional para mulheres:** SEDET — https://www.sedet.df.gov.br
+- **Programa Mulher Cidada:** Secretaria da Mulher do DF — https://www.mulher.df.gov.br
+
+### Perguntas Frequentes — Mulheres
+- **"Meu marido me bate, o que faco?"** → Ligue 190 (risco imediato) ou 180 (orientacao). Va a DEAM ou Casa da Mulher Brasileira
+- **"Preciso de medida protetiva"** → Registre BO em qualquer delegacia e solicite a medida na hora
+- **"Posso registrar BO online?"** → Sim: https://www.pcdf.df.gov.br/servicos/delegacia-eletronica
+- **"Onde fazer pre-natal gratuito?"** → Na UBS mais proxima de casa. Leve RG, CPF e cartao SUS
+- **"Fui demitida gravida, o que faco?"** → Procure o sindicato ou Defensoria Publica. Gestantes tem estabilidade no emprego
+
+---
+
+## 10. TRIBUNAL DE CONTAS DA UNIAO (TCU)
 
 ### Sobre o TCU
 - **O que e:** Orgao de controle externo do Governo Federal, responsavel por fiscalizar o uso dos recursos publicos
@@ -301,7 +376,7 @@
 
 ---
 
-## 10. POSTOS DE ATENDIMENTO PRESENCIAL
+## 11. POSTOS DE ATENDIMENTO PRESENCIAL
 
 ### Na Hora — Rede de Atendimento Integrado
 - **Site:** https://www.nahora.df.gov.br
@@ -324,10 +399,11 @@
 
 ---
 
-## 11. CANAIS DE ATENDIMENTO RÁPIDO
+## 12. CANAIS DE ATENDIMENTO RÁPIDO
 
 | Serviço | Contato |
 |---------|---------|
+| Central de Atendimento à Mulher | 180 |
 | Central Cidadão GDF | 156 |
 | SAMU (Emergência Médica) | 192 |
 | Bombeiros | 193 |
@@ -432,6 +508,8 @@ Centro/Asa Sul, Taguatinga — tel. 135 — Seg–Sex 7h–17h
 | Bolsa Família / CadÚnico / BPC | CRAS do DF |
 | Aposentadoria / INSS | INSS + Na Hora Venâncio |
 | Saúde / SUS | UBS/UPA via CNES API (dados dinâmicos) |
+| Maria da Penha / Violência contra Mulher | DEAM + Casa da Mulher Brasileira |
+| Pré-natal / Maternidade | Maternidades (HMIB, HRC, HRG) + UBS |
 
 ---
 

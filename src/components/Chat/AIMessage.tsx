@@ -13,6 +13,7 @@ const TAG_STYLES: Record<string, string> = {
   'tag-social':  'bg-verde-light text-verde',
   'tag-transit': 'bg-blue-50 text-blue-700',
   'tag-tcu':     'bg-indigo-50 text-indigo-700',
+  'tag-mulher':  'bg-pink-50 text-pink-700',
 }
 
 interface Props {

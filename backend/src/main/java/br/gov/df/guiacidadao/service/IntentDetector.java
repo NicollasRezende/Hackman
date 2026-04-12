@@ -61,6 +61,14 @@ public class IntentDetector {
                 "identidade", "cin", "titulo de eleitor", "segunda via")) {
             return "documentos";
         }
+        if (containsAny(text, "maria da penha", "violencia domestica", "violencia contra mulher",
+                "mulher agredida", "deam", "delegacia da mulher", "casa da mulher",
+                "feminicidio", "medida protetiva", "apanho", "meu marido me bate",
+                "meu companheiro me agride", "abuso", "agressao", "estupro",
+                "assedio", "direitos da mulher", "mulher", "mae gestante",
+                "gestante", "pre natal", "parto", "maternidade")) {
+            return "mulher";
+        }
         if (containsAny(text, "tcu", "tribunal de contas", "licitante inidoneo", "inidoneo",
                 "inabilitado", "certidao negativa tcu", "contas publicas", "fiscalizacao tcu",
                 "inidoneos", "sancionado", "impedido de licitar", "certidao tcu")) {
