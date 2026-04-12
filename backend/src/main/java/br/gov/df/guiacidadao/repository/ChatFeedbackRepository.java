@@ -4,5 +4,6 @@ import br.gov.df.guiacidadao.entity.ChatFeedback;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChatFeedbackRepository extends JpaRepository<ChatFeedback, Long> {
+
     long countByVote(String vote);
 }
