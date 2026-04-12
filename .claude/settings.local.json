@@ -3,7 +3,33 @@
     "allow": [
       "Bash(./mvnw compile:*)",
       "Bash(ls \"C:/Trabalho/Hackman/backend/\"mvn*)",
-      "Bash(mvn compile:*)"
+      "Bash(mvn compile:*)",
+      "Bash(npx tsc:*)",
+      "Bash(where mvn:*)",
+      "Read(//c/Program Files/**)",
+      "Read(//c//**)",
+      "Read(//c/Users/VitorAbreu/**)",
+      "Bash(find \"/c\" -maxdepth 3 -name \"apache-maven*\" -type d)",
+      "Bash(cmd.exe /c \"where mvn\")",
+      "Bash(cmd.exe /c \"where java\")",
+      "Bash(ls /c/Users/VitorAbreu/.jdks/*/bin/java)",
+      "Bash(ls /c/Users/VitorAbreu/.sdkman/*/java/*/bin/java)",
+      "Bash(ls \"/c/Program Files/Java\"/*/bin/java)",
+      "Bash(ls \"/c/Program Files/Eclipse Adoptium\"/*/bin/java)",
+      "Bash(ls \"/c/Program Files/Microsoft\"/*/bin/java)",
+      "Bash(export JAVA_HOME=\"/c/Program Files/Microsoft/jdk-17.0.18.8-hotspot\")",
+      "Bash(export PATH=\"$JAVA_HOME/bin:$PATH\")",
+      "Bash(java -version)",
+      "Bash(mvn -N wrapper:wrapper)",
+      "Bash(mkdir -p .mvn/wrapper)",
+      "Bash(curl -sL \"https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar\" -o .mvn/wrapper/maven-wrapper.jar)",
+      "Bash(echo \"distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.9/apache-maven-3.9.9-bin.zip\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/apache/maven-wrapper/refs/heads/master/maven-wrapper-distribution/src/resources/mvnw\" -o mvnw)",
+      "Bash(chmod +x mvnw)",
+      "Bash(./mvnw spring-boot:run)",
+      "Bash(curl:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('TAG:', d.get\\('tag',{}\\).get\\('txt','?'\\)\\); print\\('INTRO:', d.get\\('intro',''\\)[:150]\\)\")",
+      "Bash(npx vite:*)"
     ]
   }
 }

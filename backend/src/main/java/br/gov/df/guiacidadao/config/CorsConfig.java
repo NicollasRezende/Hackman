@@ -19,7 +19,15 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         for (String origin : allowedOrigins.split(",")) {
-            config.addAllowedOrigin(origin.trim());
+            String o = origin.trim();
+            if (o.isEmpty()) continue;
+            if (o.equals("*")) {
+                config.addAllowedOriginPattern("*");
+            } else if (o.contains("*")) {
+                config.addAllowedOriginPattern(o);
+            } else {
+                config.addAllowedOrigin(o);
+            }
         }
         config.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));

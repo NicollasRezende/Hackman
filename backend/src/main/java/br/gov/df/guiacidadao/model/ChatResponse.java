@@ -46,9 +46,16 @@ public record ChatResponse(
     }
 
     public static ChatResponse fallback(String sessionId, String model) {
+        return fallback(sessionId, model, null);
+    }
+
+    public static ChatResponse fallback(String sessionId, String model, String errorDetail) {
+        String intro = (errorDetail == null || errorDetail.isBlank())
+                ? "Desculpe, nosso assistente esta temporariamente indisponivel. Verifique se a variavel <strong>OPENROUTER_API_KEY</strong> esta configurada no backend e tente novamente."
+                : "Falha ao consultar o assistente. Detalhe tecnico: <code>" + errorDetail + "</code>";
         return new ChatResponse(
                 new Tag("tag-social", "HelpCircle", "Assistente indisponivel"),
-                "Desculpe, nosso assistente esta temporariamente indisponivel. Por favor, tente novamente em alguns instantes.",
+                intro,
                 List.of(new Block("Phone", "Precisa de ajuda agora?",
                         "Ligue para a Central do Cidadao: <strong>156</strong> (gratuito, 24 horas).", null)),
                 List.of(

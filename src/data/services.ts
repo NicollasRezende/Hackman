@@ -56,6 +56,15 @@ export const FEATURED_SERVICES: ServiceCard[] = [
     query: 'fui demitido e preciso de ajuda com seguro desemprego',
   },
   {
+    icon: 'Heart',
+    title: 'Direitos da Mulher',
+    desc: 'Lei Maria da Penha, medida protetiva, DEAM, Casa da Mulher Brasileira e saúde da mulher.',
+    badges: [{ label: 'Gratuito', variant: 'green' }, { label: '24h', variant: 'blue' }],
+    stat: { icon: 'Phone', text: 'Ligue 180 — 24h' },
+    cta: 'Orientar',
+    query: 'preciso de ajuda com violência doméstica',
+  },
+  {
     icon: 'Scale',
     title: 'TCU — Controle e Fiscalização',
     desc: 'Certidão negativa, licitantes inidôneos, consulta consolidada e dados abertos do Tribunal de Contas da União.',
@@ -112,6 +121,8 @@ export const SUGGESTIONS = [
   { icon: 'Car', label: 'Tirar primeira CNH', query: 'quero tirar minha primeira CNH' },
   { icon: 'HandHeart', label: 'Inscrição no Bolsa Família', query: 'como me inscrever no Bolsa Família' },
   { icon: 'ShieldCheck', label: 'Aposentadoria pelo INSS', query: 'quero me aposentar pelo INSS' },
+  { icon: 'Heart', label: 'Maria da Penha', query: 'como solicitar medida protetiva pela Lei Maria da Penha' },
+  { icon: 'Heart', label: 'Casa da Mulher', query: 'onde fica a Casa da Mulher Brasileira em Brasília' },
   { icon: 'Scale', label: 'Certidão TCU', query: 'como consultar certidão negativa do TCU' },
   { icon: 'Scale', label: 'Licitantes inidôneos TCU', query: 'como verificar se uma empresa está na lista de inidôneos do TCU' },
 ]
@@ -124,5 +135,6 @@ export const CHIPS = [
   { icon: 'Accessibility', label: 'PCD', query: 'tenho deficiência e quero saber meus direitos' },
   { icon: 'Car', label: 'CNH', query: 'quero tirar minha primeira CNH' },
   { icon: 'IdCard', label: 'RG', query: 'como emitir segunda via do RG?' },
+  { icon: 'Heart', label: 'Mulher', query: 'preciso de ajuda com violência doméstica' },
   { icon: 'Scale', label: 'TCU', query: 'como consultar certidão negativa do TCU' },
 ]

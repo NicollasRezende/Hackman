@@ -14,6 +14,11 @@
     {"q":"O que e o BPC e quem pode receber?","a":"O BPC paga 1 salario minimo a idosos com 65+ anos ou pessoas com deficiencia.","query":"tenho deficiencia e quero saber sobre o BPC"},
     {"q":"Como conseguir cesta basica emergencial?","a":"Procure o CRAS da sua regiao com RG, CPF e comprovante de residencia.","query":"preciso de cesta basica emergencial"}
   ]},
+  {"category":"Direitos da Mulher","icon":"Heart","items":[
+    {"q":"O que fazer em caso de violencia domestica?","a":"Ligue 190 (emergencia) ou 180 (Central da Mulher). Va a DEAM ou Casa da Mulher Brasileira, que funciona 24h.","query":"preciso de ajuda com violencia domestica"},
+    {"q":"Como solicitar medida protetiva?","a":"Registre um BO em qualquer delegacia ou na DEAM e solicite a medida protetiva na hora. O juiz decide em ate 48h. Nao precisa de advogado.","query":"como solicitar medida protetiva pela Lei Maria da Penha"},
+    {"q":"Onde fazer pre-natal gratuito no DF?","a":"Na UBS mais proxima da sua casa. Leve RG, CPF e cartao SUS. O acompanhamento e 100% gratuito pelo SUS.","query":"onde fazer pre-natal gratuito em Brasilia"}
+  ]},
   {"category":"TCU e Fiscalizacao","icon":"Scale","items":[
     {"q":"Como emitir certidao negativa do TCU?","a":"Acesse contas.tcu.gov.br/certidao, informe o CPF ou CNPJ e a certidao e gerada automaticamente, de forma gratuita.","query":"como consultar certidao negativa do TCU"},
     {"q":"Como verificar se uma empresa esta na lista de inidoneos?","a":"Consulte a lista de licitantes inidoneos no portal de dados abertos do TCU ou na Consulta Consolidada (certidoes-apf.apps.tcu.gov.br).","query":"como verificar se uma empresa esta na lista de inidoneos do TCU"},

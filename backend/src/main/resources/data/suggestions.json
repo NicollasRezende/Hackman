@@ -5,6 +5,8 @@
   {"icon":"Car","label":"Tirar primeira CNH","query":"quero tirar minha primeira CNH"},
   {"icon":"HandHeart","label":"Inscricao no Bolsa Familia","query":"como me inscrever no Bolsa Familia"},
   {"icon":"ShieldCheck","label":"Aposentadoria pelo INSS","query":"quero me aposentar pelo INSS"},
+  {"icon":"Heart","label":"Maria da Penha","query":"como solicitar medida protetiva pela Lei Maria da Penha"},
+  {"icon":"Heart","label":"Casa da Mulher","query":"onde fica a Casa da Mulher Brasileira em Brasilia"},
   {"icon":"Scale","label":"Certidao TCU","query":"como consultar certidao negativa do TCU"},
   {"icon":"Scale","label":"Licitantes inidoneos TCU","query":"como verificar se uma empresa esta na lista de inidoneos do TCU"}
 ]

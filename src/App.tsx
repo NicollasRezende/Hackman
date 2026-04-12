@@ -45,14 +45,31 @@ export default function App() {
 
     setMessages(prev => [...prev, userMsg, typingMsg])
 
-    try {
-      const res = await fetch('/api/v1/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, sessionId: sessionId.current }),
-      })
+    const apiBases = [
+      (import.meta as any).env?.VITE_API_BASE_URL as string | undefined,
+      '/api',
+      'http://localhost:8080/api',
+    ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i) as string[]
 
-      const data = await res.json()
+    try {
+      let data: Message['data'] = null
+
+      for (const base of apiBases) {
+        try {
+          const res = await fetch(`${base}/v1/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text, sessionId: sessionId.current }),
+          })
+
+          if (!res.ok) throw new Error(`HTTP ${res.status}`)
+          data = await res.json()
+          break
+        } catch (e) {
+          data = null
+          continue
+        }
+      }
 
       setMessages(prev =>
         prev.map(m =>

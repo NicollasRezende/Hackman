@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronDown, IdCard, HeartPulse, HandCoins, MessageCircle } from 'lucide-react'
+import { ChevronDown, IdCard, HeartPulse, HandCoins, Heart, MessageCircle } from 'lucide-react'
 
 const FAQ_DATA = [
   {
@@ -41,6 +41,27 @@ const FAQ_DATA = [
         q: 'Quais vacinas são oferecidas gratuitamente em 2026?',
         a: 'O calendário nacional inclui gripe, COVID-19, febre amarela, hepatite B, entre outras. Consulte a UBS mais próxima para estoque disponível na sua região.',
         query: 'quais vacinas gratuitas estão disponíveis',
+      },
+    ],
+  },
+  {
+    icon: Heart,
+    title: 'Direitos da Mulher',
+    items: [
+      {
+        q: 'O que fazer em caso de violência doméstica?',
+        a: 'Ligue 190 (emergência) ou 180 (Central da Mulher, 24h, gratuito e sigiloso). Vá à DEAM ou Casa da Mulher Brasileira, que funciona 24h na Asa Sul.',
+        query: 'preciso de ajuda com violência doméstica',
+      },
+      {
+        q: 'Como solicitar medida protetiva?',
+        a: 'Registre um BO em qualquer delegacia ou na DEAM e solicite a medida protetiva na hora. O juiz decide em até 48h. Não é necessário advogado.',
+        query: 'como solicitar medida protetiva pela Lei Maria da Penha',
+      },
+      {
+        q: 'Onde fazer pré-natal gratuito no DF?',
+        a: 'Na UBS mais próxima de casa. Leve RG, CPF e cartão SUS. O acompanhamento é 100% gratuito pelo SUS.',
+        query: 'onde fazer pré-natal gratuito em Brasília',
       },
     ],
   },

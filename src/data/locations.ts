@@ -457,6 +457,11 @@ export const LOCATIONS_SOCIAL: ServiceLocation[] = [
   ...CRAS,
 ]
 
+/** Locais para Direitos da Mulher / Maria da Penha */
+export const LOCATIONS_MULHER: ServiceLocation[] = [
+  ...MULHER,
+]
+
 /** Locais para Aposentadoria / Previdência */
 export const LOCATIONS_PREVIDENCIA: ServiceLocation[] = [
   ...INSS,

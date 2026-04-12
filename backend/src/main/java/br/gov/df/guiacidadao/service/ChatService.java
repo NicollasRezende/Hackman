@@ -44,7 +44,7 @@ public class ChatService {
 
         if (!openRouter.isConfigured()) {
             log.error("OpenRouter nao configurado — retornando fallback");
-            return ChatResponse.fallback(sessionId, model);
+            return ChatResponse.fallback(sessionId, model, "OPENROUTER_API_KEY ausente no backend");
         }
 
         try {
@@ -70,7 +70,11 @@ public class ChatService {
             long processingMs = System.currentTimeMillis() - start;
             log.error("Erro no processamento da mensagem: {}", e.getMessage(), e);
             saveLog(sessionId, message, "resp_error", "error", processingMs);
-            return ChatResponse.fallback(sessionId, model);
+            String detail = e.getMessage();
+            if (e.getCause() != null && detail != null && !detail.contains(e.getCause().getClass().getSimpleName())) {
+                detail = detail + " | causa: " + e.getCause().getMessage();
+            }
+            return ChatResponse.fallback(sessionId, model, detail);
         }
     }
 

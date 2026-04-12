@@ -2,6 +2,7 @@ package br.gov.df.guiacidadao.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import br.gov.df.guiacidadao.service.OpenRouterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,11 @@ public class ServicesController {
 
     private static final Logger log = LoggerFactory.getLogger(ServicesController.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final OpenRouterService openRouterService;
+
+    public ServicesController(OpenRouterService openRouterService) {
+        this.openRouterService = openRouterService;
+    }
 
     @GetMapping("/services/featured")
     public ResponseEntity<JsonNode> featured() {
@@ -45,6 +51,14 @@ public class ServicesController {
         return ResponseEntity.ok(Map.of(
                 "status", "UP",
                 "timestamp", Instant.now().toString()
+        ));
+    }
+
+    @GetMapping("/openrouter/status")
+    public ResponseEntity<Map<String, Object>> openRouterStatus() {
+        return ResponseEntity.ok(Map.of(
+                "configured", openRouterService.isConfigured(),
+                "model", openRouterService.getModel()
         ));
     }
 

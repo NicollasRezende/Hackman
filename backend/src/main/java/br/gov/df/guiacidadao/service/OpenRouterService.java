@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.time.Duration;
 
@@ -55,11 +56,6 @@ public class OpenRouterService {
             throw new IllegalStateException("OPENROUTER_API_KEY nao configurada");
         }
 
-        ObjectNode requestBody = objectMapper.createObjectNode();
-        requestBody.put("model", model);
-        requestBody.put("max_tokens", maxTokens);
-        requestBody.put("temperature", temperature);
-
         var messages = objectMapper.createArrayNode();
         var systemMsg = objectMapper.createObjectNode();
         systemMsg.put("role", "system");
@@ -71,29 +67,45 @@ public class OpenRouterService {
         userMsg.put("content", userMessage);
         messages.add(userMsg);
 
-        requestBody.set("messages", messages);
-
-        var reasoning = objectMapper.createObjectNode();
-        reasoning.put("enabled", true);
-        requestBody.set("reasoning", reasoning);
-
-        var responseFormat = objectMapper.createObjectNode();
-        responseFormat.put("type", "json_object");
-        requestBody.set("response_format", responseFormat);
-
         log.debug("Chamando OpenRouter modelo={} mensagem={} chars", model, userMessage.length());
 
-        String responseJson = webClient.post()
-                .uri(apiUrl)
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + apiKey)
-                .header("HTTP-Referer", "https://guiacidadao.df.gov.br")
-                .header("X-Title", "Guia Cidadao GDF")
-                .bodyValue(requestBody.toString())
-                .retrieve()
-                .bodyToMono(String.class)
-                .timeout(Duration.ofSeconds(timeoutSeconds))
-                .block();
+        String responseJson;
+        try {
+            ObjectNode requestBody = objectMapper.createObjectNode();
+            requestBody.put("model", model);
+            requestBody.put("max_tokens", maxTokens);
+            requestBody.put("temperature", temperature);
+            requestBody.set("messages", messages);
+
+            var reasoning = objectMapper.createObjectNode();
+            reasoning.put("enabled", true);
+            requestBody.set("reasoning", reasoning);
+
+            var responseFormat = objectMapper.createObjectNode();
+            responseFormat.put("type", "json_object");
+            requestBody.set("response_format", responseFormat);
+
+            responseJson = post(requestBody);
+        } catch (WebClientResponseException e) {
+            int status = e.getStatusCode().value();
+            if (status == 400 || status == 401 || status == 403 || status == 422) {
+                log.warn("OpenRouter retornou {}. Retentando com payload minimo.", status);
+                ObjectNode minimalBody = objectMapper.createObjectNode();
+                minimalBody.put("model", model);
+                minimalBody.put("max_tokens", maxTokens);
+                minimalBody.put("temperature", temperature);
+                minimalBody.set("messages", messages);
+                try {
+                    responseJson = post(minimalBody);
+                } catch (WebClientResponseException e2) {
+                    throw new RuntimeException("OpenRouter HTTP " + e2.getStatusCode().value()
+                            + " (modelo=" + model + "): " + e2.getResponseBodyAsString(), e2);
+                }
+            } else {
+                throw new RuntimeException("OpenRouter HTTP " + status
+                        + " (modelo=" + model + "): " + e.getResponseBodyAsString(), e);
+            }
+        }
 
         try {
             JsonNode root = objectMapper.readTree(responseJson);
@@ -109,6 +121,30 @@ public class OpenRouterService {
         } catch (Exception e) {
             log.error("Erro ao parsear resposta OpenRouter: {}", e.getMessage());
             throw new RuntimeException("Erro ao parsear resposta OpenRouter", e);
+        }
+    }
+
+    private String post(ObjectNode requestBody) {
+        try {
+            return webClient.post()
+                    .uri(apiUrl)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", "Bearer " + apiKey)
+                    .header("HTTP-Referer", "https://guiacidadao.df.gov.br")
+                    .header("X-Title", "Guia Cidadao GDF")
+                    .bodyValue(requestBody.toString())
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .timeout(Duration.ofSeconds(timeoutSeconds))
+                    .block();
+        } catch (WebClientResponseException e) {
+            String body = e.getResponseBodyAsString();
+            log.error("OpenRouter HTTP {} {} | url={} | model={} | body={}",
+                    e.getStatusCode().value(), e.getStatusText(), apiUrl, model, body);
+            throw e;
+        } catch (Exception e) {
+            log.error("Falha ao chamar OpenRouter url={} model={}: {}", apiUrl, model, e.toString());
+            throw new RuntimeException("Falha ao chamar OpenRouter: " + e.getMessage(), e);
         }
     }
 }
