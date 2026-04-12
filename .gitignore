@@ -5,3 +5,5 @@ dist/
 *.tsbuildinfo
 .vite/
 backend/target/
+.env
+backend/.env

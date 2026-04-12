@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import jakarta.annotation.PostConstruct;
 import java.time.Duration;
 
 @Service
@@ -39,8 +40,29 @@ public class OpenRouterService {
     @Value("${openrouter.temperature}")
     private double temperature;
 
+    @Value("${server.port:8080}")
+    private String serverPort;
+
+    @Value("${cors.allowed.origins:*}")
+    private String corsAllowedOrigins;
+
     public OpenRouterService(WebClient webClient) {
         this.webClient = webClient;
+    }
+
+    @PostConstruct
+    void logConfig() {
+        String masked = "(vazio)";
+        if (apiKey != null) {
+            String k = apiKey.trim();
+            if (!k.isEmpty()) {
+                int len = k.length();
+                String tail = len > 6 ? k.substring(len - 6) : k;
+                masked = "len=" + len + " ... " + tail;
+            }
+        }
+        log.info("Config OpenRouter | configured={} | apiKey={} | url={} | model={} | timeout={}s | maxTokens={} | temp={} | serverPort={} | corsOrigins={}",
+                isConfigured(), masked, apiUrl, model, timeoutSeconds, maxTokens, temperature, serverPort, corsAllowedOrigins);
     }
 
     public boolean isConfigured() {
@@ -76,10 +98,6 @@ public class OpenRouterService {
             requestBody.put("max_tokens", maxTokens);
             requestBody.put("temperature", temperature);
             requestBody.set("messages", messages);
-
-            var reasoning = objectMapper.createObjectNode();
-            reasoning.put("enabled", true);
-            requestBody.set("reasoning", reasoning);
 
             var responseFormat = objectMapper.createObjectNode();
             responseFormat.put("type", "json_object");

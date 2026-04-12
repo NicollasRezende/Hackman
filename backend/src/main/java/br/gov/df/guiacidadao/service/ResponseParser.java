@@ -20,45 +20,61 @@ public class ResponseParser {
     public ChatResponse parse(String rawJson, String sessionId, String model, long processingMs) {
         try {
             String cleaned = cleanJson(rawJson);
-            JsonNode root = objectMapper.readTree(cleaned);
-
-            if (!root.has("tag") || !root.has("intro") || !root.has("blocks") || !root.has("steps")) {
-                log.warn("JSON do LLM com campos obrigatorios faltando");
-                return ChatResponse.fallback(sessionId, model);
+            cleaned = sanitizeJsonLike(cleaned);
+            JsonNode root;
+            try {
+                root = objectMapper.readTree(cleaned);
+            } catch (Exception e) {
+                String extracted = extractJsonObject(cleaned);
+                if (extracted != null) {
+                    extracted = sanitizeJsonLike(extracted);
+                    root = objectMapper.readTree(extracted);
+                } else {
+                    return ChatResponse.fromParsed(
+                            new Tag("tag-social", "Info", "Resposta"),
+                            escapeHtml(cleaned).replace("\n", "<br/>"),
+                            List.of(),
+                            List.of("Se quiser, me diga sua cidade/bairro e o que você precisa exatamente."),
+                            null, null, null,
+                            sessionId, model, processingMs
+                    );
+                }
             }
 
-            JsonNode tagNode = root.get("tag");
-            if (!tagNode.has("cls") || !tagNode.has("icon") || !tagNode.has("txt")) {
-                log.warn("JSON do LLM com tag incompleta");
-                return ChatResponse.fallback(sessionId, model);
-            }
-
-            Tag tag = new Tag(
-                    tagNode.get("cls").asText(),
-                    tagNode.get("icon").asText(),
-                    tagNode.get("txt").asText()
-            );
-
-            String intro = root.get("intro").asText();
+            Tag tag = parseTag(root.get("tag"));
+            String intro = root.has("intro") && !root.get("intro").isNull()
+                    ? root.get("intro").asText()
+                    : escapeHtml(cleaned).replace("\n", "<br/>");
 
             List<Block> blocks = new ArrayList<>();
-            for (JsonNode b : root.get("blocks")) {
-                String icon = b.has("icon") ? b.get("icon").asText() : "Info";
-                String title = b.has("title") ? b.get("title").asText() : "";
-                String body = b.has("body") && !b.get("body").isNull() ? b.get("body").asText() : null;
-                List<String> docs = null;
-                if (b.has("docs") && b.get("docs").isArray()) {
-                    docs = new ArrayList<>();
-                    for (JsonNode d : b.get("docs")) {
-                        docs.add(d.asText());
+            if (root.has("blocks") && root.get("blocks").isArray()) {
+                for (JsonNode b : root.get("blocks")) {
+                    String icon = b.has("icon") ? b.get("icon").asText() : "Info";
+                    String title = b.has("title") ? b.get("title").asText() : "";
+                    String body = b.has("body") && !b.get("body").isNull() ? b.get("body").asText() : null;
+                    List<String> docs = null;
+                    if (b.has("docs") && !b.get("docs").isNull()) {
+                        docs = new ArrayList<>();
+                        if (b.get("docs").isArray()) {
+                            for (JsonNode d : b.get("docs")) {
+                                docs.add(normalizeDoc(d.asText()));
+                            }
+                        } else {
+                            docs.add(normalizeDoc(b.get("docs").asText()));
+                        }
                     }
+                    blocks.add(new Block(icon, title, body, docs));
                 }
-                blocks.add(new Block(icon, title, body, docs));
             }
 
             List<String> steps = new ArrayList<>();
-            for (JsonNode s : root.get("steps")) {
-                steps.add(s.asText());
+            if (root.has("steps") && root.get("steps").isArray()) {
+                for (JsonNode s : root.get("steps")) {
+                    steps.add(s.asText());
+                }
+            }
+            if (steps.isEmpty()) {
+                steps.add("Se quiser, me diga sua cidade/bairro e o que você precisa exatamente.");
             }
 
             String tip = root.has("tip") && !root.get("tip").isNull() ? root.get("tip").asText() : null;
@@ -104,5 +120,129 @@ public class ResponseParser {
             trimmed = trimmed.trim();
         }
         return trimmed;
+    }
+
+    private String extractJsonObject(String text) {
+        int start = text.indexOf('{');
+        int end = text.lastIndexOf('}');
+        if (start >= 0 && end > start) {
+            return text.substring(start, end + 1);
+        }
+        return null;
+    }
+
+    private String sanitizeJsonLike(String s) {
+        if (s == null) return "";
+        String input = s
+                .replace("\r\n", "\n")
+                .replace("\r", "\n")
+                .replace('“', '"')
+                .replace('”', '"')
+                .replace('’', '\'');
+
+        StringBuilder out = new StringBuilder(input.length() + 16);
+        boolean inString = false;
+        boolean escaping = false;
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+
+            if (inString) {
+                if (escaping) {
+                    out.append(c);
+                    escaping = false;
+                    continue;
+                }
+                if (c == '\\') {
+                    out.append(c);
+                    escaping = true;
+                    continue;
+                }
+                if (c == '"') {
+                    out.append(c);
+                    inString = false;
+                    continue;
+                }
+                if (c == '\n') {
+                    out.append("\\n");
+                    continue;
+                }
+                out.append(c);
+                continue;
+            }
+
+            if (c == '"') {
+                out.append(c);
+                inString = true;
+                continue;
+            }
+
+            out.append(c);
+        }
+
+        return out.toString();
+    }
+
+    private String normalizeDoc(String d) {
+        if (d == null) return "";
+        String t = d.trim();
+        if (t.startsWith("`") && t.endsWith("`") && t.length() >= 2) {
+            t = t.substring(1, t.length() - 1).trim();
+        }
+        if (t.startsWith("`")) t = t.substring(1).trim();
+        if (t.endsWith("`")) t = t.substring(0, t.length() - 1).trim();
+        return t;
+    }
+
+    private Tag parseTag(JsonNode tagNode) {
+        String cls = "tag-social";
+        String icon = "Info";
+        String txt = "Resposta";
+
+        if (tagNode == null || tagNode.isNull()) {
+            return new Tag(cls, icon, txt);
+        }
+
+        if (tagNode.isTextual()) {
+            cls = tagNode.asText(cls);
+            txt = humanizeTag(cls);
+            return new Tag(cls, icon, txt);
+        }
+
+        if (tagNode.isObject()) {
+            if (tagNode.has("cls") && !tagNode.get("cls").isNull()) cls = tagNode.get("cls").asText(cls);
+            if (tagNode.has("icon") && !tagNode.get("icon").isNull()) icon = tagNode.get("icon").asText(icon);
+            if (tagNode.has("txt") && !tagNode.get("txt").isNull()) {
+                txt = tagNode.get("txt").asText(humanizeTag(cls));
+            } else {
+                txt = humanizeTag(cls);
+            }
+            return new Tag(cls, icon, txt);
+        }
+
+        return new Tag(cls, icon, txt);
+    }
+
+    private String humanizeTag(String cls) {
+        if (cls == null) return "Resposta";
+        return switch (cls) {
+            case "tag-health" -> "Saúde";
+            case "tag-work" -> "Trabalho";
+            case "tag-transit" -> "Trânsito";
+            case "tag-tcu" -> "TCU";
+            case "tag-mulher" -> "Mulher";
+            case "tag-social" -> "Social";
+            default -> "Resposta";
+        };
+    }
+
+    private String escapeHtml(String s) {
+        if (s == null) return "";
+        return s
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
     }
 }

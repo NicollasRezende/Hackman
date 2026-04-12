@@ -1,5 +1,5 @@
 param(
-  [string]$BackendBaseUrl = "http://localhost:8080",
+  [string]$BackendBaseUrl = "auto",
   [string]$Message = "preciso de medico",
   [string]$SessionId = "sess_teste_1"
 )
@@ -28,6 +28,24 @@ function Post-Json([string]$Url, $Body) {
     Write-Host $_.Exception.Message -ForegroundColor Red
     exit 1
   }
+}
+
+if ($BackendBaseUrl -eq "auto") {
+  $candidates = @("http://localhost:8080", "http://localhost:8081")
+  $picked = $null
+  foreach ($c in $candidates) {
+    try {
+      Invoke-RestMethod -Method Get -Uri (($c.TrimEnd("/") + "/api/v1/health")) -TimeoutSec 5 | Out-Null
+      $picked = $c
+      break
+    } catch {
+    }
+  }
+  if ($null -eq $picked) {
+    Write-Host "Não consegui encontrar o backend em 8080/8081." -ForegroundColor Red
+    exit 1
+  }
+  $BackendBaseUrl = $picked
 }
 
 $healthUrl = ($BackendBaseUrl.TrimEnd("/") + "/api/v1/health")

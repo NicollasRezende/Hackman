@@ -60,7 +60,8 @@ class ResponseParserTest {
     void returnsFallbackForInvalidJson() {
         ChatResponse response = parser.parse("not json at all", "sess_1", "gemma", 100);
         assertEquals("tag-social", response.tag().cls());
-        assertTrue(response.intro().contains("indisponivel"));
+        assertEquals("Resposta", response.tag().txt());
+        assertTrue(response.intro().contains("not json at all"));
     }
 
     @Test
@@ -69,8 +70,9 @@ class ResponseParserTest {
                 { "tag": { "cls": "tag-health" } }
                 """;
         ChatResponse response = parser.parse(json, "sess_1", "gemma", 100);
-        assertEquals("tag-social", response.tag().cls());
-        assertTrue(response.intro().contains("indisponivel"));
+        assertEquals("tag-health", response.tag().cls());
+        assertEquals("Saúde", response.tag().txt());
+        assertTrue(response.intro().contains("tag"));
     }
 
     @Test
@@ -87,5 +89,14 @@ class ResponseParserTest {
                 """;
         ChatResponse response = parser.parse(json, "sess_1", "gemma", 100);
         assertEquals("tag-health", response.tag().cls());
+    }
+
+    @Test
+    void handlesNewlinesInsideJsonStringValues() {
+        String json = "{ \"tag\": \"tag-social\", \"intro\": \"Linha 1\nLinha 2\", \"blocks\": [], \"steps\": [] }";
+        ChatResponse response = parser.parse(json, "sess_1", "gemma", 100);
+        assertEquals("tag-social", response.tag().cls());
+        assertTrue(response.intro().contains("Linha 1"));
+        assertTrue(response.intro().contains("Linha 2"));
     }
 }

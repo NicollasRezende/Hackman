@@ -6,6 +6,15 @@ function Encode-Command([string]$Command) {
   return [Convert]::ToBase64String($bytes)
 }
 
+function Get-ListeningPid([int]$Port) {
+  try {
+    $c = Get-NetTCPConnection -State Listen -LocalPort $Port -ErrorAction Stop | Select-Object -First 1
+    if ($null -ne $c -and $null -ne $c.OwningProcess) { return [int]$c.OwningProcess }
+  } catch {
+  }
+  return $null
+}
+
 function Import-DotEnv([string]$Path) {
   if (-not (Test-Path -LiteralPath $Path)) { return }
   $lines = Get-Content -LiteralPath $Path -ErrorAction Stop
@@ -56,6 +65,20 @@ if ($null -eq $backendRunnerKind) {
   throw "Não foi possível iniciar o backend. Verifique se existe backend\mvnw.cmd ou instale o Maven (mvn) no Windows."
 }
 
+$backendPort = 8080
+$pid8080 = Get-ListeningPid 8080
+if ($null -ne $pid8080) {
+  $backendPort = 8081
+  Write-Host ("Aviso: porta 8080 já está em uso (PID " + $pid8080 + "). Subindo backend na porta " + $backendPort + ".") -ForegroundColor Yellow
+}
+
+[Environment]::SetEnvironmentVariable("SERVER_PORT", [string]$backendPort, "Process")
+
+$apiBase = [Environment]::GetEnvironmentVariable("VITE_API_BASE_URL", "Process")
+if ([string]::IsNullOrWhiteSpace($apiBase)) {
+  [Environment]::SetEnvironmentVariable("VITE_API_BASE_URL", ("http://localhost:" + $backendPort + "/api"), "Process")
+}
+
 $orKey = [Environment]::GetEnvironmentVariable("OPENROUTER_API_KEY", "Process")
 if ([string]::IsNullOrWhiteSpace($orKey)) {
   Write-Host "Aviso: OPENROUTER_API_KEY não está definida. O chat vai cair no fallback." -ForegroundColor Yellow
@@ -83,9 +106,7 @@ try {
   Read-Host 'Pressione Enter para fechar'
 }
 '@
-$backendCmd = $backendCmd.
-  Replace('__BACKEND_RUNNER_KIND__', $backendRunnerKind).
-  Replace('__BACKEND_RUNNER_KIND__', $backendRunnerKind)
+$backendCmd = $backendCmd.Replace('__BACKEND_RUNNER_KIND__', $backendRunnerKind)
 try {
   $backend = Start-Process -FilePath "powershell.exe" -WorkingDirectory $backendDir -ArgumentList @(
     "-NoProfile",
