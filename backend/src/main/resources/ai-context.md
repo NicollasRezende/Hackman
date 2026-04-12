@@ -37,11 +37,10 @@
 ### Seguro-Desemprego
 - **Órgão:** SEDET-DF (Secretaria de Desenvolvimento Econômico, Trabalho e Renda)
 - **Portal:** https://www.sedet.df.gov.br/seguro-desemprego-2
-- **Emprega Brasil (Federal):** https://www.gov.br/empregabrasil
 - **Agendamento SINE:** https://agenda.df.gov.br/posto.html?servico=67348
 - **Telefone SINE:** 158
 - **Como solicitar:**
-  1. Acessar o portal Emprega Brasil (gov.br) ou Carteira de Trabalho Digital
+  1. Procure o passo a passo oficial no portal da SEDET-DF (link acima)
   2. Ter sido dispensado sem justa causa
   3. Não ter renda própria suficiente para sustento
   4. Ter trabalhado com carteira assinada por período mínimo exigido
@@ -55,7 +54,6 @@
 ### Carteira de Trabalho Digital (CTPS)
 - **Portal GDF:** https://sedet.df.gov.br/carteira-de-trabalho
 - **App:** "CTPS Digital" (Android/iOS)
-- **Portal Federal:** https://www.gov.br/trabalho-e-emprego
 - **Observação:** A CTPS física não é mais emitida. O app substitui o documento físico.
 
 ### Cursos de Qualificação Profissional
@@ -111,7 +109,6 @@
 
 ### BPC (Benefício de Prestação Continuada)
 - **Portal SEDES:** https://www.sedes.df.gov.br/beneficios-socioassistenciais-2
-- **Portal Federal:** https://www.gov.br/mds/pt-br/acoes-e-programas/bpc
 - **INSS:** 135 (agendamento e informações)
 - **Público:** Idosos a partir de 65 anos ou pessoas com deficiência em situação de pobreza
 
@@ -182,9 +179,7 @@
 - **Documentos necessários:** Certidão de nascimento ou casamento (original), CPF
 
 ### CPF
-- **Portal Federal:** https://www.gov.br/receitafederal
-- **Emissão online:** https://servicos.receita.fazenda.gov.br
-- **Bancos conveniados:** Também emitem e atualizam o CPF gratuitamente
+- **Orientação no DF:** Procure atendimento presencial na rede Na Hora e/ou bancos conveniados para regularização do CPF
 
 ### Certidões (Nascimento, Casamento, Óbito)
 - **CRC-DF:** Cartório de Registro Civil
@@ -196,8 +191,8 @@
 - **Portal:** https://sedet.df.gov.br/carteira-de-trabalho
 
 ### Passaporte
-- **Portal PF:** https://www.gov.br/pf/pt-br/assuntos/passaporte
-- **Agendamento online** — documentos: RG, CPF, certidão de nascimento, título de eleitor, foto
+- **Serviço federal:** Em geral é feito com agendamento e atendimento da Polícia Federal (PF)
+- **Orientação no DF:** Consulte os canais oficiais do DF para orientação e, se necessário, realize o agendamento da PF
 
 ### Título de Eleitor
 - **Portal TSE:** https://www.tse.jus.br
@@ -241,8 +236,7 @@
 ### Lei Maria da Penha (Lei 11.340/2006)
 - **O que e:** Lei federal que protege mulheres contra violencia domestica e familiar
 - **Tipos de violencia previstos:** Fisica, psicologica, sexual, patrimonial e moral
-- **Portal:** https://www.gov.br/mdh/pt-br/navegue-por-temas/politicas-para-mulheres
-- **Texto da lei:** https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm
+- **No DF:** Use os canais do DF abaixo (DEAM, Casa da Mulher Brasileira e Secretaria da Mulher) para atendimento e encaminhamento
 
 ### Medida Protetiva de Urgencia
 - **O que e:** Ordem judicial que afasta o agressor e protege a vitima

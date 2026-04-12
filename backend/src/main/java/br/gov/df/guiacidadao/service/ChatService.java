@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -52,7 +53,8 @@ public class ChatService {
             log.debug("Intent detectado: categoria={}, cep={}, cnpj={}, nis={}",
                     intent.category(), intent.cep(), intent.cnpj(), intent.nis());
 
-            Map<String, Object> externalData = aggregator.aggregate(intent);
+            Map<String, Object> externalData = new HashMap<>(aggregator.aggregate(intent));
+            externalData.put("intent_category", intent.category());
             log.debug("Dados externos coletados: {} fontes", externalData.size());
 
             String systemPrompt = contextBuilder.build(externalData);

@@ -57,11 +57,14 @@ public class ResponseParser {
                         docs = new ArrayList<>();
                         if (b.get("docs").isArray()) {
                             for (JsonNode d : b.get("docs")) {
-                                docs.add(normalizeDoc(d.asText()));
+                                String nd = normalizeDoc(d.asText());
+                                if (!nd.isBlank()) docs.add(nd);
                             }
                         } else {
-                            docs.add(normalizeDoc(b.get("docs").asText()));
+                            String nd = normalizeDoc(b.get("docs").asText());
+                            if (!nd.isBlank()) docs.add(nd);
                         }
+                        if (docs.isEmpty()) docs = null;
                     }
                     blocks.add(new Block(icon, title, body, docs));
                 }
@@ -191,7 +194,23 @@ public class ResponseParser {
         }
         if (t.startsWith("`")) t = t.substring(1).trim();
         if (t.endsWith("`")) t = t.substring(0, t.length() - 1).trim();
+        if (t.startsWith("http://") || t.startsWith("https://")) {
+            if (!isAllowedUrl(t)) return "";
+        }
         return t;
+    }
+
+    private boolean isAllowedUrl(String url) {
+        try {
+            java.net.URI u = java.net.URI.create(url);
+            String host = u.getHost();
+            if (host == null) return false;
+            String h = host.toLowerCase();
+            if (h.equals("df.gov.br") || h.endsWith(".df.gov.br")) return true;
+            return h.equals("meu.inss.gov.br");
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private Tag parseTag(JsonNode tagNode) {

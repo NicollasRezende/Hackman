@@ -48,6 +48,9 @@ public class ContextBuilder {
         - tag.icon deve ser um nome de icone Lucide React valido (ex: HeartPulse, Briefcase, Users, Car, IdCard, ShieldCheck).
         - Responda em portugues brasileiro, tom informal e acolhedor.
         - Se a pergunta estiver fora do escopo de servicos publicos do GDF, retorne tag.cls="tag-social", tag.txt="Fora do escopo" e oriente ligar para 156.
+        - Se houver "Categoria detectada para esta pergunta", use como fonte de verdade para tag.cls:
+          - saude=tag-health, trabalho=tag-work, transito=tag-transit, tcu=tag-tcu, mulher=tag-mulher, social=tag-social
+        - Para a categoria "mulher" (violencia domestica, Maria da Penha, DEAM, Casa da Mulher Brasileira): traga SOMENTE informacoes e canais do DF e use URLs do DF listadas no contexto.
         """;
 
     public ContextBuilder() {
@@ -68,6 +71,11 @@ public class ContextBuilder {
 
     @SuppressWarnings("unchecked")
     private void injectExternalData(StringBuilder ctx, Map<String, Object> data) {
+        if (data.containsKey("intent_category")) {
+            String cat = String.valueOf(data.get("intent_category"));
+            ctx.append("Categoria detectada para esta pergunta: ").append(cat).append("\n\n");
+        }
+
         if (data.containsKey("cep")) {
             CepResponse cep = (CepResponse) data.get("cep");
             ctx.append("CEP informado pelo cidadao: ")
