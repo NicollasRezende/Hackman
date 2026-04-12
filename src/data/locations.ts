@@ -434,42 +434,52 @@ export const HOSPITAIS: ServiceLocation[] = [
 // Helpers — conjuntos por caso de uso
 // ─────────────────────────────────────────────────────────
 
+const REGISTRY_UPDATED_AT = '2026-01-15'
+
+function stamp(
+  locations: ServiceLocation[],
+  source: string,
+  updatedAt: string = REGISTRY_UPDATED_AT,
+): ServiceLocation[] {
+  return locations.map(l => ({ source, updatedAt, ...l }))
+}
+
 /** Locais para emissão de RG/CIN (Identidade) */
 export const LOCATIONS_IDENTIDADE: ServiceLocation[] = [
-  ...PCDF,
-  ...NA_HORA,
+  ...stamp(PCDF, 'PCDF — Polícia Civil do DF'),
+  ...stamp(NA_HORA, 'Rede Na Hora / GDF'),
 ]
 
 /** Locais para CNH / serviços DETRAN */
 export const LOCATIONS_CNH: ServiceLocation[] = [
-  ...DETRAN,
-  ...NA_HORA.filter(l => l.services?.includes('CNH')),
+  ...stamp(DETRAN, 'DETRAN-DF'),
+  ...stamp(NA_HORA.filter(l => l.services?.includes('CNH')), 'Rede Na Hora / GDF'),
 ]
 
 /** Locais para Seguro-Desemprego / Emprego */
 export const LOCATIONS_TRABALHO: ServiceLocation[] = [
-  ...SEDET,
-  ...NA_HORA.filter(l => l.services?.includes('Trabalho')),
+  ...stamp(SEDET, 'SEDET-DF / SINE'),
+  ...stamp(NA_HORA.filter(l => l.services?.includes('Trabalho')), 'Rede Na Hora / GDF'),
 ]
 
 /** Locais para Bolsa Família / CadÚnico / BPC */
 export const LOCATIONS_SOCIAL: ServiceLocation[] = [
-  ...CRAS,
+  ...stamp(CRAS, 'SEDES-DF — Assistência Social'),
 ]
 
 /** Locais para Direitos da Mulher / Maria da Penha */
 export const LOCATIONS_MULHER: ServiceLocation[] = [
-  ...MULHER,
+  ...stamp(MULHER, 'SEMulher-DF'),
 ]
 
 /** Locais para Aposentadoria / Previdência */
 export const LOCATIONS_PREVIDENCIA: ServiceLocation[] = [
-  ...INSS,
-  ...NA_HORA.filter(l => l.services?.includes('INSS')),
+  ...stamp(INSS, 'INSS'),
+  ...stamp(NA_HORA.filter(l => l.services?.includes('INSS')), 'Rede Na Hora / GDF'),
 ]
 
 export const LOCATIONS_HOSPITAIS: ServiceLocation[] = [
-  ...HOSPITAIS,
+  ...stamp(HOSPITAIS, 'CNES / SES-DF'),
 ]
 
 /** Calcula distância em km entre duas coordenadas (Haversine) */

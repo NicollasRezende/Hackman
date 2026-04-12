@@ -200,7 +200,7 @@ export default function App() {
           <Hospitals onBack={handleHomeClick} />
         ) : chatStarted ? (
           <>
-            <ChatSection messages={messages} onRelated={send} />
+            <ChatSection messages={messages} onRelated={send} sessionId={sessionId.current} />
             <BottomBar onSend={send} />
           </>
         ) : (

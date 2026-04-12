@@ -307,6 +307,20 @@ export default function LocationsMap({ locations }: Props) {
                       ))}
                     </div>
                   )}
+                  {(loc.source || loc.updatedAt) && (
+                    <div className="flex flex-wrap gap-1 mt-1 text-[10px] text-gray-600">
+                      {loc.source && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-gdf-border rounded-full">
+                          Fonte: {loc.source}
+                        </span>
+                      )}
+                      {loc.updatedAt && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-gdf-border rounded-full">
+                          Atualizado em {loc.updatedAt}
+                        </span>
+                      )}
+                    </div>
+                  )}
 
                   {/* CTAs */}
                   <div className="flex gap-2 flex-wrap pt-1">

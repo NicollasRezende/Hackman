@@ -122,7 +122,7 @@ Prefixo comum: `/api/v1`.
 | Método | Caminho | Descrição |
 |--------|---------|-----------|
 | `POST` | `/chat` | Corpo: `{ "message": string, "sessionId": string }`. Retorna JSON estruturado da resposta da IA (tag, intro, blocos, passos, dicas, contato, locais, relacionadas, meta). |
-| `POST` | `/chat/feedback` | Corpo: voto sobre uma resposta (persistido em H2). **Nota:** a UI atual dos thumbs não chama este endpoint; apenas o backend está pronto. |
+| `POST` | `/chat/feedback` | Corpo: `{ responseId, sessionId, vote }`. Persistido em H2. **Status atual:** as respostas estruturadas da IA já enviam votos para este endpoint; a mensagem padrão de fallback ainda usa apenas estado local na interface. |
 | `GET` | `/health` | Status da aplicação e timestamp. |
 | `GET` | `/services/featured` | JSON de serviços em destaque (`classpath:data/featured-services.json`). |
 | `GET` | `/services/status` | JSON de cards de status (`data/status-cards.json`). |
@@ -159,7 +159,7 @@ Falhas em APIs externas são tratadas com **degradação graciosa** (timeout por
 | **Painel de status** | Cards ilustrativos (filas UPA, água, ar, obras) — conteúdo de demonstração em `services.ts`. |
 | **FAQ** | Perguntas frequentes clicáveis que enviam consultas ao assistente. |
 | **Chat** | Histórico de mensagens usuário/IA, indicador de digitação, barra inferior para novas mensagens. |
-| **Resposta da IA** | Tag por tema, introdução em HTML, blocos informativos, passo a passo numerado, dica, card de contato presencial, **mapa Leaflet** quando há `locations`, perguntas relacionadas que reenviam ao chat. |
+| **Resposta da IA** | Tag por tema, introdução em HTML, blocos informativos, passo a passo numerado, dica, card de contato presencial, CTA para serviço oficial, **mapa Leaflet** quando há `locations`, perguntas relacionadas que reenviam ao chat e feedback "ajudou / não funcionou". |
 | **Rodapé** | Exibido apenas antes de iniciar o chat. |
 
 **Sessão:** o `sessionId` é um UUID guardado em `sessionStorage` (`guia-cidadao-session`) e enviado em cada mensagem para correlacionar logs e feedback no backend.

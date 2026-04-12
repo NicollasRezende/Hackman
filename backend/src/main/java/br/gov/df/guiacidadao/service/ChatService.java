@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import br.gov.df.guiacidadao.model.ChatResponse.Provenance;
+
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +69,8 @@ public class ChatService {
 
             long processingMs = System.currentTimeMillis() - start;
             ChatResponse response = responseParser.parse(llmJson, sessionId, model, processingMs)
-                    .withOfficial(officialLinkResolver.resolve(intent.category()));
+                    .withOfficial(officialLinkResolver.resolve(intent.category(), message))
+                    .withProvenance(buildProvenance(intent.category()));
 
             saveLog(sessionId, message, response.meta().responseId(), intent.category(), processingMs);
 
@@ -101,6 +105,61 @@ public class ChatService {
                 throw e2;
             }
         }
+    }
+
+    private Provenance buildProvenance(String category) {
+        String today = LocalDate.now().toString();
+        if (category == null) {
+            return new Provenance("Portal GDF", today, "https://www.df.gov.br");
+        }
+        return switch (category) {
+            case "saude" -> new Provenance(
+                    "CNES / SES-DF",
+                    today,
+                    "https://cnes.datasus.gov.br"
+            );
+            case "trabalho" -> new Provenance(
+                    "SINE-DF / SEDET-DF",
+                    today,
+                    "https://www.trabalho.df.gov.br"
+            );
+            case "previdencia" -> new Provenance(
+                    "INSS / Meu INSS",
+                    today,
+                    "https://meu.inss.gov.br"
+            );
+            case "transito" -> new Provenance(
+                    "DETRAN-DF",
+                    today,
+                    "https://www.detran.df.gov.br"
+            );
+            case "documentos" -> new Provenance(
+                    "Rede Na Hora / GDF",
+                    today,
+                    "https://www.nahora.df.gov.br"
+            );
+            case "social", "bolsa_familia" -> new Provenance(
+                    "MDS / Portal da Transparência",
+                    today,
+                    "https://www.gov.br/mds"
+            );
+            case "mulher" -> new Provenance(
+                    "SEMulher-DF",
+                    today,
+                    "https://www.mulher.df.gov.br"
+            );
+            case "tcu" -> new Provenance(
+                    "TCU",
+                    today,
+                    "https://portal.tcu.gov.br"
+            );
+            case "transparencia" -> new Provenance(
+                    "Portal da Transparência do DF",
+                    today,
+                    "https://www.transparencia.df.gov.br"
+            );
+            default -> new Provenance("Portal GDF", today, "https://www.df.gov.br");
+        };
     }
 
     private void saveLog(String sessionId, String message, String responseId, String category, long processingMs) {

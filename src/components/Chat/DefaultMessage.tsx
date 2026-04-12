@@ -1,5 +1,7 @@
-import { useId, useState } from 'react'
+import { useId, useState, useCallback } from 'react'
 import { Bot, ThumbsUp, ThumbsDown, Lightbulb, MessageCircle } from 'lucide-react'
+import { sendFeedback, type FeedbackVote } from '../../services/feedback'
+import { useAccessibility } from '../../contexts/AccessibilityContext'
 
 const POPULAR = [
   { label: 'Consulta médica', query: 'como agendar consulta médica' },
@@ -10,12 +12,43 @@ const POPULAR = [
 
 interface Props {
   onRelated: (q: string) => void
+  responseId: string
+  sessionId?: string
 }
 
-export default function DefaultMessage({ onRelated }: Props) {
+export default function DefaultMessage({ onRelated, responseId, sessionId }: Props) {
+  const { announce } = useAccessibility()
   const [feedback, setFeedback] = useState<'pos' | 'neg' | null>(null)
+  const [feedbackSending, setFeedbackSending] = useState(false)
+  const [feedbackSent, setFeedbackSent] = useState(false)
+  const [feedbackError, setFeedbackError] = useState(false)
   const titleId = useId()
   const feedbackLabelId = useId()
+
+  const submitFeedback = useCallback(
+    async (choice: 'pos' | 'neg') => {
+      if (feedbackSending || feedbackSent) return
+      setFeedback(choice)
+      setFeedbackSending(true)
+      setFeedbackError(false)
+      const vote: FeedbackVote = choice === 'pos' ? 'positive' : 'negative'
+      const ok = await sendFeedback(responseId, sessionId, vote)
+      setFeedbackSending(false)
+      if (ok) {
+        setFeedbackSent(true)
+        announce(
+          choice === 'pos'
+            ? 'Obrigado! Seu retorno foi registrado.'
+            : 'Retorno registrado. Vamos melhorar esta orientação.',
+        )
+      } else {
+        setFeedbackError(true)
+        setFeedback(null)
+        announce('Não foi possível registrar seu retorno. Tente novamente.')
+      }
+    },
+    [responseId, sessionId, feedbackSending, feedbackSent, announce],
+  )
 
   return (
     <article
@@ -56,36 +89,49 @@ export default function DefaultMessage({ onRelated }: Props) {
           <p className="m-0">Ou clique em uma das categorias abaixo para ir direto ao serviço.</p>
         </div>
 
-        <div className="flex items-center gap-2 mt-5 pt-4 border-t border-gdf-border">
-          <span className="text-xs text-gray-600 flex-1" id={feedbackLabelId}>
-            Isso te ajudou?
-          </span>
-          <button
-            type="button"
-            onClick={() => setFeedback('pos')}
-            aria-pressed={feedback === 'pos'}
-            aria-describedby={feedbackLabelId}
-            className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${
-              feedback === 'pos'
-                ? 'bg-verde-light border-verde text-verde'
-                : 'bg-white border-gdf-border text-gray-600 hover:border-verde hover:text-verde'
-            }`}
-          >
-            <ThumbsUp size={12} aria-hidden /> Sim
-          </button>
-          <button
-            type="button"
-            onClick={() => setFeedback('neg')}
-            aria-pressed={feedback === 'neg'}
-            aria-describedby={feedbackLabelId}
-            className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${
-              feedback === 'neg'
-                ? 'bg-red-50 border-red-400 text-red-600'
-                : 'bg-white border-gdf-border text-gray-600 hover:border-red-400 hover:text-red-600'
-            }`}
-          >
-            <ThumbsDown size={12} aria-hidden /> Não
-          </button>
+        <div className="mt-5 pt-4 border-t border-gdf-border">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-600 flex-1" id={feedbackLabelId}>
+              {feedbackSent
+                ? 'Obrigado pelo retorno!'
+                : feedbackSending
+                  ? 'Registrando seu retorno…'
+                  : 'Isso te ajudou?'}
+            </span>
+            <button
+              type="button"
+              onClick={() => void submitFeedback('pos')}
+              disabled={feedbackSending || feedbackSent}
+              aria-pressed={feedback === 'pos'}
+              aria-describedby={feedbackLabelId}
+              className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all disabled:cursor-not-allowed disabled:opacity-80 ${
+                feedback === 'pos'
+                  ? 'bg-verde-light border-verde text-verde'
+                  : 'bg-white border-gdf-border text-gray-600 hover:border-verde hover:text-verde'
+              }`}
+            >
+              <ThumbsUp size={12} aria-hidden /> Sim
+            </button>
+            <button
+              type="button"
+              onClick={() => void submitFeedback('neg')}
+              disabled={feedbackSending || feedbackSent}
+              aria-pressed={feedback === 'neg'}
+              aria-describedby={feedbackLabelId}
+              className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all disabled:cursor-not-allowed disabled:opacity-80 ${
+                feedback === 'neg'
+                  ? 'bg-red-50 border-red-400 text-red-600'
+                  : 'bg-white border-gdf-border text-gray-600 hover:border-red-400 hover:text-red-600'
+              }`}
+            >
+              <ThumbsDown size={12} aria-hidden /> Não
+            </button>
+          </div>
+          {feedbackError && (
+            <p className="text-[11px] text-red-600 mt-2 m-0" role="alert">
+              Não foi possível registrar seu retorno. Tente novamente.
+            </p>
+          )}
         </div>
       </div>
 

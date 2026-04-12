@@ -206,6 +206,27 @@ export default function AIMessage({ data, onRelated }: Props) {
           <LocationsMap locations={data.locations} />
         )}
 
+        {data.provenance && (
+          <div className="mt-3 flex flex-wrap items-center gap-1.5 text-[11px] text-gray-600">
+            <span className="inline-flex items-center gap-1 font-semibold bg-gdf-soft border border-gdf-border px-2 py-0.5 rounded-md">
+              Fonte: {data.provenance.source}
+            </span>
+            <span className="inline-flex items-center gap-1 font-semibold bg-gdf-soft border border-gdf-border px-2 py-0.5 rounded-md">
+              Atualizado em {data.provenance.updatedAt}
+            </span>
+            {data.provenance.referenceUrl && (
+              <a
+                href={data.provenance.referenceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-verde hover:text-verde-med"
+              >
+                ver origem
+              </a>
+            )}
+          </div>
+        )}
+
         <div className="flex gap-2 flex-wrap mt-4">
           {(() => {
             const officialUrl = data.official?.url ?? 'https://www.df.gov.br'
