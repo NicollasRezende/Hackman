@@ -1,0 +1,569 @@
+2026-04-12 14:44:25.310 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:44:25.310 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:44:25.321 | INFO     | __main__:<module>:151 - 🚀 Iniciando servidor na porta 8000
+2026-04-12 14:44:25.611 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:44:25.611 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:44:25.655 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:44:25.655 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:44:25.656 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:44:25.656 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:44:57.989 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:44:57.989 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:44:57.990 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 14:44:57.990 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 14:44:57.991 | INFO     | guia_cidadao_bot:get_session:87 - 🆕 Nova sessão: 556191769500
+2026-04-12 14:44:57.991 | INFO     | guia_cidadao_bot:get_session:87 - 🆕 Nova sessão: 556191769500
+2026-04-12 14:44:57.992 | INFO     | guia_cidadao_bot:handle_message:343 - 💬 [556191769500] text: Oi (estado: initial)
+2026-04-12 14:44:57.992 | INFO     | guia_cidadao_bot:handle_message:343 - 💬 [556191769500] text: Oi (estado: initial)
+2026-04-12 14:44:57.993 | ERROR    | guia_cidadao_bot:send_payload:279 - ❌ Erro ao enviar mensagem: 'WhatsAppClient' object has no attribute 'send_message'
+2026-04-12 14:44:57.993 | ERROR    | guia_cidadao_bot:send_payload:279 - ❌ Erro ao enviar mensagem: 'WhatsAppClient' object has no attribute 'send_message'
+2026-04-12 14:44:57.993 | ERROR    | webhook_guia_cidadao:receive_webhook:132 - ❌ Erro no webhook: 'WhatsAppClient' object has no attribute 'send_message'
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.12/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 3
+               │     └ 8
+               └ <function _main at 0x7745059ee8e0>
+  File "/usr/lib/python3.12/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 3
+           │    └ <function BaseProcess._bootstrap at 0x774505ad8c20>
+           └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x774505ad8180>
+    └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x7745039b3530>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+    │    └ <function subprocess_started at 0x7745038556c0>
+    └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+  File "/home/sea/.local/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 76, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x774503863a10>>
+  File "/home/sea/.local/lib/python3.12/site-packages/uvicorn/server.py", line 61, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x774503854d60>
+           │       │   └ <uvicorn.server.Server object at 0x774503863a10>
+           │       └ <function run at 0x77450564d9e0>
+           └ <module 'asyncio' from '/usr/lib/python3.12/asyncio/__init__.py'>
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x7745039da540>
+           │      └ <function Runner.run at 0x774504f14cc0>
+           └ <asyncio.runners.Runner object at 0x774503a3d940>
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /home/sea/.local/lib/python3.12/site-packages/uvicorn/server.py:8...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x7745039fe5c0>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x774503a3d940>
+  File "/home/sea/.local/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 426, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+                   └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x774503885490>
+  File "/home/sea/.local/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034f2f...
+                 │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+                 │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+                 │    └ <fastapi.applications.FastAPI object at 0x7745034f0bf0>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x774503885490>
+  File "/home/sea/.local/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034f2f...
+                           │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+                           └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034f2f...
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7745034b7650>
+          └ <fastapi.applications.FastAPI object at 0x7745034f0bf0>
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x774503501ee0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7745038c75f0>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7745034b7650>
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x774503501da0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7745038c7350>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7745038c75f0>
+  File "/home/sea/.local/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x774503501da0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.routing.APIRouter object at 0x774503a3eb40>
+          └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7745038c7350>
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x774503501da0>
+          │     │      │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x774504129080>
+          └ APIRoute(path='/webhooks/whatsapp', name='receive_webhook', methods=['POST'])
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x774503501da0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x774503501760>
+          └ APIRoute(path='/webhooks/whatsapp', name='receive_webhook', methods=['POST'])
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x7745034f3110>
+                     └ <function get_request_handler.<locals>.app at 0x7745035016c0>
+  File "/home/sea/.local/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x77450412a160>
+  File "/home/sea/.local/lib/python3.12/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'request': <starlette.requests.Request object at 0x7745034f3110>}
+                 │         └ <function receive_webhook at 0x774503501580>
+                 └ <fastapi.dependencies.models.Dependant object at 0x7745034f2390>
+
+> File "/home/sea/wpp-constructor/hackthon/bot/webhook_guia_cidadao.py", line 96, in receive_webhook
+    await bot.handle_message(phone, text, "text")
+          │   │              │      └ 'Oi'
+          │   │              └ '556191769500'
+          │   └ <function GuiaCidadaoBot.handle_message at 0x7745039d0d60>
+          └ <guia_cidadao_bot.GuiaCidadaoBot object at 0x7745034f0d40>
+
+  File "/home/sea/wpp-constructor/hackthon/bot/guia_cidadao_bot.py", line 355, in handle_message
+    await self.send_welcome(phone)
+          │    │            └ '556191769500'
+          │    └ <function GuiaCidadaoBot.send_welcome at 0x7745039d0c20>
+          └ <guia_cidadao_bot.GuiaCidadaoBot object at 0x7745034f0d40>
+
+  File "/home/sea/wpp-constructor/hackthon/bot/guia_cidadao_bot.py", line 300, in send_welcome
+    await self.send_payload(phone, payload)
+          │    │            │      └ {'messaging_product': 'whatsapp', 'recipient_type': 'individual', 'to': '556191769500', 'type': 'interactive', 'interactive':...
+          │    │            └ '556191769500'
+          │    └ <function GuiaCidadaoBot.send_payload at 0x7745039d0ae0>
+          └ <guia_cidadao_bot.GuiaCidadaoBot object at 0x7745034f0d40>
+
+  File "/home/sea/wpp-constructor/hackthon/bot/guia_cidadao_bot.py", line 275, in send_payload
+    response = await self.whatsapp.send_message(payload)
+                     │    │                     └ {'messaging_product': 'whatsapp', 'recipient_type': 'individual', 'to': '556191769500', 'type': 'interactive', 'interactive':...
+                     │    └ <whatsapp_client.WhatsAppClient object at 0x774503dac710>
+                     └ <guia_cidadao_bot.GuiaCidadaoBot object at 0x7745034f0d40>
+
+AttributeError: 'WhatsAppClient' object has no attribute 'send_message'. Did you mean: 'send_image'?
+2026-04-12 14:44:57.993 | ERROR    | webhook_guia_cidadao:receive_webhook:132 - ❌ Erro no webhook: 'WhatsAppClient' object has no attribute 'send_message'
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.12/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 3
+               │     └ 8
+               └ <function _main at 0x7745059ee8e0>
+  File "/usr/lib/python3.12/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 3
+           │    └ <function BaseProcess._bootstrap at 0x774505ad8c20>
+           └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x774505ad8180>
+    └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x7745039b3530>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+    │    └ <function subprocess_started at 0x7745038556c0>
+    └ <SpawnProcess name='SpawnProcess-1' parent=305247 started>
+  File "/home/sea/.local/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 76, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x774503863a10>>
+  File "/home/sea/.local/lib/python3.12/site-packages/uvicorn/server.py", line 61, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=4, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x774503854d60>
+           │       │   └ <uvicorn.server.Server object at 0x774503863a10>
+           │       └ <function run at 0x77450564d9e0>
+           └ <module 'asyncio' from '/usr/lib/python3.12/asyncio/__init__.py'>
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x7745039da540>
+           │      └ <function Runner.run at 0x774504f14cc0>
+           └ <asyncio.runners.Runner object at 0x774503a3d940>
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /home/sea/.local/lib/python3.12/site-packages/uvicorn/server.py:8...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x7745039fe5c0>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x774503a3d940>
+  File "/home/sea/.local/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 426, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+                   └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x774503885490>
+  File "/home/sea/.local/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034f2f...
+                 │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+                 │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+                 │    └ <fastapi.applications.FastAPI object at 0x7745034f0bf0>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x774503885490>
+  File "/home/sea/.local/lib/python3.12/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034f2f...
+                           │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+                           └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034f2f...
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7745034b7650>
+          └ <fastapi.applications.FastAPI object at 0x7745034f0bf0>
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x774503501ee0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7745038c75f0>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7745034b7650>
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x774503501da0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7745038c7350>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7745038c75f0>
+  File "/home/sea/.local/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x774503501da0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.routing.APIRouter object at 0x774503a3eb40>
+          └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7745038c7350>
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x774503501da0>
+          │     │      │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x774504129080>
+          └ APIRoute(path='/webhooks/whatsapp', name='receive_webhook', methods=['POST'])
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x774503501da0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7745034...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x774503501760>
+          └ APIRoute(path='/webhooks/whatsapp', name='receive_webhook', methods=['POST'])
+  File "/home/sea/.local/lib/python3.12/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x7745034f3110>
+                     └ <function get_request_handler.<locals>.app at 0x7745035016c0>
+  File "/home/sea/.local/lib/python3.12/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x77450412a160>
+  File "/home/sea/.local/lib/python3.12/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'request': <starlette.requests.Request object at 0x7745034f3110>}
+                 │         └ <function receive_webhook at 0x774503501580>
+                 └ <fastapi.dependencies.models.Dependant object at 0x7745034f2390>
+
+> File "/home/sea/wpp-constructor/hackthon/bot/webhook_guia_cidadao.py", line 96, in receive_webhook
+    await bot.handle_message(phone, text, "text")
+          │   │              │      └ 'Oi'
+          │   │              └ '556191769500'
+          │   └ <function GuiaCidadaoBot.handle_message at 0x7745039d0d60>
+          └ <guia_cidadao_bot.GuiaCidadaoBot object at 0x7745034f0d40>
+
+  File "/home/sea/wpp-constructor/hackthon/bot/guia_cidadao_bot.py", line 355, in handle_message
+    await self.send_welcome(phone)
+          │    │            └ '556191769500'
+          │    └ <function GuiaCidadaoBot.send_welcome at 0x7745039d0c20>
+          └ <guia_cidadao_bot.GuiaCidadaoBot object at 0x7745034f0d40>
+
+  File "/home/sea/wpp-constructor/hackthon/bot/guia_cidadao_bot.py", line 300, in send_welcome
+    await self.send_payload(phone, payload)
+          │    │            │      └ {'messaging_product': 'whatsapp', 'recipient_type': 'individual', 'to': '556191769500', 'type': 'interactive', 'interactive':...
+          │    │            └ '556191769500'
+          │    └ <function GuiaCidadaoBot.send_payload at 0x7745039d0ae0>
+          └ <guia_cidadao_bot.GuiaCidadaoBot object at 0x7745034f0d40>
+
+  File "/home/sea/wpp-constructor/hackthon/bot/guia_cidadao_bot.py", line 275, in send_payload
+    response = await self.whatsapp.send_message(payload)
+                     │    │                     └ {'messaging_product': 'whatsapp', 'recipient_type': 'individual', 'to': '556191769500', 'type': 'interactive', 'interactive':...
+                     │    └ <whatsapp_client.WhatsAppClient object at 0x774503dac710>
+                     └ <guia_cidadao_bot.GuiaCidadaoBot object at 0x7745034f0d40>
+
+AttributeError: 'WhatsAppClient' object has no attribute 'send_message'. Did you mean: 'send_image'?
+2026-04-12 14:46:07.386 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:07.386 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:07.425 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:07.425 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:07.426 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:07.426 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:08.675 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:08.675 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:08.715 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:08.715 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:08.715 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:08.715 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:30.257 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:30.257 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:30.266 | INFO     | __main__:<module>:151 - 🚀 Iniciando servidor na porta 8000
+2026-04-12 14:46:30.550 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:30.550 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:30.597 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:30.597 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:46:30.597 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:30.597 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:46:35.844 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:35.844 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:35.845 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 14:46:35.845 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 14:46:35.846 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: initial)
+2026-04-12 14:46:35.846 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: initial)
+2026-04-12 14:46:35.847 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: Oi (estado: initial)
+2026-04-12 14:46:35.847 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: Oi (estado: initial)
+2026-04-12 14:46:35.848 | INFO     | whatsapp_client:send_buttons:135 - 📤 Enviando botões para 5561991769500
+2026-04-12 14:46:35.848 | INFO     | whatsapp_client:send_buttons:135 - 📤 Enviando botões para 5561991769500
+2026-04-12 14:46:37.678 | SUCCESS  | whatsapp_client:send_buttons:144 - ✅ Botões enviados!
+2026-04-12 14:46:37.678 | SUCCESS  | whatsapp_client:send_buttons:144 - ✅ Botões enviados!
+2026-04-12 14:46:38.553 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:38.553 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:38.801 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:38.801 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:42.231 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:42.231 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:42.234 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:46:42.234 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:46:42.234 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: saude (🏥 Saúde)
+2026-04-12 14:46:42.234 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: saude (🏥 Saúde)
+2026-04-12 14:46:42.234 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:46:42.234 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:46:42.235 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: médico saúde (estado: waiting_question)
+2026-04-12 14:46:42.235 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: médico saúde (estado: waiting_question)
+2026-04-12 14:46:42.235 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *🏥 Saúde*
+
+Você tem direito ao atendimento gratuit...
+2026-04-12 14:46:42.235 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *🏥 Saúde*
+
+Você tem direito ao atendimento gratuit...
+2026-04-12 14:46:43.106 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:46:43.106 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:46:43.106 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:46:43.106 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:46:44.243 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:44.243 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:44.337 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:44.337 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:49.151 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:49.151 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:49.152 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:46:49.152 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:46:49.153 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: trabalho (💼 Trabalho)
+2026-04-12 14:46:49.153 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: trabalho (💼 Trabalho)
+2026-04-12 14:46:49.153 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:46:49.153 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:46:49.154 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: emprego trabalho (estado: waiting_question)
+2026-04-12 14:46:49.154 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: emprego trabalho (estado: waiting_question)
+2026-04-12 14:46:49.154 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *💼 Trabalho e Emprego*
+
+Acesse serviços de emprego...
+2026-04-12 14:46:49.154 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *💼 Trabalho e Emprego*
+
+Acesse serviços de emprego...
+2026-04-12 14:46:50.191 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:46:50.191 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:46:50.192 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:46:50.192 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:46:50.806 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:50.806 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:51.100 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:51.100 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:54.093 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:54.093 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:54.094 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:46:54.094 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:46:54.094 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: outros (ℹ️ Outros)
+2026-04-12 14:46:54.094 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: outros (ℹ️ Outros)
+2026-04-12 14:46:54.095 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:46:54.095 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:46:54.095 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: serviços (estado: waiting_question)
+2026-04-12 14:46:54.095 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: serviços (estado: waiting_question)
+2026-04-12 14:46:54.095 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *ℹ️ Atendimento Geral*
+
+Não consegui identificar e...
+2026-04-12 14:46:54.095 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *ℹ️ Atendimento Geral*
+
+Não consegui identificar e...
+2026-04-12 14:46:57.374 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:46:57.374 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:46:57.375 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:46:57.375 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:46:58.004 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:58.004 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:58.077 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:46:58.077 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:14.152 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:14.152 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:14.153 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 14:50:14.153 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 14:50:14.154 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:50:14.154 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:50:14.154 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: Oi (estado: waiting_question)
+2026-04-12 14:50:14.154 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: Oi (estado: waiting_question)
+2026-04-12 14:50:14.155 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *ℹ️ Atendimento Geral*
+
+Não consegui identificar e...
+2026-04-12 14:50:14.155 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *ℹ️ Atendimento Geral*
+
+Não consegui identificar e...
+2026-04-12 14:50:15.066 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:50:15.066 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:50:15.067 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:50:15.067 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:50:16.233 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:16.233 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:16.376 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:16.376 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:21.632 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:21.632 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:21.633 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 14:50:21.633 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 14:50:21.633 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:50:21.633 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:50:21.634 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: /menu (estado: waiting_question)
+2026-04-12 14:50:21.634 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: /menu (estado: waiting_question)
+2026-04-12 14:50:21.635 | INFO     | whatsapp_client:send_buttons:135 - 📤 Enviando botões para 5561991769500
+2026-04-12 14:50:21.635 | INFO     | whatsapp_client:send_buttons:135 - 📤 Enviando botões para 5561991769500
+2026-04-12 14:50:23.074 | SUCCESS  | whatsapp_client:send_buttons:144 - ✅ Botões enviados!
+2026-04-12 14:50:23.074 | SUCCESS  | whatsapp_client:send_buttons:144 - ✅ Botões enviados!
+2026-04-12 14:50:23.596 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:23.596 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:23.724 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:23.724 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:53.491 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:53.491 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:53.492 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:50:53.492 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:50:53.492 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: saude (🏥 Saúde)
+2026-04-12 14:50:53.492 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: saude (🏥 Saúde)
+2026-04-12 14:50:53.493 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: initial)
+2026-04-12 14:50:53.493 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: initial)
+2026-04-12 14:50:53.494 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: médico saúde (estado: initial)
+2026-04-12 14:50:53.494 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: médico saúde (estado: initial)
+2026-04-12 14:50:53.494 | INFO     | whatsapp_client:send_buttons:135 - 📤 Enviando botões para 5561991769500
+2026-04-12 14:50:53.494 | INFO     | whatsapp_client:send_buttons:135 - 📤 Enviando botões para 5561991769500
+2026-04-12 14:50:54.335 | SUCCESS  | whatsapp_client:send_buttons:144 - ✅ Botões enviados!
+2026-04-12 14:50:54.335 | SUCCESS  | whatsapp_client:send_buttons:144 - ✅ Botões enviados!
+2026-04-12 14:50:55.439 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:55.439 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:55.597 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:55.597 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:59.254 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:59.254 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:50:59.255 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:50:59.255 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:50:59.256 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: trabalho (💼 Trabalho)
+2026-04-12 14:50:59.256 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: trabalho (💼 Trabalho)
+2026-04-12 14:50:59.257 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:50:59.257 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:50:59.257 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: emprego trabalho (estado: waiting_question)
+2026-04-12 14:50:59.257 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: emprego trabalho (estado: waiting_question)
+2026-04-12 14:50:59.258 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *💼 Trabalho e Emprego*
+
+Acesse serviços de emprego...
+2026-04-12 14:50:59.258 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *💼 Trabalho e Emprego*
+
+Acesse serviços de emprego...
+2026-04-12 14:51:00.246 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:51:00.246 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:51:00.246 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:51:00.246 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:51:01.153 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:01.153 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:01.224 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:01.224 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:17.027 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:17.027 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:17.028 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:51:17.028 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: interactive)
+2026-04-12 14:51:17.029 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: outros (ℹ️ Outros)
+2026-04-12 14:51:17.029 | INFO     | guia_cidadao_bot:handle_button_reply:368 - 🔘 [556191769500] Botão: outros (ℹ️ Outros)
+2026-04-12 14:51:17.029 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:51:17.029 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 14:51:17.030 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: serviços (estado: waiting_question)
+2026-04-12 14:51:17.030 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] button: serviços (estado: waiting_question)
+2026-04-12 14:51:17.031 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *ℹ️ Atendimento Geral*
+
+Não consegui identificar e...
+2026-04-12 14:51:17.031 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *ℹ️ Atendimento Geral*
+
+Não consegui identificar e...
+2026-04-12 14:51:18.459 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:51:18.459 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 14:51:18.461 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:51:18.461 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 14:51:19.383 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:19.383 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:19.627 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:51:19.627 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 14:59:46.845 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:59:46.845 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:59:46.854 | INFO     | __main__:<module>:151 - 🚀 Iniciando servidor na porta 8000
+2026-04-12 14:59:47.138 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:59:47.138 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:59:47.175 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:59:47.175 | INFO     | guia_cidadao_bot:__init__:63 - 📁 Session storage: storage/sessions
+2026-04-12 14:59:47.175 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 14:59:47.175 | INFO     | guia_cidadao_bot:__init__:270 - 🤖 Guia Cidadão Bot inicializado
+2026-04-12 15:00:29.291 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:29.291 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:29.293 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 15:00:29.293 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 15:00:29.293 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 15:00:29.293 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 15:00:29.294 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: Oi (estado: waiting_question)
+2026-04-12 15:00:29.294 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: Oi (estado: waiting_question)
+2026-04-12 15:00:29.294 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *ℹ️ Atendimento Geral*
+
+Não consegui identificar e...
+2026-04-12 15:00:29.294 | INFO     | whatsapp_client:send_text:79 - 📤 Enviando para 5561991769500: *ℹ️ Atendimento Geral*
+
+Não consegui identificar e...
+2026-04-12 15:00:30.727 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 15:00:30.727 | SUCCESS  | whatsapp_client:send_text:88 - ✅ Mensagem enviada!
+2026-04-12 15:00:30.728 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 15:00:30.728 | SUCCESS  | guia_cidadao_bot:send_text:276 - ✅ Mensagem enviada para 556191769500
+2026-04-12 15:00:31.318 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:31.318 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:31.707 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:31.707 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:36.909 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:36.909 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:36.910 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 15:00:36.910 | INFO     | webhook_guia_cidadao:receive_webhook:91 - 📱 Mensagem de 556191769500 (tipo: text)
+2026-04-12 15:00:36.910 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 15:00:36.910 | INFO     | guia_cidadao_bot:get_session:76 - 📂 Sessão recuperada: 556191769500 (estado: waiting_question)
+2026-04-12 15:00:36.911 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: /menu (estado: waiting_question)
+2026-04-12 15:00:36.911 | INFO     | guia_cidadao_bot:handle_message:336 - 💬 [556191769500] text: /menu (estado: waiting_question)
+2026-04-12 15:00:36.912 | INFO     | whatsapp_client:send_buttons:135 - 📤 Enviando botões para 5561991769500
+2026-04-12 15:00:36.912 | INFO     | whatsapp_client:send_buttons:135 - 📤 Enviando botões para 5561991769500
+2026-04-12 15:00:38.270 | SUCCESS  | whatsapp_client:send_buttons:144 - ✅ Botões enviados!
+2026-04-12 15:00:38.270 | SUCCESS  | whatsapp_client:send_buttons:144 - ✅ Botões enviados!
+2026-04-12 15:00:38.757 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:38.757 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:39.797 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
+2026-04-12 15:00:39.797 | INFO     | webhook_guia_cidadao:receive_webhook:74 - 📨 Webhook recebido
