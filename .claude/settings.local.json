@@ -34,7 +34,9 @@
       "Bash(./mvnw -q -DskipTests compile)",
       "Bash(ls *.json tsconfig*)",
       "Bash(./mvnw -q test -Dtest=IntentDetectorTest)",
-      "Bash(./mvnw test:*)"
+      "Bash(./mvnw test:*)",
+      "Bash(./mvnw -q -o compile)",
+      "Bash(ls mvnw* pom.xml)"
     ]
   }
 }

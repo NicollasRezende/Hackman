@@ -19,6 +19,10 @@ public class ResponseParser {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ChatResponse parse(String rawJson, String sessionId, String model, long processingMs) {
+        return parse(rawJson, sessionId, model, processingMs, null);
+    }
+
+    public ChatResponse parse(String rawJson, String sessionId, String model, long processingMs, String intentCategory) {
         try {
             String cleaned = cleanJson(rawJson);
             cleaned = sanitizeJsonLike(cleaned);
@@ -31,18 +35,21 @@ public class ResponseParser {
                     extracted = sanitizeJsonLike(extracted);
                     root = objectMapper.readTree(extracted);
                 } else {
+                    Tag fallbackTag = tagForCategory(intentCategory);
                     return ChatResponse.fromParsed(
-                            new Tag("tag-social", "Info", "Resposta"),
+                            fallbackTag,
                             escapeHtml(cleaned).replace("\n", "<br/>"),
                             List.of(),
                             List.of("Se quiser, me diga sua cidade/bairro e o que você precisa exatamente."),
-                            null, null, null,
+                            null, contactForCategory(intentCategory), null,
                             sessionId, model, processingMs
                     );
                 }
             }
 
-            Tag tag = parseTag(root.get("tag"));
+            Tag tag = intentCategory != null
+                    ? tagForCategory(intentCategory)
+                    : parseTag(root.get("tag"));
             String intro = root.has("intro") && !root.get("intro").isNull()
                     ? root.get("intro").asText()
                     : escapeHtml(cleaned).replace("\n", "<br/>");
@@ -93,7 +100,7 @@ public class ResponseParser {
                         c.has("hours") ? c.get("hours").asText() : ""
                 );
             }
-            contact = normalizeContact(contact, tag);
+            contact = normalizeContact(contact, tag, intentCategory);
 
             List<String> related = null;
             if (root.has("related") && root.get("related").isArray()) {
@@ -215,57 +222,107 @@ public class ResponseParser {
         }
     }
 
-    private Contact normalizeContact(Contact contact, Tag tag) {
-        if (contact == null) return null;
+    private Contact normalizeContact(Contact contact, Tag tag, String intentCategory) {
+        // Sempre sobrescrevemos o contato com dados curados do DF.
+        // O LLM nao e confiavel para enderecos — alucinou ruas ficticias.
+        if (intentCategory != null) {
+            return contactForCategory(intentCategory);
+        }
         String cls = tag != null ? tag.cls() : "tag-social";
-
-        String title = safeTrim(contact.title());
-        String addr = safeTrim(contact.addr());
-        String phone = normalizePhone(safeTrim(contact.phone()));
-        String hours = safeTrim(contact.hours());
-
-        if (!isLikelyDfAddress(addr)) {
-            return defaultContactForTag(cls);
-        }
-
-        if (phone.isEmpty()) {
-            Contact fallback = defaultContactForTag(cls);
-            phone = fallback.phone();
-        }
-
-        if (title.isEmpty()) title = defaultContactForTag(cls).title();
-        if (hours.isEmpty()) hours = defaultContactForTag(cls).hours();
-
-        return new Contact(title, addr, phone, hours);
+        return defaultContactForTag(cls);
     }
 
-    private Contact defaultContactForTag(String cls) {
-        if (cls == null) cls = "tag-social";
-        return switch (cls) {
-            case "tag-mulher" -> new Contact(
+    Contact contactForCategory(String category) {
+        if (category == null) category = "geral";
+        return switch (category) {
+            case "mulher" -> new Contact(
                     "Casa da Mulher Brasileira — Brasília (DF)",
                     "SGAS 601, Lote 2, Asa Sul, Brasília/DF",
                     "(61) 3223-3690",
                     "24 horas"
             );
-            case "tag-work" -> new Contact(
-                    "SINE-DF / SEDET-DF",
-                    "Postos do SINE/Na Hora no DF (consulte Agenda DF)",
+            case "trabalho" -> new Contact(
+                    "Agência do Trabalhador — SEDET/DF",
+                    "SAIN Parque Rural, Bloco B, Asa Norte, Brasília/DF",
                     "158",
-                    "Seg–Sex (consultar Agenda DF)"
+                    "Seg–Sex 8h–17h"
             );
-            case "tag-health" -> new Contact(
+            case "saude" -> new Contact(
                     "Central 156 (GDF) / SES-DF",
-                    "Brasília/DF",
+                    "Brasília/DF — ligue 156 para a UBS/UPA mais próxima",
                     "156",
                     "24 horas"
+            );
+            case "previdencia" -> new Contact(
+                    "INSS — Meu INSS",
+                    "Agências do INSS no DF (agendamento pelo Meu INSS)",
+                    "135",
+                    "Seg–Sex 7h–17h"
+            );
+            case "transito" -> new Contact(
+                    "DETRAN-DF — Sede",
+                    "SGON Quadra 5, Lote 23, Brasília/DF",
+                    "154",
+                    "Seg–Sex 8h–18h"
+            );
+            case "documentos" -> new Contact(
+                    "Rede Na Hora — GDF",
+                    "Postos Na Hora no DF (agendamento em nahora.df.gov.br)",
+                    "156",
+                    "Seg–Sex 8h–18h"
+            );
+            case "social", "bolsa_familia" -> new Contact(
+                    "CRAS / SEDES-DF",
+                    "CRAS mais próximo no DF (consulte sedes.df.gov.br)",
+                    "156",
+                    "Seg–Sex 8h–17h"
+            );
+            case "tcu" -> new Contact(
+                    "Tribunal de Contas da União (TCU)",
+                    "SAFS Quadra 4, Lote 1, Brasília/DF",
+                    "(61) 3316-5338",
+                    "Seg–Sex 9h–18h"
+            );
+            case "transparencia" -> new Contact(
+                    "Portal da Transparência do DF",
+                    "Consulta online — transparencia.df.gov.br",
+                    "162",
+                    "24 horas (portal online)"
             );
             default -> new Contact(
                     "Central 156 (GDF)",
-                    "Brasília/DF",
+                    "Brasília/DF — Central do Cidadão",
                     "156",
                     "24 horas"
             );
+        };
+    }
+
+    Tag tagForCategory(String category) {
+        if (category == null) category = "geral";
+        return switch (category) {
+            case "saude" -> new Tag("tag-health", "Heart", "Saúde");
+            case "trabalho" -> new Tag("tag-work", "Briefcase", "Trabalho");
+            case "previdencia" -> new Tag("tag-work", "Briefcase", "Previdência");
+            case "transito" -> new Tag("tag-transit", "Car", "Trânsito");
+            case "documentos" -> new Tag("tag-social", "FileText", "Documentos");
+            case "social", "bolsa_familia" -> new Tag("tag-social", "Users", "Social");
+            case "mulher" -> new Tag("tag-mulher", "Shield", "Mulher");
+            case "tcu" -> new Tag("tag-tcu", "Scale", "TCU");
+            case "transparencia" -> new Tag("tag-social", "Eye", "Transparência");
+            default -> new Tag("tag-social", "Info", "Resposta");
+        };
+    }
+
+    private Contact defaultContactForTag(String cls) {
+        if (cls == null) cls = "tag-social";
+        return switch (cls) {
+            case "tag-mulher" -> contactForCategory("mulher");
+            case "tag-work" -> contactForCategory("trabalho");
+            case "tag-health" -> contactForCategory("saude");
+            case "tag-transit" -> contactForCategory("transito");
+            case "tag-tcu" -> contactForCategory("tcu");
+            default -> contactForCategory("geral");
         };
     }
 

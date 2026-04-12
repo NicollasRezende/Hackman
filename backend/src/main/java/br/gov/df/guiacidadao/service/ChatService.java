@@ -68,7 +68,7 @@ public class ChatService {
             String llmJson = callWithRetry(systemPrompt, message);
 
             long processingMs = System.currentTimeMillis() - start;
-            ChatResponse response = responseParser.parse(llmJson, sessionId, model, processingMs)
+            ChatResponse response = responseParser.parse(llmJson, sessionId, model, processingMs, intent.category())
                     .withOfficial(officialLinkResolver.resolve(intent.category(), message))
                     .withProvenance(buildProvenance(intent.category()));
 
