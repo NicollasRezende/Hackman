@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { ChevronDown, IdCard, HeartPulse, HandCoins, Heart, MessageCircle } from 'lucide-react'
 
 const FAQ_DATA = [
@@ -88,49 +88,91 @@ const FAQ_DATA = [
   },
 ]
 
-function FAQItem({ q, a, query, onQuery }: { q: string; a: string; query: string; onQuery: (q: string) => void }) {
+function slugify(text: string) {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .toLowerCase()
+    .slice(0, 48)
+}
+
+function FAQItem({
+  q,
+  a,
+  query,
+  onQuery,
+}: {
+  q: string
+  a: string
+  query: string
+  onQuery: (q: string) => void
+}) {
   const [open, setOpen] = useState(false)
+  const baseId = useId()
+  const panelId = `${baseId}-${slugify(q)}-panel`
+  const buttonId = `${baseId}-${slugify(q)}-button`
+
   return (
     <div className="border-b border-gdf-border">
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between gap-2 py-3 text-left text-sm font-medium text-gray-800 hover:text-verde transition-colors"
+      <h4 className="m-0 text-inherit font-inherit">
+        <button
+          id={buttonId}
+          type="button"
+          onClick={() => setOpen(o => !o)}
+          className="w-full flex items-center justify-between gap-2 py-3 text-left text-sm font-medium text-gray-800 hover:text-verde transition-colors rounded-md"
+          aria-expanded={open}
+          aria-controls={panelId}
+        >
+          {q}
+          <ChevronDown
+            size={14}
+            className={`flex-shrink-0 text-gray-500 transition-transform ${open ? 'rotate-180 text-verde' : ''}`}
+            aria-hidden
+          />
+        </button>
+      </h4>
+      <section
+        id={panelId}
+        aria-labelledby={buttonId}
+        hidden={!open}
+        className="pb-3 text-sm text-gray-600 leading-relaxed"
       >
-        {q}
-        <ChevronDown size={14} className={`flex-shrink-0 text-gray-500 transition-transform ${open ? 'rotate-180 text-verde' : ''}`} />
-      </button>
-      {open && (
-        <div className="pb-3 text-sm text-gray-600 leading-relaxed">
-          {a}
-          <br />
-          <button
-            onClick={() => onQuery(query)}
-            className="inline-flex items-center gap-1 text-xs font-semibold text-verde mt-2 hover:underline"
-          >
-            <MessageCircle size={11} /> Perguntar ao Guia Cidadão
-          </button>
-        </div>
-      )}
+        {a}
+        <br />
+        <button
+          type="button"
+          onClick={() => onQuery(query)}
+          className="inline-flex items-center gap-1 text-xs font-semibold text-verde mt-2 hover:underline rounded-md"
+        >
+          <MessageCircle size={11} aria-hidden /> Perguntar ao Guia Cidadão
+        </button>
+      </section>
     </div>
   )
 }
 
-interface Props { onQuery: (q: string) => void }
+interface Props {
+  onQuery: (q: string) => void
+}
 
 export default function FAQ({ onQuery }: Props) {
   return (
-    <section className="max-w-6xl mx-auto px-6 md:px-10 py-14">
+    <section className="max-w-6xl mx-auto px-6 md:px-10 py-14" aria-labelledby="faq-heading">
       <div className="mb-7">
-        <h2 className="text-xl font-extrabold text-gray-900 tracking-tight">Dúvidas frequentes</h2>
-        <p className="text-sm text-gray-600 mt-1">Clique para expandir ou pergunte ao Guia Cidadão</p>
+        <h2 id="faq-heading" className="text-xl font-extrabold text-gray-900 tracking-tight">
+          Dúvidas frequentes
+        </h2>
+        <p className="text-sm text-gray-600 mt-1">Expanda cada pergunta ou envie sua dúvida ao Guia Cidadão</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
         {FAQ_DATA.map(col => (
           <div key={col.title}>
-            <div className="flex items-center gap-2 text-sm font-bold text-gray-900 mb-3 pb-3 border-b-2 border-verde-light">
-              <col.icon size={14} className="text-verde" />
+            <h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 mb-3 pb-3 border-b-2 border-verde-light m-0">
+              <col.icon size={14} className="text-verde" aria-hidden />
               {col.title}
-            </div>
+            </h3>
             {col.items.map(item => (
               <FAQItem key={item.q} {...item} onQuery={onQuery} />
             ))}

@@ -184,44 +184,52 @@ export default function LocationsMap({ locations }: Props) {
     d == null ? null : d < 1 ? `${Math.round(d * 1000)} m` : `${d.toFixed(1)} km`
 
   return (
-    <div className="mt-4 rounded-2xl border border-gdf-border overflow-hidden bg-white">
-      {/* Header */}
+    <section className="mt-4 rounded-2xl border border-gdf-border overflow-hidden bg-white" aria-label="Mapa e lista de locais de atendimento">
       <div className="flex items-center justify-between px-4 py-3 bg-gdf-soft border-b border-gdf-border">
         <div className="flex items-center gap-2">
-          <MapPin size={14} className="text-verde" />
-          <span className="text-[11px] font-bold tracking-widest uppercase text-gray-600">
+          <MapPin size={14} className="text-verde" aria-hidden />
+          <h3 className="text-[11px] font-bold tracking-widest uppercase text-gray-600 m-0">
             Locais de atendimento ({locations.length})
-          </span>
+          </h3>
         </div>
         <button
+          type="button"
           onClick={handleLocate}
           disabled={locating}
           className="flex items-center gap-1.5 text-xs font-semibold text-verde bg-verde-light border border-verde/20 px-3 py-1.5 rounded-lg hover:bg-verde hover:text-white transition-all disabled:opacity-50"
+          aria-busy={locating}
         >
-          <Navigation size={12} className={locating ? 'animate-spin' : ''} />
+          <Navigation size={12} className={locating ? 'animate-spin' : ''} aria-hidden />
           {locating ? 'Localizando…' : userPos ? 'Atualizar local' : 'Perto de mim'}
         </button>
       </div>
 
-      {/* Mapa Leaflet */}
-      <div ref={mapRef} className={locations.some(l => l.type === 'hospital') ? 'w-full h-96' : 'w-full h-52'} />
+      <div
+        ref={mapRef}
+        className={locations.some(l => l.type === 'hospital') ? 'w-full h-96' : 'w-full h-52'}
+        role="region"
+        aria-label="Mapa interativo com pinos dos locais de atendimento"
+        tabIndex={0}
+      />
 
-      {/* Lista de locais */}
       <div className="divide-y divide-gdf-border max-h-72 overflow-y-auto">
         {sorted.map((loc, i) => {
           const badge = TYPE_BADGE[loc.type] ?? TYPE_BADGE['other']
           const dist = fmtDist(loc.distance)
           const open = expanded === loc.name
+          const rowId = `loc-row-${i}-${String(loc.lat)}-${String(loc.lng)}`
 
           return (
-            <div key={loc.name} className="px-4 py-3">
-              {/* Linha principal */}
-              <div
-                className="flex items-start gap-3 cursor-pointer"
+            <div key={rowId} className="px-4 py-3">
+              <button
+                type="button"
+                id={`${rowId}-btn`}
+                className="flex w-full items-start gap-3 text-left cursor-pointer rounded-lg p-1 -m-1 hover:bg-gdf-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-verde"
                 onClick={() => setExpanded(open ? null : loc.name)}
+                aria-expanded={open}
+                aria-controls={`${rowId}-panel`}
               >
-                {/* Número de ordem */}
-                <div className="min-w-[22px] h-[22px] rounded-full bg-verde text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">
+                <div className="min-w-[22px] h-[22px] rounded-full bg-verde text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5" aria-hidden>
                   {i + 1}
                 </div>
 
@@ -240,16 +248,15 @@ export default function LocationsMap({ locations }: Props) {
                   <div className="text-xs text-gray-600 mt-0.5 truncate">{loc.address}</div>
                 </div>
 
-                <div className="text-gray-500 flex-shrink-0">
+                <span className="text-gray-500 flex-shrink-0 self-center" aria-hidden>
                   {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                </div>
-              </div>
+                </span>
+              </button>
 
-              {/* Detalhe expandido */}
               {open && (
-                <div className="mt-3 pl-[34px] space-y-2">
+                <section id={`${rowId}-panel`} className="mt-3 pl-[34px] space-y-2" aria-labelledby={`${rowId}-btn`}>
                   {loc.type === 'hospital' && loc.hospitalData && (
-                    <div className="flex items-center gap-2 text-xs text-gray-800">
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-gray-800">
                       <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg">
                         Fila: {loc.hospitalData.totalWaiting}
                       </span>
@@ -275,13 +282,13 @@ export default function LocationsMap({ locations }: Props) {
                   )}
                   {loc.hours && (
                     <div className="flex items-center gap-2 text-xs text-gray-800">
-                      <Clock size={12} className="text-verde flex-shrink-0" />
+                      <Clock size={12} className="text-verde flex-shrink-0" aria-hidden />
                       {loc.hours}
                     </div>
                   )}
                   {loc.phone && (
                     <div className="flex items-center gap-2 text-xs text-gray-800">
-                      <Phone size={12} className="text-verde flex-shrink-0" />
+                      <Phone size={12} className="text-verde flex-shrink-0" aria-hidden />
                       {loc.phone}
                     </div>
                   )}
@@ -303,7 +310,8 @@ export default function LocationsMap({ locations }: Props) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs font-bold bg-verde text-white px-3 py-1.5 rounded-lg hover:bg-verde-med transition-all"
                     >
-                      <Navigation size={11} /> Como chegar
+                      <Navigation size={11} aria-hidden /> Como chegar
+                      <span className="sr-only"> em {loc.name}, abre em nova aba</span>
                     </a>
                     <a
                       href={wazeUrl(loc.lat, loc.lng)}
@@ -311,7 +319,8 @@ export default function LocationsMap({ locations }: Props) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs font-semibold bg-sky-500 text-white px-3 py-1.5 rounded-lg hover:bg-sky-600 transition-all"
                     >
-                      Waze
+                      Waze até {loc.name}
+                      <span className="sr-only">, abre em nova aba</span>
                     </a>
                     {loc.online && (
                       <a
@@ -320,16 +329,17 @@ export default function LocationsMap({ locations }: Props) {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs font-semibold bg-white text-verde border border-verde px-3 py-1.5 rounded-lg hover:bg-verde-light transition-all"
                       >
-                        <ExternalLink size={11} /> Agendar online
+                        <ExternalLink size={11} aria-hidden /> Agendar online
+                        <span className="sr-only"> em {loc.name}, abre em nova aba</span>
                       </a>
                     )}
                   </div>
-                </div>
+                </section>
               )}
             </div>
           )
         })}
       </div>
-    </div>
+    </section>
   )
 }

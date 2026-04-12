@@ -19,6 +19,39 @@
   textarea {
     font: inherit;
   }
+
+  /* Foco visível — WCAG 2.4.7 */
+  :where(a, button, input, textarea, select, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 3px solid #006633;
+    outline-offset: 2px;
+  }
+
+  html.a11y-high-contrast :where(a, button, input, textarea, select, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline-color: #ffff00;
+    outline-width: 3px;
+  }
+}
+
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background-color: #006633;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.skip-to-content:focus {
+  left: 0.75rem;
+  top: 0.75rem;
+  outline: 3px solid #ff0;
+  outline-offset: 2px;
 }
 
 @layer components {
@@ -27,6 +60,9 @@
   }
   .chip:hover {
     @apply bg-verde-light border-verde text-verde;
+  }
+  .chip:focus-visible {
+    @apply ring-2 ring-verde ring-offset-2;
   }
 }
 
@@ -53,3 +89,281 @@
 .typing-dot:nth-child(2) { animation-delay: 0.18s; }
 .typing-dot:nth-child(3) { animation-delay: 0.36s; }
 .recording { animation: pulse-r 1s ease infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-msg-in,
+  .typing-dot,
+  .animate-blink,
+  .recording {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/*
+ * Alto contraste — escopo amplo (Tailwind + classes arbitrárias + HTML injetado).
+ * Tokens: verde no tailwind = azul gov; gdf-dark = #071d41.
+ */
+html.a11y-high-contrast {
+  background-color: #000;
+  color-scheme: dark;
+}
+
+html.a11y-high-contrast body,
+html.a11y-high-contrast #root {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .min-h-screen {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+/* Qualquer gradiente vira fundo sólido legível */
+html.a11y-high-contrast [class*="bg-gradient"] {
+  background-image: none !important;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .bg-white {
+  background-color: #0a0a0a !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast [class*="bg-white/"] {
+  background-color: #141414 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .bg-gdf-soft,
+html.a11y-high-contrast .bg-gdf-dark {
+  background-color: #111 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast [class*="#f8f8f8"] {
+  background-color: #161616 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast nav.bg-white {
+  background-color: #000 !important;
+  border-bottom-color: #ff0 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .text-gdf-dark {
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .text-gray-900,
+html.a11y-high-contrast .text-gray-800,
+html.a11y-high-contrast .text-gray-700,
+html.a11y-high-contrast .text-gray-600,
+html.a11y-high-contrast .text-gray-500 {
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .text-verde,
+html.a11y-high-contrast .text-verde-med {
+  color: #ff0 !important;
+}
+
+html.a11y-high-contrast .text-\[\#1351b4\],
+html.a11y-high-contrast .text-\[\#0c326f\] {
+  color: #ff0 !important;
+}
+
+html.a11y-high-contrast .border-gray-200,
+html.a11y-high-contrast .border-gray-300,
+html.a11y-high-contrast .border-gdf-border,
+html.a11y-high-contrast .border-verde-light,
+html.a11y-high-contrast .border-ouro-border,
+html.a11y-high-contrast [class*="border-verde"] {
+  border-color: #ff0 !important;
+}
+
+html.a11y-high-contrast [class*="border-white"] {
+  border-color: #ff0 !important;
+}
+
+html.a11y-high-contrast .status-dashboard-panel {
+  background-color: #000 !important;
+  border-top: 2px solid #ff0;
+  border-bottom: 2px solid #ff0;
+}
+
+html.a11y-high-contrast section[class*="from-verde"] {
+  background-color: #000 !important;
+  background-image: none !important;
+  border-bottom-color: #ff0 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .bg-verde,
+html.a11y-high-contrast .hover\:bg-verde-med:hover {
+  background-color: #001a44 !important;
+  color: #fff !important;
+  border: 2px solid #ff0 !important;
+}
+
+html.a11y-high-contrast .bg-verde-light {
+  background-color: #1a2332 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .text-white {
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .bg-sky-500,
+html.a11y-high-contrast .hover\:bg-sky-600:hover {
+  background-color: #075985 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .bg-red-50,
+html.a11y-high-contrast .bg-amber-50,
+html.a11y-high-contrast .bg-blue-50,
+html.a11y-high-contrast .bg-green-50,
+html.a11y-high-contrast .bg-yellow-50,
+html.a11y-high-contrast .bg-orange-50,
+html.a11y-high-contrast .bg-pink-50,
+html.a11y-high-contrast .bg-indigo-50,
+html.a11y-high-contrast .bg-purple-50 {
+  background-color: #1c1c1c !important;
+  color: #fff !important;
+  border-color: #ff0 !important;
+}
+
+html.a11y-high-contrast .text-green-700,
+html.a11y-high-contrast .text-blue-700,
+html.a11y-high-contrast .text-yellow-700,
+html.a11y-high-contrast .text-orange-700,
+html.a11y-high-contrast .text-red-700,
+html.a11y-high-contrast .text-amber-700,
+html.a11y-high-contrast .text-indigo-700,
+html.a11y-high-contrast .text-pink-700 {
+  color: #f5f5f5 !important;
+}
+
+html.a11y-high-contrast footer.bg-gdf-dark {
+  background-color: #000 !important;
+  border-color: #ff0 !important;
+}
+
+html.a11y-high-contrast footer [class*="text-white/"] {
+  color: #e8e8e8 !important;
+}
+
+html.a11y-high-contrast .bg-ouro-bg {
+  background-color: #422006 !important;
+  border-color: #ff0 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .text-yellow-800,
+html.a11y-high-contrast .text-yellow-700,
+html.a11y-high-contrast .text-ouro-DEFAULT {
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .text-ouro-border {
+  color: #ff0 !important;
+}
+
+html.a11y-high-contrast textarea,
+html.a11y-high-contrast input {
+  background-color: #0a0a0a !important;
+  color: #fff !important;
+  caret-color: #ff0;
+}
+
+html.a11y-high-contrast ::placeholder {
+  color: #c8c8c8 !important;
+  opacity: 1 !important;
+}
+
+html.a11y-high-contrast main article a:not([class*="bg-verde"]),
+html.a11y-high-contrast main article .leading-relaxed a,
+html.a11y-high-contrast main article .leading-snug a {
+  color: #ff0 !important;
+  text-decoration: underline;
+}
+
+html.a11y-high-contrast main article strong,
+html.a11y-high-contrast main article b {
+  color: #fff !important;
+}
+
+html.a11y-high-contrast main a[class*="bg-verde"],
+html.a11y-high-contrast main a.inline-flex[class*="text-white"] {
+  background-color: #001a44 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast .chip {
+  background-color: #0a0a0a !important;
+  color: #fff !important;
+  border-color: #ff0 !important;
+}
+
+html.a11y-high-contrast .chip:hover {
+  background-color: #1a1a1a !important;
+  color: #ff0 !important;
+}
+
+html.a11y-high-contrast .bg-gray-500 {
+  background-color: #d4d4d4 !important;
+}
+
+/* Escala de fonte (100% = padrão) */
+html[data-font-scale='115'] {
+  font-size: 115%;
+}
+
+html[data-font-scale='130'] {
+  font-size: 130%;
+}
+
+/* Links sublinhados: âncoras + botões que funcionam como links (Nav gov.br, main) */
+html.a11y-underline-links a:not(.skip-to-content),
+html.a11y-underline-links nav[aria-label="Navegação principal"] button[type="button"],
+html.a11y-underline-links main button[type="button"] {
+  text-decoration-line: underline !important;
+  text-decoration-style: solid !important;
+  text-underline-offset: 0.12em;
+  text-decoration-thickness: 0.1em;
+}
+
+html.a11y-underline-links nav[aria-label="Ferramentas de acessibilidade e identidade do portal"] button,
+html.a11y-underline-links main [aria-label="Campo para continuar a conversa"] button,
+html.a11y-underline-links main button.min-h-11.min-w-11 {
+  text-decoration: none !important;
+}
+
+html.a11y-underline-links nav[aria-label="Navegação principal"] button:disabled {
+  text-decoration: none !important;
+}
+
+/* Alto contraste forçado do sistema (Windows / alguns navegadores) */
+@media (forced-colors: active) {
+  :where(a, button):focus-visible {
+    outline: 3px solid CanvasText;
+    outline-offset: 2px;
+  }
+}
+
+/* Contraste aumentado preferido */
+@media (prefers-contrast: more) {
+  :root {
+    --tw-border-opacity: 1;
+  }
+  .border-gdf-border {
+    border-color: rgb(90 120 100 / var(--tw-border-opacity, 1));
+  }
+}
