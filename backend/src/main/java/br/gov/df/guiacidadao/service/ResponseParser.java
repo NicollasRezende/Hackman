@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +93,7 @@ public class ResponseParser {
                         c.has("hours") ? c.get("hours").asText() : ""
                 );
             }
+            contact = normalizeContact(contact, tag);
 
             List<String> related = null;
             if (root.has("related") && root.get("related").isArray()) {
@@ -211,6 +213,96 @@ public class ResponseParser {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private Contact normalizeContact(Contact contact, Tag tag) {
+        if (contact == null) return null;
+        String cls = tag != null ? tag.cls() : "tag-social";
+
+        String title = safeTrim(contact.title());
+        String addr = safeTrim(contact.addr());
+        String phone = normalizePhone(safeTrim(contact.phone()));
+        String hours = safeTrim(contact.hours());
+
+        if (!isLikelyDfAddress(addr)) {
+            return defaultContactForTag(cls);
+        }
+
+        if (phone.isEmpty()) {
+            Contact fallback = defaultContactForTag(cls);
+            phone = fallback.phone();
+        }
+
+        if (title.isEmpty()) title = defaultContactForTag(cls).title();
+        if (hours.isEmpty()) hours = defaultContactForTag(cls).hours();
+
+        return new Contact(title, addr, phone, hours);
+    }
+
+    private Contact defaultContactForTag(String cls) {
+        if (cls == null) cls = "tag-social";
+        return switch (cls) {
+            case "tag-mulher" -> new Contact(
+                    "Casa da Mulher Brasileira — Brasília (DF)",
+                    "SGAS 601, Lote 2, Asa Sul, Brasília/DF",
+                    "(61) 3223-3690",
+                    "24 horas"
+            );
+            case "tag-work" -> new Contact(
+                    "SINE-DF / SEDET-DF",
+                    "Postos do SINE/Na Hora no DF (consulte Agenda DF)",
+                    "158",
+                    "Seg–Sex (consultar Agenda DF)"
+            );
+            case "tag-health" -> new Contact(
+                    "Central 156 (GDF) / SES-DF",
+                    "Brasília/DF",
+                    "156",
+                    "24 horas"
+            );
+            default -> new Contact(
+                    "Central 156 (GDF)",
+                    "Brasília/DF",
+                    "156",
+                    "24 horas"
+            );
+        };
+    }
+
+    private String normalizePhone(String phone) {
+        if (phone == null) return "";
+        String digits = phone.replaceAll("\\D+", "");
+        if (digits.isEmpty()) return "";
+        if (digits.equals("156") || digits.equals("158") || digits.equals("180") || digits.equals("190")
+                || digits.equals("192") || digits.equals("193") || digits.equals("199") || digits.equals("135")) {
+            return digits;
+        }
+        if ((digits.length() == 10 || digits.length() == 11) && digits.startsWith("61")) {
+            return phone;
+        }
+        return "";
+    }
+
+    private boolean isLikelyDfAddress(String addr) {
+        if (addr == null) return false;
+        String t = normalizeText(addr);
+        if (t.isBlank()) return false;
+        if (t.contains("sao paulo") || t.contains(", sp") || t.contains(" sp ") || t.endsWith(" sp")) return false;
+        if (t.contains("rio de janeiro") || t.contains(", rj") || t.endsWith(" rj")) return false;
+        if (t.contains("brasilia") || t.contains(" distrito federal") || t.contains(" df")) return true;
+        return t.contains("asa sul") || t.contains("asa norte") || t.contains("ceilandia") || t.contains("taguatinga")
+                || t.contains("samambaia") || t.contains("guara") || t.contains("planaltina") || t.contains("paranoa")
+                || t.contains("sobradinho") || t.contains("gama") || t.contains("recanto das emas") || t.contains("brazlandia");
+    }
+
+    private String normalizeText(String s) {
+        String lower = s.toLowerCase();
+        String n = Normalizer.normalize(lower, Normalizer.Form.NFD).replaceAll("[\\u0300-\\u036f]", "");
+        return n.replaceAll("\\s+", " ").trim();
+    }
+
+    private String safeTrim(String s) {
+        return s == null ? "" : s.trim();
     }
 
     private Tag parseTag(JsonNode tagNode) {
