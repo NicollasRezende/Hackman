@@ -27,7 +27,7 @@ public class AdminController {
     public ResponseEntity<AdminMetricsDTO> metrics() {
         long totalMessages = chatLogRepo.count();
         long uniqueSessions = chatLogRepo.countUniqueSessions();
-        long avgMs = Math.round(chatLogRepo.avgProcessingMs());
+        long avgMs = Math.round(chatLogRepo.averageProcessingMs());
 
         long positive = feedbackRepo.countByVote("positive");
         long negative = feedbackRepo.countByVote("negative");

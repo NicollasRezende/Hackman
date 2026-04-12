@@ -15,6 +15,7 @@ public record ChatResponse(
         Contact contact,
         List<String> related,
         Official official,
+        Provenance provenance,
         Meta meta
 ) {
     public record Tag(String cls, String icon, String txt) {}
@@ -25,6 +26,8 @@ public record ChatResponse(
 
     public record Official(String label, String url, String source) {}
 
+    public record Provenance(String source, String updatedAt, String referenceUrl) {}
+
     public record Meta(
             String sessionId,
             String responseId,
@@ -34,7 +37,11 @@ public record ChatResponse(
     ) {}
 
     public ChatResponse withOfficial(Official official) {
-        return new ChatResponse(tag, intro, blocks, steps, tip, contact, related, official, meta);
+        return new ChatResponse(tag, intro, blocks, steps, tip, contact, related, official, provenance, meta);
+    }
+
+    public ChatResponse withProvenance(Provenance provenance) {
+        return new ChatResponse(tag, intro, blocks, steps, tip, contact, related, official, provenance, meta);
     }
 
     public static ChatResponse fromParsed(
@@ -49,7 +56,7 @@ public record ChatResponse(
                 processingMs,
                 Instant.now().toString()
         );
-        return new ChatResponse(tag, intro, blocks, steps, tip, contact, related, null, meta);
+        return new ChatResponse(tag, intro, blocks, steps, tip, contact, related, null, null, meta);
     }
 
     public static ChatResponse fallback(String sessionId, String model) {
@@ -71,6 +78,7 @@ public record ChatResponse(
                 ),
                 null, null,
                 List.of("Como agendar consulta pelo SUS?", "Como solicitar seguro-desemprego?", "Como emitir segunda via do RG?"),
+                null,
                 null,
                 new Meta(sessionId, "resp_fallback", model, 0, Instant.now().toString())
         );

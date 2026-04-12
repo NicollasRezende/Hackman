@@ -23,6 +23,12 @@ export type LocationType =
   | 'hospital'
   | 'other'
 
+export interface Provenance {
+  source: string
+  updatedAt: string
+  referenceUrl?: string
+}
+
 export interface ServiceLocation {
   name: string
   type: LocationType
@@ -34,6 +40,8 @@ export interface ServiceLocation {
   services?: string[]
   online?: string
   distance?: number
+  source?: string
+  updatedAt?: string
   hospitalData?: {
     totalWaiting: number
     bedsAvailable: number
@@ -69,6 +77,7 @@ export interface AIResponse {
   locations?: ServiceLocation[]
   related?: string[]
   official?: OfficialLink
+  provenance?: Provenance
   meta?: ResponseMeta
 }
 

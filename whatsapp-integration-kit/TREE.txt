@@ -1,0 +1,60 @@
+/home/sea/seagri/whatsapp-integration-kit
+├── docs
+│   ├── API_REFERENCE.md
+│   ├── BEST_PRACTICES.md
+│   ├── MESSAGE_TYPES.md
+│   └── TROUBLESHOOTING.md
+├── examples
+│   ├── 01_basic
+│   │   ├── send_media.py
+│   │   ├── send_simple_message.py
+│   │   └── send_template.py
+│   ├── 02_interactive
+│   │   ├── send_buttons.py
+│   │   └── send_cta_url.py
+│   ├── 03_webhooks
+│   │   └── fastapi_webhook.py
+│   └── 04_use_cases
+│       ├── billing_system
+│       ├── customer_support
+│       ├── notifications
+│       └── order_confirmation
+├── tests
+│   ├── __init__.py
+│   ├── test_builders.py
+│   └── test_service.py
+├── whatsapp_kit
+│   ├── builders
+│   │   ├── __init__.py
+│   │   ├── interactive_builder.py
+│   │   ├── media_builder.py
+│   │   ├── template_builder.py
+│   │   └── text_builder.py
+│   ├── core
+│   │   ├── base_client.py
+│   │   ├── base_service.py
+│   │   ├── exceptions.py
+│   │   ├── __init__.py
+│   │   └── types.py
+│   ├── services
+│   │   ├── __init__.py
+│   │   ├── media_service.py
+│   │   ├── template_service.py
+│   │   ├── webhook_service.py
+│   │   └── whatsapp_service.py
+│   ├── utils
+│   │   ├── handlers
+│   │   ├── formatters.py
+│   │   ├── __init__.py
+│   │   ├── logging.py
+│   │   └── validators.py
+│   ├── config.py
+│   └── __init__.py
+├── INDEX.md
+├── QUICK_START.md
+├── README.md
+├── requirements.txt
+├── STRUCTURE.md
+└── TREE.txt
+
+18 directories, 40 files

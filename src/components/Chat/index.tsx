@@ -6,6 +6,7 @@ import type { Message } from '../../types'
 interface Props {
   messages: Message[]
   onRelated: (q: string) => void
+  sessionId?: string
 }
 
 function statusFromMessages(messages: Message[]): string {
@@ -19,7 +20,7 @@ function statusFromMessages(messages: Message[]): string {
   return 'Resposta do assistente exibida abaixo.'
 }
 
-export default function ChatSection({ messages, onRelated }: Props) {
+export default function ChatSection({ messages, onRelated, sessionId }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null)
   const [announcement, setAnnouncement] = useState('')
   const prevSignature = useRef('')
@@ -78,7 +79,14 @@ export default function ChatSection({ messages, onRelated }: Props) {
             )
           }
           if (msg.data === null) {
-            return <DefaultMessage key={msg.id} onRelated={onRelated} />
+            return (
+              <DefaultMessage
+                key={msg.id}
+                onRelated={onRelated}
+                responseId={`default_${msg.id}`}
+                sessionId={sessionId}
+              />
+            )
           }
           return <AIMessage key={msg.id} data={msg.data} onRelated={onRelated} />
         })}
