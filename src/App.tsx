@@ -11,6 +11,7 @@ import ChatSection from './components/Chat'
 import BottomBar from './components/Chat/BottomBar'
 import AllServices from './components/AllServices'
 import Hospitals from './components/Hospitals'
+import AdminDashboard from './components/AdminDashboard'
 import type { Message } from './types'
 import { BOTTOM_CHAT_INPUT_ID, HERO_CONSULTA_ID } from './a11y/constants'
 
@@ -31,6 +32,7 @@ export default function App() {
   const [chatStarted, setChatStarted] = useState(false)
   const [showAllServices, setShowAllServices] = useState(false)
   const [showHospitals, setShowHospitals] = useState(false)
+  const [showAdmin, setShowAdmin] = useState(() => window.location.hash === '#admin')
   const [messages, setMessages] = useState<Message[]>([])
   const sessionId = useRef(getSessionId())
   const mainRef = useRef<HTMLElement>(null)
@@ -107,7 +109,15 @@ export default function App() {
     setChatStarted(false)
     setShowAllServices(false)
     setShowHospitals(false)
+    setShowAdmin(false)
+    window.history.replaceState(null, '', window.location.pathname)
   }
+
+  useEffect(() => {
+    const onHash = () => setShowAdmin(window.location.hash === '#admin')
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
 
   const skipToMain = () => {
     mainRef.current?.focus()
@@ -190,6 +200,9 @@ export default function App() {
                 : 'Serviços e informações ao cidadão'
         }
       >
+        {showAdmin ? (
+          <AdminDashboard onBack={handleHomeClick} />
+        ) : (<>
         {!showAllServices && !showHospitals && (
           <Hero compact={chatStarted} onSend={send} />
         )}
@@ -214,6 +227,7 @@ export default function App() {
             <Footer />
           </>
         )}
+        </>)}
       </main>
     </div>
   )
