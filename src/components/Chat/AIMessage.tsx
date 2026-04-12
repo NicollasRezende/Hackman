@@ -7,6 +7,7 @@ import { getIcon } from '../../utils/icon'
 import type { AIResponse } from '../../types'
 import LocationsMap from './LocationsMap'
 import { useAccessibility } from '../../contexts/AccessibilityContext'
+import { sendFeedback, type FeedbackVote } from '../../services/feedback'
 
 const TAG_STYLES: Record<string, string> = {
   'tag-work': 'bg-amber-50 text-amber-700',
@@ -25,9 +26,44 @@ interface Props {
 export default function AIMessage({ data, onRelated }: Props) {
   const { announce } = useAccessibility()
   const [feedback, setFeedback] = useState<'pos' | 'neg' | null>(null)
+  const [feedbackSending, setFeedbackSending] = useState(false)
+  const [feedbackSent, setFeedbackSent] = useState(false)
+  const [feedbackError, setFeedbackError] = useState(false)
   const titleId = useId()
   const stepsId = useId()
   const feedbackLabelId = useId()
+
+  const submitFeedback = useCallback(
+    async (choice: 'pos' | 'neg') => {
+      if (feedbackSending || feedbackSent) return
+      const responseId = data.meta?.responseId
+      if (!responseId) {
+        setFeedback(choice)
+        announce('Obrigado pelo retorno.')
+        setFeedbackSent(true)
+        return
+      }
+      setFeedback(choice)
+      setFeedbackSending(true)
+      setFeedbackError(false)
+      const vote: FeedbackVote = choice === 'pos' ? 'positive' : 'negative'
+      const ok = await sendFeedback(responseId, data.meta?.sessionId, vote)
+      setFeedbackSending(false)
+      if (ok) {
+        setFeedbackSent(true)
+        announce(
+          choice === 'pos'
+            ? 'Obrigado! Seu retorno foi registrado.'
+            : 'Retorno registrado. Vamos melhorar esta orientação.',
+        )
+      } else {
+        setFeedbackError(true)
+        setFeedback(null)
+        announce('Não foi possível registrar seu retorno. Tente novamente.')
+      }
+    },
+    [data.meta?.responseId, data.meta?.sessionId, feedbackSending, feedbackSent, announce],
+  )
 
   const TagIcon = getIcon(data.tag.icon)
 
@@ -171,15 +207,28 @@ export default function AIMessage({ data, onRelated }: Props) {
         )}
 
         <div className="flex gap-2 flex-wrap mt-4">
-          <a
-            href="https://www.df.gov.br"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-bold bg-verde text-white px-4 py-2.5 rounded-xl hover:bg-verde-med transition-all shadow-sm"
-          >
-            <ExternalLink size={14} aria-hidden /> Acessar serviço oficial
-            <span className="sr-only"> (abre df.gov.br em nova aba)</span>
-          </a>
+          {(() => {
+            const officialUrl = data.official?.url ?? 'https://www.df.gov.br'
+            const officialLabel = data.official?.label ?? 'Acessar serviço oficial'
+            const officialHost = (() => {
+              try {
+                return new URL(officialUrl).host
+              } catch {
+                return 'df.gov.br'
+              }
+            })()
+            return (
+              <a
+                href={officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-bold bg-verde text-white px-4 py-2.5 rounded-xl hover:bg-verde-med transition-all shadow-sm"
+              >
+                <ExternalLink size={14} aria-hidden /> {officialLabel}
+                <span className="sr-only"> (abre {officialHost} em nova aba)</span>
+              </a>
+            )
+          })()}
           <button
             type="button"
             onClick={() => void handleShare()}
@@ -190,36 +239,49 @@ export default function AIMessage({ data, onRelated }: Props) {
           </button>
         </div>
 
-        <div className="flex items-center gap-2 mt-5 pt-4 border-t border-gdf-border">
-          <span className="text-xs text-gray-600 flex-1" id={feedbackLabelId}>
-            Isso te ajudou?
-          </span>
-          <button
-            type="button"
-            onClick={() => setFeedback('pos')}
-            aria-pressed={feedback === 'pos'}
-            aria-describedby={feedbackLabelId}
-            className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${
-              feedback === 'pos'
-                ? 'bg-verde-light border-verde text-verde'
-                : 'bg-white border-gdf-border text-gray-600 hover:border-verde hover:text-verde hover:bg-verde-light'
-            }`}
-          >
-            <ThumbsUp size={12} aria-hidden /> Sim, ajudou
-          </button>
-          <button
-            type="button"
-            onClick={() => setFeedback('neg')}
-            aria-pressed={feedback === 'neg'}
-            aria-describedby={feedbackLabelId}
-            className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${
-              feedback === 'neg'
-                ? 'bg-red-50 border-red-400 text-red-600'
-                : 'bg-white border-gdf-border text-gray-600 hover:border-red-400 hover:text-red-600 hover:bg-red-50'
-            }`}
-          >
-            <ThumbsDown size={12} aria-hidden /> Não funcionou
-          </button>
+        <div className="mt-5 pt-4 border-t border-gdf-border">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-600 flex-1" id={feedbackLabelId}>
+              {feedbackSent
+                ? 'Obrigado pelo retorno!'
+                : feedbackSending
+                  ? 'Registrando seu retorno…'
+                  : 'Isso te ajudou?'}
+            </span>
+            <button
+              type="button"
+              onClick={() => void submitFeedback('pos')}
+              disabled={feedbackSending || feedbackSent}
+              aria-pressed={feedback === 'pos'}
+              aria-describedby={feedbackLabelId}
+              className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all disabled:cursor-not-allowed disabled:opacity-80 ${
+                feedback === 'pos'
+                  ? 'bg-verde-light border-verde text-verde'
+                  : 'bg-white border-gdf-border text-gray-600 hover:border-verde hover:text-verde hover:bg-verde-light'
+              }`}
+            >
+              <ThumbsUp size={12} aria-hidden /> Sim, ajudou
+            </button>
+            <button
+              type="button"
+              onClick={() => void submitFeedback('neg')}
+              disabled={feedbackSending || feedbackSent}
+              aria-pressed={feedback === 'neg'}
+              aria-describedby={feedbackLabelId}
+              className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all disabled:cursor-not-allowed disabled:opacity-80 ${
+                feedback === 'neg'
+                  ? 'bg-red-50 border-red-400 text-red-600'
+                  : 'bg-white border-gdf-border text-gray-600 hover:border-red-400 hover:text-red-600 hover:bg-red-50'
+              }`}
+            >
+              <ThumbsDown size={12} aria-hidden /> Não funcionou
+            </button>
+          </div>
+          {feedbackError && (
+            <p className="text-[11px] text-red-600 mt-2 m-0" role="alert">
+              Não foi possível registrar seu retorno. Tente novamente.
+            </p>
+          )}
         </div>
       </div>
 

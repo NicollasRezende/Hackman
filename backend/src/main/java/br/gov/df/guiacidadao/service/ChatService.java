@@ -22,6 +22,7 @@ public class ChatService {
     private final OpenRouterService openRouter;
     private final ResponseParser responseParser;
     private final ChatLogRepository chatLogRepository;
+    private final OfficialLinkResolver officialLinkResolver;
 
     public ChatService(
             IntentDetector intentDetector,
@@ -29,7 +30,8 @@ public class ChatService {
             ContextBuilder contextBuilder,
             OpenRouterService openRouter,
             ResponseParser responseParser,
-            ChatLogRepository chatLogRepository
+            ChatLogRepository chatLogRepository,
+            OfficialLinkResolver officialLinkResolver
     ) {
         this.intentDetector = intentDetector;
         this.aggregator = aggregator;
@@ -37,6 +39,7 @@ public class ChatService {
         this.openRouter = openRouter;
         this.responseParser = responseParser;
         this.chatLogRepository = chatLogRepository;
+        this.officialLinkResolver = officialLinkResolver;
     }
 
     public ChatResponse processMessage(String message, String sessionId) {
@@ -62,7 +65,8 @@ public class ChatService {
             String llmJson = callWithRetry(systemPrompt, message);
 
             long processingMs = System.currentTimeMillis() - start;
-            ChatResponse response = responseParser.parse(llmJson, sessionId, model, processingMs);
+            ChatResponse response = responseParser.parse(llmJson, sessionId, model, processingMs)
+                    .withOfficial(officialLinkResolver.resolve(intent.category()));
 
             saveLog(sessionId, message, response.meta().responseId(), intent.category(), processingMs);
 

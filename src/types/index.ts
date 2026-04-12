@@ -44,6 +44,20 @@ export interface ServiceLocation {
     red: number
   }
 }
+export interface ResponseMeta {
+  sessionId?: string
+  responseId?: string
+  model?: string
+  processingMs?: number
+  timestamp?: string
+}
+
+export interface OfficialLink {
+  label: string
+  url: string
+  source?: string
+}
+
 export interface AIResponse {
   keys?: string[]
   tag: { cls: string; icon: string; txt: string }
@@ -54,6 +68,8 @@ export interface AIResponse {
   contact?: ContactInfo
   locations?: ServiceLocation[]
   related?: string[]
+  official?: OfficialLink
+  meta?: ResponseMeta
 }
 
 export interface ServiceCard {

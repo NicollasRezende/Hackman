@@ -257,6 +257,12 @@ export default function LocationsMap({ locations }: Props) {
                 <section id={`${rowId}-panel`} className="mt-3 pl-[34px] space-y-2" aria-labelledby={`${rowId}-btn`}>
                   {loc.type === 'hospital' && loc.hospitalData && (
                     <div className="flex flex-wrap items-center gap-2 text-xs text-gray-800">
+                      <span
+                        className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider bg-amber-50 border border-amber-200 text-amber-800 px-2 py-1 rounded-lg"
+                        title="Valores ilustrativos para demonstração — não refletem dados operacionais em tempo real"
+                      >
+                        Dado de referência
+                      </span>
                       <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gdf-soft border border-gdf-border px-2 py-1 rounded-lg">
                         Fila: {loc.hospitalData.totalWaiting}
                       </span>

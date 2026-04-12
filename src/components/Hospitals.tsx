@@ -24,7 +24,10 @@ export default function Hospitals({ onBack }: Props) {
         <div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Unidades Hospitalares do DF</h2>
           <p className="text-gray-600">
-            Mapa e métricas em tempo real: fila, vagas e triagem por unidade.
+            Mapa das unidades, serviços disponíveis e indicadores de fila/triagem.
+          </p>
+          <p className="mt-2 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full">
+            Dados de referência · não são operacionais em tempo real
           </p>
         </div>
 

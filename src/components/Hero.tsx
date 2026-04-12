@@ -238,20 +238,13 @@ export default function Hero({ compact, onSend }: HeroProps) {
         </div>
 
         {!compact && (
-          <div
-            className="flex items-center justify-center gap-4 mt-3 text-xs text-gray-600"
-            aria-live="polite"
-          >
+          <div className="flex items-center justify-center gap-2 mt-3 text-xs text-gray-600">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-blink flex-shrink-0" aria-hidden />
-            <span>1.247 consultas respondidas hoje</span>
-            <span className="text-gdf-border" aria-hidden>
+            <span>Piloto no DF · linguagem natural e voz</span>
+            <span className="text-gdf-border hidden sm:inline" aria-hidden>
               ·
             </span>
-            <span>Tempo médio: 4 segundos</span>
-            <span className="text-gdf-border hidden sm:block" aria-hidden>
-              ·
-            </span>
-            <span className="hidden sm:block">Atualizado às 09:15 de 11/04/2026</span>
+            <span className="hidden sm:inline">Integra fontes públicas oficiais</span>
           </div>
         )}
 

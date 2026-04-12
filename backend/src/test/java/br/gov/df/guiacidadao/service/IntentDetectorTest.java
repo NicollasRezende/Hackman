@@ -100,4 +100,47 @@ class IntentDetectorTest {
         DetectedIntent intent = detector.detect("QUERO TIRAR MINHA CARTEIRA DE MOTORISTA");
         assertEquals("transito", intent.category());
     }
+
+    @Test
+    void detectsSaudeWithTypoInPassandoMal() {
+        DetectedIntent intent = detector.detect("to pasando mal, preciso de ajuda");
+        assertEquals("saude", intent.category());
+    }
+
+    @Test
+    void detectsSaudeWithPopularSynonymTaMal() {
+        DetectedIntent intent = detector.detect("ta mal, nao sei o que fazer");
+        assertEquals("saude", intent.category());
+    }
+
+    @Test
+    void detectsTrabalhoWithTypoInEmprego() {
+        DetectedIntent intent = detector.detect("perdi meu empreego ontem");
+        assertEquals("trabalho", intent.category());
+    }
+
+    @Test
+    void detectsTrabalhoWithSynonymMeMandaramEmbora() {
+        DetectedIntent intent = detector.detect("me mandaram embora do servico");
+        assertEquals("trabalho", intent.category());
+    }
+
+    @Test
+    void detectsMulherWithTypoInViolencia() {
+        DetectedIntent intent = detector.detect("violencia domestca, preciso de ajuda");
+        assertEquals("mulher", intent.category());
+    }
+
+    @Test
+    void detectsMulherWithPopularSynonymMaridoBate() {
+        DetectedIntent intent = detector.detect("meu marido bate em mim");
+        assertEquals("mulher", intent.category());
+    }
+
+    @Test
+    void stillDetectsCnpjAfterNormalization() {
+        DetectedIntent intent = detector.detect("cnpj 12.345.678/0001-90 inidoneo tcu");
+        assertEquals("12345678000190", intent.cnpj());
+        assertEquals("tcu", intent.category());
+    }
 }
