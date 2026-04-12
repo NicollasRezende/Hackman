@@ -19,6 +19,7 @@ public class ChatService {
     private final IntentDetector intentDetector;
     private final ExternalDataAggregator aggregator;
     private final ContextBuilder contextBuilder;
+    private final GroqService groq;
     private final OpenRouterService openRouter;
     private final ResponseParser responseParser;
     private final ChatLogRepository chatLogRepository;
@@ -28,6 +29,7 @@ public class ChatService {
             IntentDetector intentDetector,
             ExternalDataAggregator aggregator,
             ContextBuilder contextBuilder,
+            GroqService groq,
             OpenRouterService openRouter,
             ResponseParser responseParser,
             ChatLogRepository chatLogRepository,
@@ -36,6 +38,7 @@ public class ChatService {
         this.intentDetector = intentDetector;
         this.aggregator = aggregator;
         this.contextBuilder = contextBuilder;
+        this.groq = groq;
         this.openRouter = openRouter;
         this.responseParser = responseParser;
         this.chatLogRepository = chatLogRepository;
@@ -44,11 +47,13 @@ public class ChatService {
 
     public ChatResponse processMessage(String message, String sessionId) {
         long start = System.currentTimeMillis();
-        String model = openRouter.getModel();
 
-        if (!openRouter.isConfigured()) {
-            log.error("OpenRouter nao configurado — retornando fallback");
-            return ChatResponse.fallback(sessionId, model, "OPENROUTER_API_KEY ausente no backend");
+        boolean groqAvailable = groq.isConfigured();
+        boolean routerAvailable = openRouter.isConfigured();
+
+        if (!groqAvailable && !routerAvailable) {
+            log.error("Nenhum provider LLM configurado — retornando fallback");
+            return ChatResponse.fallback(sessionId, "none", "Nenhum provider LLM configurado (GROQ_API_KEY e OPENROUTER_API_KEY ausentes)");
         }
 
         try {
@@ -62,10 +67,10 @@ public class ChatService {
 
             String systemPrompt = contextBuilder.build(externalData);
 
-            String llmJson = callWithRetry(systemPrompt, message);
+            LlmResult result = callWithFallback(systemPrompt, message, groqAvailable, routerAvailable);
 
             long processingMs = System.currentTimeMillis() - start;
-            ChatResponse response = responseParser.parse(llmJson, sessionId, model, processingMs)
+            ChatResponse response = responseParser.parse(result.content(), sessionId, result.model(), processingMs)
                     .withOfficial(officialLinkResolver.resolve(intent.category()));
 
             saveLog(sessionId, message, response.meta().responseId(), intent.category(), processingMs);
@@ -76,6 +81,7 @@ public class ChatService {
             long processingMs = System.currentTimeMillis() - start;
             log.error("Erro no processamento da mensagem: {}", e.getMessage(), e);
             saveLog(sessionId, message, "resp_error", "error", processingMs);
+            String model = groqAvailable ? groq.getModel() : openRouter.getModel();
             String detail = e.getMessage();
             if (e.getCause() != null && detail != null && !detail.contains(e.getCause().getClass().getSimpleName())) {
                 detail = detail + " | causa: " + e.getCause().getMessage();
@@ -84,23 +90,34 @@ public class ChatService {
         }
     }
 
-    private String callWithRetry(String systemPrompt, String userMessage) {
-        try {
-            return openRouter.complete(systemPrompt, userMessage);
-        } catch (Exception e) {
-            log.warn("Primeira tentativa LLM falhou, retentando em 2s: {}", e.getMessage());
+    private record LlmResult(String content, String model) {}
+
+    private LlmResult callWithFallback(String systemPrompt, String userMessage,
+                                        boolean groqAvailable, boolean routerAvailable) {
+        // 1. Groq (principal — com web search via compound)
+        if (groqAvailable) {
             try {
-                Thread.sleep(2000);
-                return openRouter.complete(systemPrompt, userMessage);
-            } catch (InterruptedException ie) {
-                Thread.currentThread().interrupt();
-                log.error("Thread interrompida durante retry LLM");
-                throw new RuntimeException("Thread interrompida durante retry LLM", ie);
-            } catch (Exception e2) {
-                log.error("Segunda tentativa LLM falhou: {}", e2.getMessage());
-                throw e2;
+                log.info("Chamando Groq (principal) modelo={}", groq.getModel());
+                String result = groq.complete(systemPrompt, userMessage);
+                return new LlmResult(result, groq.getModel());
+            } catch (Exception e) {
+                log.warn("Groq falhou: {}. Tentando fallback OpenRouter...", e.getMessage());
             }
         }
+
+        // 2. Fallback: OpenRouter
+        if (routerAvailable) {
+            try {
+                log.info("Chamando OpenRouter (fallback) modelo={}", openRouter.getModel());
+                String result = openRouter.complete(systemPrompt, userMessage);
+                return new LlmResult(result, openRouter.getModel());
+            } catch (Exception e) {
+                log.error("OpenRouter (fallback) tambem falhou: {}", e.getMessage());
+                throw e;
+            }
+        }
+
+        throw new RuntimeException("Todos os providers LLM falharam");
     }
 
     private void saveLog(String sessionId, String message, String responseId, String category, long processingMs) {
