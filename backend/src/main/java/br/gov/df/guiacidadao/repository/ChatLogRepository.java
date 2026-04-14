@@ -4,9 +4,18 @@ import br.gov.df.guiacidadao.entity.ChatLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.Instant;
 import java.util.List;
 
 public interface ChatLogRepository extends JpaRepository<ChatLog, Long> {
+
+    List<ChatLog> findTop100ByOrderByCreatedAtDesc();
+
+    @Query("select min(c.createdAt) from ChatLog c")
+    Instant findMinCreatedAt();
+
+    @Query("select max(c.createdAt) from ChatLog c")
+    Instant findMaxCreatedAt();
 
     @Query("SELECT COUNT(DISTINCT c.sessionId) FROM ChatLog c")
     long countUniqueSessions();

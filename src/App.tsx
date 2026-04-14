@@ -175,15 +175,17 @@ export default function App() {
         Pular para o conteúdo principal
       </a>
 
-      <header>
-        <AlertBar />
-        <IdentityBar />
-        <Nav
-          onServicesClick={handleNavServicesClick}
-          onUnitsClick={handleNavUnitsClick}
-          onHomeClick={handleHomeClick}
-        />
-      </header>
+      {!showAdmin && (
+        <header>
+          <AlertBar />
+          <IdentityBar />
+          <Nav
+            onServicesClick={handleNavServicesClick}
+            onUnitsClick={handleNavUnitsClick}
+            onHomeClick={handleHomeClick}
+          />
+        </header>
+      )}
 
       <main
         ref={mainRef}
@@ -191,13 +193,15 @@ export default function App() {
         tabIndex={-1}
         className="outline-none"
         aria-label={
-          showAllServices
-            ? 'Lista de serviços'
-            : showHospitals
-              ? 'Hospitais e unidades'
-              : chatStarted
-                ? 'Conversa com o Guia Cidadão'
-                : 'Serviços e informações ao cidadão'
+          showAdmin
+            ? 'Painel de auditoria TCU'
+            : showAllServices
+              ? 'Lista de serviços'
+              : showHospitals
+                ? 'Hospitais e unidades'
+                : chatStarted
+                  ? 'Conversa com o Guia Cidadão'
+                  : 'Serviços e informações ao cidadão'
         }
       >
         {showAdmin ? (

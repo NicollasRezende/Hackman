@@ -1,55 +1,39 @@
 package br.gov.df.guiacidadao.controller;
 
 import br.gov.df.guiacidadao.model.dto.AdminMetricsDTO;
-import br.gov.df.guiacidadao.model.dto.AdminMetricsDTO.*;
-import br.gov.df.guiacidadao.repository.ChatFeedbackRepository;
-import br.gov.df.guiacidadao.repository.ChatLogRepository;
+import br.gov.df.guiacidadao.service.AdminMetricsBuilder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminController {
 
-    private final ChatLogRepository chatLogRepo;
-    private final ChatFeedbackRepository feedbackRepo;
+    private final AdminMetricsBuilder adminMetricsBuilder;
 
-    public AdminController(ChatLogRepository chatLogRepo, ChatFeedbackRepository feedbackRepo) {
-        this.chatLogRepo = chatLogRepo;
-        this.feedbackRepo = feedbackRepo;
+    public AdminController(AdminMetricsBuilder adminMetricsBuilder) {
+        this.adminMetricsBuilder = adminMetricsBuilder;
     }
 
     @GetMapping("/metrics")
     public ResponseEntity<AdminMetricsDTO> metrics() {
-        long totalMessages = chatLogRepo.count();
-        long uniqueSessions = chatLogRepo.countUniqueSessions();
-        long avgMs = Math.round(chatLogRepo.averageProcessingMs());
+        return ResponseEntity.ok(adminMetricsBuilder.build());
+    }
 
-        long positive = feedbackRepo.countByVote("positive");
-        long negative = feedbackRepo.countByVote("negative");
-        long feedbackTotal = positive + negative;
-
-        List<CategoryCount> categoryCounts = chatLogRepo.countByCategory().stream()
-                .map(row -> new CategoryCount((String) row[0], (Long) row[1]))
-                .toList();
-
-        List<TimelineCount> timelineCounts = chatLogRepo.countByHour().stream()
-                .map(row -> new TimelineCount((String) row[0], (Long) row[1]))
-                .toList();
-
-        List<TopMessage> topMessages = chatLogRepo.topMessages().stream()
-                .limit(10)
-                .map(row -> new TopMessage((String) row[0], (Long) row[1]))
-                .toList();
-
-        return ResponseEntity.ok(new AdminMetricsDTO(
-                totalMessages, uniqueSessions, avgMs,
-                feedbackTotal, positive, negative,
-                categoryCounts, timelineCounts, topMessages
-        ));
+    @GetMapping(value = "/metrics/export.csv", produces = "text/csv; charset=UTF-8")
+    public ResponseEntity<byte[]> exportMetricsCsv() {
+        AdminMetricsDTO dto = adminMetricsBuilder.build();
+        byte[] body = adminMetricsBuilder.buildCsv(dto).getBytes(StandardCharsets.UTF_8);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"guia-cidadao-metricas-agregadas.csv\"")
+                .contentType(MediaType.parseMediaType("text/csv; charset=UTF-8"))
+                .body(body);
     }
 }
