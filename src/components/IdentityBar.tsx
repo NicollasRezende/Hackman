@@ -45,8 +45,8 @@ export default function IdentityBar() {
           <div className="w-5 h-5 rounded bg-gov-blue flex items-center justify-center" aria-hidden>
             <Landmark size={11} className="text-white" />
           </div>
-          <span className="hidden sm:inline">Governo do Distrito Federal</span>
-          <span className="sm:hidden">GDF</span>
+          <span className="hidden sm:inline">Governo Federal · GOV.BR</span>
+          <span className="sm:hidden">GOV.BR</span>
         </div>
         <span className="hidden sm:inline truncate">Portal Oficial de Serviços ao Cidadão</span>
       </div>

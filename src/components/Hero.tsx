@@ -87,7 +87,7 @@ export default function Hero({ compact, onSend }: HeroProps) {
             Como podemos <span className="text-gov-blue">ajudar você</span> hoje?
           </h1>
           <p className="text-sm md:text-base text-gray-600 max-w-md mx-auto mb-9 leading-relaxed">
-            Serviços do GDF, documentos e agendamentos — em linguagem simples, sem burocracia.
+            Serviços federais, documentos e agendamentos — para todos os brasileiros, sem burocracia.
           </p>
         </>
       )}
@@ -240,7 +240,7 @@ export default function Hero({ compact, onSend }: HeroProps) {
         {!compact && (
           <div className="flex items-center justify-center gap-2 mt-3 text-xs text-gray-600">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-blink flex-shrink-0" aria-hidden />
-            <span>Piloto no DF · linguagem natural e voz</span>
+            <span>Assistente nacional · linguagem natural e voz</span>
             <span className="text-gdf-border hidden sm:inline" aria-hidden>
               ·
             </span>
