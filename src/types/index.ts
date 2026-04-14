@@ -107,3 +107,5 @@ export interface Message {
   text: string
   data?: AIResponse | null
 }
+
+export type AudienceTab = 'cidadao' | 'servidor' | 'empresa' | 'turista' | 'agendamento'
