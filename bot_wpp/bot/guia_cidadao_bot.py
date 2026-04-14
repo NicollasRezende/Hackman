@@ -1,6 +1,7 @@
 """
 Bot Guia Cidadão IA - Atendimento WhatsApp GDF
 Orienta cidadãos do DF sobre serviços públicos
+INTEGRADO COM BACKEND SPRING BOOT
 """
 import os
 import sys
@@ -22,6 +23,10 @@ from whatsapp_kit import (
     create_text_message
 )
 
+# Importar backend client
+from backend_client import BackendClient
+from response_formatter import ResponseFormatter
+
 
 # ============================================================================
 # ENUMS E ESTADOS
@@ -32,6 +37,11 @@ class ConversationState(Enum):
     INITIAL = "initial"
     MENU = "menu"
     WAITING_QUESTION = "waiting_question"
+    CATEGORY_SAUDE = "category_saude"
+    CATEGORY_TRABALHO = "category_trabalho"
+    CATEGORY_DOCUMENTOS = "category_documentos"
+    CATEGORY_BENEFICIOS = "category_beneficios"
+    CATEGORY_OUTROS = "category_outros"
 
 
 # ============================================================================
@@ -262,12 +272,14 @@ def match_service_keywords(text: str) -> Optional[Dict[str, Any]]:
 # ============================================================================
 
 class GuiaCidadaoBot:
-    """Bot de atendimento Guia Cidadão IA"""
+    """Bot de atendimento Guia Cidadão IA - Integrado com Backend Spring Boot"""
 
     def __init__(self, whatsapp_client):
         self.whatsapp = whatsapp_client
         self.session_manager = SessionManager()
-        logger.info("🤖 Guia Cidadão Bot inicializado")
+        self.backend = BackendClient()
+        self.formatter = ResponseFormatter()
+        logger.info("🤖 Guia Cidadão Bot inicializado (com integração backend)")
 
     async def send_text(self, phone: str, text: str):
         """Envia mensagem de texto simples"""
@@ -280,20 +292,76 @@ class GuiaCidadaoBot:
             raise
 
     async def send_welcome(self, phone: str):
-        """Envia mensagem de boas-vindas"""
-        await self.whatsapp.send_buttons(
-            to=phone,
-            body="👋 Olá! Sou o *Guia Cidadão IA* do GDF.\n\nEstou aqui para te orientar sobre serviços públicos do Distrito Federal.\n\n💬 *Como posso te ajudar?*",
-            buttons=[
-                {"id": "saude", "title": "🏥 Saúde"},
-                {"id": "trabalho", "title": "💼 Trabalho"},
-                {"id": "outros", "title": "ℹ️ Outros"}
-            ],
-            footer="Digite sua dúvida ou escolha uma opção"
-        )
+        """Envia mensagem de boas-vindas simples"""
+        welcome_msg = """👋 *Olá! Sou o Guia Cidadão IA do DF*
 
-    async def send_service_info(self, phone: str, service_data: Dict[str, Any]):
-        """Envia informações sobre um serviço"""
+Estou aqui para te ajudar com serviços públicos do Distrito Federal.
+
+💬 *Digite sua dúvida ou o que você precisa*
+
+Exemplos:
+• "preciso marcar consulta no SUS"
+• "perdi meu emprego"
+• "como tirar segunda via do RG"
+• "onde fica a UPA mais próxima"
+
+_Pode escrever à vontade, vou te orientar!_"""
+
+        await self.send_text(phone, welcome_msg)
+
+    async def process_question_with_backend(self, phone: str, message: str) -> bool:
+        """
+        Processa pergunta usando backend Spring Boot
+        FLUXO SIMPLIFICADO: só repassa pro backend e formata resposta
+
+        Returns:
+            True se conseguiu processar, False caso contrário
+        """
+        try:
+            # Chamar backend
+            response_data = await self.backend.chat(message, phone)
+
+            if response_data:
+                # Formatar e enviar resposta
+                formatted_message = self.formatter.format_chat_response(response_data)
+                await self.send_text(phone, formatted_message)
+                return True
+            else:
+                logger.warning("Backend retornou resposta vazia")
+                return False
+
+        except Exception as e:
+            logger.error(f"Erro ao processar com backend: {e}")
+            return False
+
+    async def send_fallback(self, phone: str):
+        """Envia mensagem de fallback quando backend falha"""
+        fallback_message = self.formatter.format_fallback()
+        await self.send_text(phone, fallback_message)
+
+    async def handle_message(self, phone: str, message: str, message_type: str = "text"):
+        """Processa mensagem recebida - FLUXO SIMPLIFICADO"""
+
+        # Recuperar sessão
+        session = self.session_manager.get_session(phone)
+
+        logger.info(f"💬 [{phone}] {message_type}: {message}")
+
+        # Comandos especiais
+        if message.lower() in ["/start", "/menu", "menu", "oi", "olá", "ola"]:
+            await self.send_welcome(phone)
+            return
+
+        # FLUXO SIMPLES: qualquer mensagem vai pro backend
+        success = await self.process_question_with_backend(phone, message)
+
+        if not success:
+            # Fallback se backend falhar
+            logger.warning("Backend falhou, usando fallback...")
+            await self.send_fallback(phone)
+
+    async def send_local_service_info(self, phone: str, service_data: Dict[str, Any]):
+        """Fallback: envia informações locais quando backend não está disponível"""
         category = service_data.get("category", "Serviço")
         icon = service_data.get("icon", "ℹ️")
         intro = service_data.get("intro", "")
@@ -301,9 +369,7 @@ class GuiaCidadaoBot:
         contact = service_data.get("contact", {})
         link = service_data.get("link", "")
 
-        # Montar mensagem
-        message = f"*{icon} {category}*\n\n"
-        message += f"{intro}\n\n"
+        message = f"*{icon} {category}*\n\n{intro}\n\n"
 
         if steps:
             message += "*📋 Como proceder:*\n\n"
@@ -312,8 +378,7 @@ class GuiaCidadaoBot:
             message += "\n"
 
         if contact:
-            message += f"*📞 Atendimento:*\n"
-            message += f"• {contact.get('title', '')}\n"
+            message += f"*📞 Atendimento:*\n• {contact.get('title', '')}\n"
             if contact.get('phone'):
                 message += f"• Telefone: {contact['phone']}\n"
             if contact.get('hours'):
@@ -323,56 +388,52 @@ class GuiaCidadaoBot:
         if link:
             message += f"🔗 *Link oficial:* {link}\n\n"
 
-        message += "_Digite outra dúvida ou /menu para voltar ao início_"
-
+        message += "_⚠️ Modo offline - Digite /menu para voltar_"
         await self.send_text(phone, message)
 
-    async def handle_message(self, phone: str, message: str, message_type: str = "text"):
-        """Processa mensagem recebida"""
-
-        # Recuperar sessão
-        session = self.session_manager.get_session(phone)
-
-        logger.info(f"💬 [{phone}] {message_type}: {message} (estado: {session.state})")
-
-        # Comandos especiais
-        if message.lower() in ["/start", "/menu", "menu", "início", "inicio"]:
-            session.state = ConversationState.INITIAL.value
-            self.session_manager.save_session(session)
-            await self.send_welcome(phone)
-            return
-
-        # State machine
-        if session.state == ConversationState.INITIAL.value:
-            # Primeira mensagem - enviar boas-vindas
-            await self.send_welcome(phone)
-            session.state = ConversationState.WAITING_QUESTION.value
-            self.session_manager.save_session(session)
-
-        elif session.state == ConversationState.WAITING_QUESTION.value:
-            # Processar pergunta do usuário
-            service_data = match_service_keywords(message)
-            if service_data:
-                await self.send_service_info(phone, service_data)
-            else:
-                await self.send_text(
-                    phone,
-                    "Desculpe, não entendi sua pergunta. "
-                    "Tente perguntar sobre: saúde, trabalho, CNH, documentos, Bolsa Família ou INSS.\n\n"
-                    "Ou digite /menu para ver opções."
-                )
-
-    async def handle_button_reply(self, phone: str, button_id: str, button_text: str):
-        """Processa resposta de botão"""
-
-        logger.info(f"🔘 [{phone}] Botão: {button_id} ({button_text})")
-
-        # Tratar como mensagem de texto
-        keyword_map = {
-            "saude": "médico saúde",
-            "trabalho": "emprego trabalho",
-            "outros": "serviços"
+    async def send_category_menu(self, phone: str, category: str):
+        """Envia menu específico de uma categoria"""
+        menus = {
+            "saude": {
+                "body": "🏥 *Saúde - SUS/DF*\n\nServiços de saúde pública do Distrito Federal.\n\n👇 Escolha:",
+                "buttons": [
+                    {"id": "upa_hospital", "title": "🏥 UPA/Hospital"},
+                    {"id": "agendar_sus", "title": "📅 Agendar consulta"},
+                    {"id": "farmacia_remedios", "title": "💊 Remédios/Farmácia"}
+                ]
+            },
+            "trabalho": {
+                "body": "💼 *Trabalho - SINE/DF*\n\nEmprego, qualificação e benefícios trabalhistas.\n\n👇 Escolha:",
+                "buttons": [
+                    {"id": "vagas_emprego", "title": "💼 Vagas SINE"},
+                    {"id": "seguro_desemp", "title": "💰 Seguro-desemprego"},
+                    {"id": "qualificacao", "title": "📚 Qualificação"}
+                ]
+            },
+            "documentos": {
+                "body": "📄 *Documentos - Na Hora/DF*\n\nEmissão de documentos pessoais.\n\n👇 Escolha:",
+                "buttons": [
+                    {"id": "rg_identidade", "title": "🪪 RG"},
+                    {"id": "cpf_doc", "title": "📑 CPF"},
+                    {"id": "certidoes", "title": "📄 Certidões"}
+                ]
+            }
         }
 
-        keyword = keyword_map.get(button_id, button_text)
-        await self.handle_message(phone, keyword, "button")
+        menu = menus.get(category)
+        if menu:
+            await self.whatsapp.send_buttons(
+                to=phone,
+                body=menu["body"],
+                buttons=menu["buttons"],
+                footer="Ou escreva o que você precisa"
+            )
+        else:
+            await self.send_welcome(phone)
+
+    async def handle_button_reply(self, phone: str, button_id: str, button_text: str):
+        """Processa resposta de botão - SIMPLIFICADO"""
+        logger.info(f"🔘 [{phone}] Botão: {button_id} ({button_text})")
+
+        # Qualquer botão = tratar como texto e repassar pro backend
+        await self.handle_message(phone, button_text, "button")

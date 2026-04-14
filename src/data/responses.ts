@@ -21,7 +21,7 @@ export const DB: AIResponse[] = [
       'O número central indica o total de pacientes aguardando.',
       'A lista lateral indica os pacientes por cor de triagem.'
     ],
-    tip: 'Lembre-se: Casos menos urgentes (verde e azul) podem ser atendidos mais rapidamente em uma UBS.',
+    tip: 'Lembre-se: Casos menos urgentes (gov-blue e azul) podem ser atendidos mais rapidamente em uma UBS.',
     locations: LOCATIONS_HOSPITAIS,
   },
   {
@@ -29,7 +29,7 @@ export const DB: AIResponse[] = [
     tag: { cls: 'tag-work', icon: 'Briefcase', txt: 'Trabalho & Renda' },
     intro: 'Você pode solicitar o <strong>Seguro-Desemprego</strong>, que garante renda enquanto você busca um novo emprego.',
     blocks: [
-      { icon: 'MapPin', title: 'Onde solicitar', body: 'Agências do <strong>SINE-DF</strong> ou pelo portal <a href="#" class="text-verde font-semibold hover:underline">gov.br/seguro-desemprego</a>' },
+      { icon: 'MapPin', title: 'Onde solicitar', body: 'Agências do <strong>SINE-DF</strong> ou pelo portal <a href="#" class="text-gov-blue font-semibold hover:underline">gov.br/seguro-desemprego</a>' },
       { icon: 'FileText', title: 'Documentos necessários', docs: ['RG ou CNH', 'CPF', 'Carteira de Trabalho', 'Termo de rescisão (TRCT)', 'Extrato FGTS'] },
     ],
     steps: [
@@ -53,7 +53,7 @@ export const DB: AIResponse[] = [
     steps: [
       'Para consultas: vá à UBS mais próxima com seu cartão SUS',
       'Sem cartão SUS? Leve RG e CPF — emitem na hora, gratuitamente',
-      'Para agendar online: acesse o portal <a href="#" class="text-verde font-semibold hover:underline">saude.df.gov.br</a>',
+      'Para agendar online: acesse o portal <a href="#" class="text-gov-blue font-semibold hover:underline">saude.df.gov.br</a>',
     ],
     tip: 'Evite ir ao hospital para casos simples — a espera na UBS é bem menor e você é atendido por médico de família.',
     contact: { title: 'Saúde DF — Central de Regulação', addr: 'Ligue 160 para UBS mais próxima ou 192 (SAMU)', phone: '160 (regulação) · 192 (SAMU)', hours: '24 horas, 7 dias por semana' },
@@ -64,7 +64,7 @@ export const DB: AIResponse[] = [
     tag: { cls: 'tag-work', icon: 'ShieldCheck', txt: 'Previdência Social' },
     intro: 'A aposentadoria pelo <strong>INSS</strong> pode ser solicitada 100% online, sem precisar ir a uma agência.',
     blocks: [
-      { icon: 'Globe', title: 'Como solicitar', body: 'Portal <a href="#" class="text-verde font-semibold hover:underline">Meu INSS (gov.br/meu-inss)</a> ou ligue <strong>135</strong> (gratuito, seg–sáb 7h–22h)' },
+      { icon: 'Globe', title: 'Como solicitar', body: 'Portal <a href="#" class="text-gov-blue font-semibold hover:underline">Meu INSS (gov.br/meu-inss)</a> ou ligue <strong>135</strong> (gratuito, seg–sáb 7h–22h)' },
       { icon: 'FileText', title: 'Documentos básicos', docs: ['RG ou CNH', 'CPF', 'Carteira de Trabalho', 'Comprovante de residência'] },
     ],
     steps: [
@@ -117,7 +117,7 @@ export const DB: AIResponse[] = [
     tag: { cls: 'tag-transit', icon: 'Car', txt: 'DETRAN-DF — Trânsito' },
     intro: 'Para tirar a CNH pela primeira vez, o processo começa em uma auto escola credenciada pelo DETRAN-DF.',
     blocks: [
-      { icon: 'MapPin', title: 'Onde começar', body: 'Procure uma <strong>auto escola credenciada</strong> no portal <a href="#" class="text-verde font-semibold hover:underline">detran.df.gov.br</a>.' },
+      { icon: 'MapPin', title: 'Onde começar', body: 'Procure uma <strong>auto escola credenciada</strong> no portal <a href="#" class="text-gov-blue font-semibold hover:underline">detran.df.gov.br</a>.' },
       { icon: 'FileText', title: 'Documentos', docs: ['RG ou CPF original', 'Comprovante de residência', 'Foto 3x4 recente (fundo branco)'] },
     ],
     steps: [
@@ -136,7 +136,7 @@ export const DB: AIResponse[] = [
     tag: { cls: 'tag-social', icon: 'IdCard', txt: 'Documentos e Registro' },
     intro: 'Para emitir a segunda via do RG (agora chamado CIN — Carteira de Identidade Nacional), o processo é simples e gratuito.',
     blocks: [
-      { icon: 'MapPin', title: 'Onde agendar', body: 'Postos da <strong>SSP-DF</strong> — agende online pelo portal <a href="#" class="text-verde font-semibold hover:underline">portalservicos.ssp.df.gov.br</a>' },
+      { icon: 'MapPin', title: 'Onde agendar', body: 'Postos da <strong>SSP-DF</strong> — agende online pelo portal <a href="#" class="text-gov-blue font-semibold hover:underline">portalservicos.ssp.df.gov.br</a>' },
       { icon: 'FileText', title: 'Documentos necessários', docs: ['Certidão de nascimento ou casamento (original)', 'Comprovante de residência', 'Foto 3x4 recente (se solicitado)'] },
     ],
     steps: [

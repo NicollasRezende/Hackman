@@ -121,14 +121,14 @@ function FAQItem({
           id={buttonId}
           type="button"
           onClick={() => setOpen(o => !o)}
-          className="w-full flex items-center justify-between gap-2 py-3 text-left text-sm font-medium text-gray-800 hover:text-verde transition-colors rounded-md"
+          className="w-full flex items-center justify-between gap-2 py-3 text-left text-sm font-medium text-gray-800 hover:text-gov-blue transition-colors rounded-md"
           aria-expanded={open}
           aria-controls={panelId}
         >
           {q}
           <ChevronDown
             size={14}
-            className={`flex-shrink-0 text-gray-500 transition-transform ${open ? 'rotate-180 text-verde' : ''}`}
+            className={`flex-shrink-0 text-gray-500 transition-transform ${open ? 'rotate-180 text-gov-blue' : ''}`}
             aria-hidden
           />
         </button>
@@ -144,7 +144,7 @@ function FAQItem({
         <button
           type="button"
           onClick={() => onQuery(query)}
-          className="inline-flex items-center gap-1 text-xs font-semibold text-verde mt-2 hover:underline rounded-md"
+          className="inline-flex items-center gap-1 text-xs font-semibold text-gov-blue mt-2 hover:underline rounded-md"
         >
           <MessageCircle size={11} aria-hidden /> Perguntar ao Guia Cidadão
         </button>
@@ -169,8 +169,8 @@ export default function FAQ({ onQuery }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
         {FAQ_DATA.map(col => (
           <div key={col.title}>
-            <h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 mb-3 pb-3 border-b-2 border-verde-light m-0">
-              <col.icon size={14} className="text-verde" aria-hidden />
+            <h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 mb-3 pb-3 border-b-2 border-gov-blue-light m-0">
+              <col.icon size={14} className="text-gov-blue" aria-hidden />
               {col.title}
             </h3>
             {col.items.map(item => (

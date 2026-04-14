@@ -42,7 +42,7 @@ export default function IdentityBar() {
     >
       <div className="flex items-center gap-2.5 min-w-0 flex-shrink-0">
         <div className="flex items-center gap-2 font-semibold text-gdf-dark border-r border-gdf-border pr-2.5">
-          <div className="w-5 h-5 rounded bg-verde flex items-center justify-center" aria-hidden>
+          <div className="w-5 h-5 rounded bg-gov-blue flex items-center justify-center" aria-hidden>
             <Landmark size={11} className="text-white" />
           </div>
           <span className="hidden sm:inline">Governo do Distrito Federal</span>
@@ -64,19 +64,19 @@ export default function IdentityBar() {
           <button
             type="button"
             onClick={decreaseFont}
-            className="flex h-9 w-9 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 md:h-8 md:w-8 items-center justify-center rounded-md hover:bg-verde-light hover:text-verde text-gray-600 transition-colors"
+            className="flex h-9 w-9 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 md:h-8 md:w-8 items-center justify-center rounded-md hover:bg-gov-blue-light hover:text-gov-blue text-gray-600 transition-colors"
             aria-label={`Diminuir tamanho da fonte. Atual: ${fontScalePercent} por cento`}
             disabled={fontScalePercent <= 100}
           >
             <Minus size={14} aria-hidden />
           </button>
-          <span className="px-1.5 min-w-[2.5rem] text-center font-semibold text-verde tabular-nums">
+          <span className="px-1.5 min-w-[2.5rem] text-center font-semibold text-gov-blue tabular-nums">
             {fontScalePercent}%
           </span>
           <button
             type="button"
             onClick={increaseFont}
-            className="flex h-9 w-9 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 md:h-8 md:w-8 items-center justify-center rounded-md hover:bg-verde-light hover:text-verde text-gray-600 transition-colors"
+            className="flex h-9 w-9 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 md:h-8 md:w-8 items-center justify-center rounded-md hover:bg-gov-blue-light hover:text-gov-blue text-gray-600 transition-colors"
             aria-label={`Aumentar tamanho da fonte. Atual: ${fontScalePercent} por cento`}
             disabled={fontScalePercent >= 130}
           >
@@ -85,7 +85,7 @@ export default function IdentityBar() {
           <button
             type="button"
             onClick={resetFont}
-            className="flex h-9 w-9 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 md:h-8 md:w-8 items-center justify-center rounded-md hover:bg-verde-light hover:text-verde text-gray-600 transition-colors border-l border-gdf-border ml-0.5 pl-0.5"
+            className="flex h-9 w-9 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 md:h-8 md:w-8 items-center justify-center rounded-md hover:bg-gov-blue-light hover:text-gov-blue text-gray-600 transition-colors border-l border-gdf-border ml-0.5 pl-0.5"
             aria-label="Restaurar tamanho da fonte ao padrão"
             disabled={fontScalePercent === 100}
           >
@@ -96,7 +96,7 @@ export default function IdentityBar() {
         <button
           type="button"
           onClick={toggleUnderlineLinks}
-          className="flex items-center gap-1 hover:text-verde transition-colors rounded-md px-2 py-1.5 min-h-[44px] md:min-h-0"
+          className="flex items-center gap-1 hover:text-gov-blue transition-colors rounded-md px-2 py-1.5 min-h-[44px] md:min-h-0"
           aria-pressed={underlineLinks}
           aria-label={
             underlineLinks
@@ -111,7 +111,7 @@ export default function IdentityBar() {
         <button
           type="button"
           onClick={onContrastClick}
-          className="flex items-center gap-1 hover:text-verde transition-colors rounded-md px-2 py-1.5 min-h-[44px] md:min-h-0"
+          className="flex items-center gap-1 hover:text-gov-blue transition-colors rounded-md px-2 py-1.5 min-h-[44px] md:min-h-0"
           aria-pressed={highContrast}
           aria-label={
             highContrast
@@ -126,7 +126,7 @@ export default function IdentityBar() {
         <button
           type="button"
           onClick={focusVLibrasWidget}
-          className="flex items-center gap-1 hover:text-verde transition-colors rounded-md px-2 py-1.5 min-h-[44px] md:min-h-0"
+          className="flex items-center gap-1 hover:text-gov-blue transition-colors rounded-md px-2 py-1.5 min-h-[44px] md:min-h-0"
           aria-label="Abrir o tradutor de Libras do VLibras"
           title="Abrir o tradutor VLibras (surdo e ouvinte)"
         >

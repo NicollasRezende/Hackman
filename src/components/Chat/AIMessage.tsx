@@ -12,7 +12,7 @@ import { sendFeedback, type FeedbackVote } from '../../services/feedback'
 const TAG_STYLES: Record<string, string> = {
   'tag-work': 'bg-amber-50 text-amber-700',
   'tag-health': 'bg-red-50 text-red-700',
-  'tag-social': 'bg-verde-light text-verde',
+  'tag-social': 'bg-gov-blue-light text-gov-blue',
   'tag-transit': 'bg-blue-50 text-blue-700',
   'tag-tcu': 'bg-indigo-50 text-indigo-700',
   'tag-mulher': 'bg-pink-50 text-pink-700',
@@ -104,11 +104,11 @@ export default function AIMessage({ data, onRelated }: Props) {
     >
       <div className="p-5">
         <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-gdf-border">
-          <div className="w-8 h-8 rounded-lg bg-verde-light text-verde flex items-center justify-center" aria-hidden>
+          <div className="w-8 h-8 rounded-lg bg-gov-blue-light text-gov-blue flex items-center justify-center" aria-hidden>
             <Bot size={17} />
           </div>
           <div>
-            <h2 id={titleId} className="text-sm font-bold text-verde m-0 leading-none">
+            <h2 id={titleId} className="text-sm font-bold text-gov-blue m-0 leading-none">
               Guia Cidadão IA · GDF
             </h2>
             <p className="text-[11px] text-gray-600 mt-0.5 m-0">Assistente oficial de serviços públicos</p>
@@ -166,7 +166,7 @@ export default function AIMessage({ data, onRelated }: Props) {
         <ol className="flex flex-col gap-2 m-0 p-0 list-none" aria-labelledby={stepsId}>
           {data.steps.map((s, i) => (
             <li key={`${i}-${s.slice(0, 40)}`} className="flex items-start gap-2.5 text-sm">
-              <span className="min-w-[22px] h-[22px] rounded-md bg-verde text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0" aria-hidden>
+              <span className="min-w-[22px] h-[22px] rounded-md bg-gov-blue text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0" aria-hidden>
                 {i + 1}
               </span>
               <span className="leading-snug text-gray-700" dangerouslySetInnerHTML={{ __html: s }} />
@@ -194,7 +194,7 @@ export default function AIMessage({ data, onRelated }: Props) {
                 { icon: Clock, text: data.contact.hours },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-start gap-2 text-sm text-gray-800">
-                  <Icon size={13} className="text-verde flex-shrink-0 mt-0.5" aria-hidden />
+                  <Icon size={13} className="text-gov-blue flex-shrink-0 mt-0.5" aria-hidden />
                   {text}
                 </div>
               ))}
@@ -243,7 +243,7 @@ export default function AIMessage({ data, onRelated }: Props) {
                 href={officialUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm font-bold bg-verde text-white px-4 py-2.5 rounded-xl hover:bg-verde-med transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 text-sm font-bold bg-gov-blue text-white px-4 py-2.5 rounded-xl hover:bg-gov-blue-dark transition-all shadow-sm"
               >
                 <ExternalLink size={14} aria-hidden /> {officialLabel}
                 <span className="sr-only"> (abre {officialHost} em nova aba)</span>
@@ -253,7 +253,7 @@ export default function AIMessage({ data, onRelated }: Props) {
           <button
             type="button"
             onClick={() => void handleShare()}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold bg-white text-verde border-[1.5px] border-verde px-3.5 py-2.5 rounded-xl hover:bg-verde-light transition-all"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold bg-white text-gov-blue border-[1.5px] border-gov-blue px-3.5 py-2.5 rounded-xl hover:bg-gov-blue-light transition-all"
             aria-label="Compartilhar ou copiar resumo desta orientação"
           >
             <Share2 size={13} aria-hidden /> Compartilhar
@@ -277,8 +277,8 @@ export default function AIMessage({ data, onRelated }: Props) {
               aria-describedby={feedbackLabelId}
               className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all disabled:cursor-not-allowed disabled:opacity-80 ${
                 feedback === 'pos'
-                  ? 'bg-verde-light border-verde text-verde'
-                  : 'bg-white border-gdf-border text-gray-600 hover:border-verde hover:text-verde hover:bg-verde-light'
+                  ? 'bg-gov-blue-light border-gov-blue text-gov-blue'
+                  : 'bg-white border-gdf-border text-gray-600 hover:border-gov-blue hover:text-gov-blue hover:bg-gov-blue-light'
               }`}
             >
               <ThumbsUp size={12} aria-hidden /> Sim, ajudou
@@ -317,7 +317,7 @@ export default function AIMessage({ data, onRelated }: Props) {
                 key={r}
                 type="button"
                 onClick={() => onRelated(r)}
-                className="inline-flex items-center gap-1 text-xs font-medium text-gray-800 bg-white border border-gdf-border px-3 py-1.5 rounded-full hover:bg-verde-light hover:border-verde hover:text-verde transition-all"
+                className="inline-flex items-center gap-1 text-xs font-medium text-gray-800 bg-white border border-gdf-border px-3 py-1.5 rounded-full hover:bg-gov-blue-light hover:border-gov-blue hover:text-gov-blue transition-all"
                 aria-label={`Perguntar: ${r}`}
               >
                 <MessageCircle size={11} aria-hidden /> {r}

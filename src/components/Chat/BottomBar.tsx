@@ -51,7 +51,7 @@ export default function BottomBar({ onSend }: Props) {
         <p id={hintId} className="sr-only">
           Enter envia a mensagem. Shift+Enter quebra linha.
         </p>
-        <div className="relative bg-white border-[1.5px] border-gdf-border rounded-2xl shadow-lg focus-within:border-verde focus-within:shadow-[0_0_0_3px_rgba(38,112,232,.18)] transition-all">
+        <div className="relative bg-white border-[1.5px] border-gdf-border rounded-2xl shadow-lg focus-within:border-gov-blue focus-within:shadow-[0_0_0_3px_rgba(38,112,232,.18)] transition-all">
           <textarea
             id={BOTTOM_CHAT_INPUT_ID}
             ref={textareaRef}
@@ -73,7 +73,7 @@ export default function BottomBar({ onSend }: Props) {
                 className={`min-h-11 min-w-11 md:min-h-0 md:min-w-0 w-11 h-11 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all border ${
                   recording
                     ? 'border-red-600 text-red-600 bg-red-50 recording'
-                    : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-verde hover:text-verde'
+                    : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-gov-blue hover:text-gov-blue'
                 }`}
               >
                 {recording ? <Square size={14} aria-hidden /> : <Mic size={14} aria-hidden />}
@@ -82,7 +82,7 @@ export default function BottomBar({ onSend }: Props) {
             <button
               type="button"
               onClick={handleSend}
-              className="min-h-11 min-w-11 md:min-h-0 md:min-w-0 w-11 h-11 md:w-10 md:h-10 rounded-xl bg-verde text-white flex items-center justify-center hover:bg-verde-med transition-all"
+              className="min-h-11 min-w-11 md:min-h-0 md:min-w-0 w-11 h-11 md:w-10 md:h-10 rounded-xl bg-gov-blue text-white flex items-center justify-center hover:bg-gov-blue-dark transition-all"
               aria-label="Enviar mensagem ao assistente"
             >
               <ArrowUp size={17} strokeWidth={2.5} aria-hidden />

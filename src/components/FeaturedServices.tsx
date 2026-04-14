@@ -3,7 +3,7 @@ import { getIcon } from '../utils/icon'
 import { FEATURED_SERVICES } from '../data/services'
 
 const BADGE_STYLES = {
-  green: 'bg-verde-light text-verde',
+  green: 'bg-gov-blue-light text-gov-blue',
   blue: 'bg-blue-50 text-blue-700',
   ouro: 'bg-ouro-bg text-yellow-800 border border-ouro-border',
 }
@@ -26,7 +26,7 @@ export default function FeaturedServices({ onServiceClick }: Props) {
           href="https://www.df.gov.br"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:flex items-center gap-1 text-sm font-semibold text-verde hover:underline whitespace-nowrap"
+          className="hidden sm:flex items-center gap-1 text-sm font-semibold text-gov-blue hover:underline whitespace-nowrap"
         >
           Ver todos <ArrowRight size={13} aria-hidden />
           <span className="sr-only"> (abre em nova aba no site do GDF)</span>
@@ -44,10 +44,10 @@ export default function FeaturedServices({ onServiceClick }: Props) {
               type="button"
               onClick={() => onServiceClick(s.query)}
               aria-label={`Abrir no assistente: ${label}`}
-              className="bg-white border border-gdf-border rounded-2xl p-5 text-left hover:shadow-md hover:border-verde-light hover:-translate-y-0.5 transition-all duration-200 flex flex-col"
+              className="bg-white border border-gdf-border rounded-2xl p-5 text-left hover:shadow-md hover:border-gov-blue-light hover:-translate-y-0.5 transition-all duration-200 flex flex-col"
             >
               <div className="flex items-start justify-between mb-3.5">
-                <div className="w-10 h-10 rounded-xl bg-verde-light text-verde flex items-center justify-center" aria-hidden>
+                <div className="w-10 h-10 rounded-xl bg-gov-blue-light text-gov-blue flex items-center justify-center" aria-hidden>
                   {Icon && <Icon size={20} />}
                 </div>
                 <div className="flex gap-1.5 flex-wrap justify-end">
@@ -68,7 +68,7 @@ export default function FeaturedServices({ onServiceClick }: Props) {
                   {StatIcon && <StatIcon size={12} aria-hidden />}
                   {s.stat.text}
                 </span>
-                <span className="flex items-center gap-1 text-xs font-bold text-verde">
+                <span className="flex items-center gap-1 text-xs font-bold text-gov-blue">
                   {s.cta} <ArrowRight size={12} aria-hidden />
                 </span>
               </div>

@@ -36,7 +36,11 @@
       "Bash(./mvnw -q test -Dtest=IntentDetectorTest)",
       "Bash(./mvnw test:*)",
       "Bash(./mvnw -q -o compile)",
-      "Bash(ls mvnw* pom.xml)"
+      "Bash(ls mvnw* pom.xml)",
+      "Bash(npm run:*)",
+      "Bash(find src:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

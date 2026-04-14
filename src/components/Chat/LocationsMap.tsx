@@ -7,7 +7,7 @@ import { sortByDistance, googleMapsRouteUrl, wazeUrl } from '../../data/location
 const LEAFLET_CSS = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
 
 const TYPE_BADGE: Record<string, { label: string; color: string }> = {
-  'na-hora': { label: 'Na Hora', color: 'bg-verde-light text-verde border-verde/30' },
+  'na-hora': { label: 'Na Hora', color: 'bg-gov-blue-light text-gov-blue border-gov-blue/30' },
   'pcdf':    { label: 'PCDF',    color: 'bg-blue-50 text-blue-700 border-blue-200' },
   'detran':  { label: 'DETRAN',  color: 'bg-orange-50 text-orange-700 border-orange-200' },
   'sedet':   { label: 'SEDET',   color: 'bg-amber-50 text-amber-700 border-amber-200' },
@@ -187,7 +187,7 @@ export default function LocationsMap({ locations }: Props) {
     <section className="mt-4 rounded-2xl border border-gdf-border overflow-hidden bg-white" aria-label="Mapa e lista de locais de atendimento">
       <div className="flex items-center justify-between px-4 py-3 bg-gdf-soft border-b border-gdf-border">
         <div className="flex items-center gap-2">
-          <MapPin size={14} className="text-verde" aria-hidden />
+          <MapPin size={14} className="text-gov-blue" aria-hidden />
           <h3 className="text-[11px] font-bold tracking-widest uppercase text-gray-600 m-0">
             Locais de atendimento ({locations.length})
           </h3>
@@ -196,7 +196,7 @@ export default function LocationsMap({ locations }: Props) {
           type="button"
           onClick={handleLocate}
           disabled={locating}
-          className="flex items-center gap-1.5 text-xs font-semibold text-verde bg-verde-light border border-verde/20 px-3 py-1.5 rounded-lg hover:bg-verde hover:text-white transition-all disabled:opacity-50"
+          className="flex items-center gap-1.5 text-xs font-semibold text-gov-blue bg-gov-blue-light border border-gov-blue/20 px-3 py-1.5 rounded-lg hover:bg-gov-blue hover:text-white transition-all disabled:opacity-50"
           aria-busy={locating}
         >
           <Navigation size={12} className={locating ? 'animate-spin' : ''} aria-hidden />
@@ -224,12 +224,12 @@ export default function LocationsMap({ locations }: Props) {
               <button
                 type="button"
                 id={`${rowId}-btn`}
-                className="flex w-full items-start gap-3 text-left cursor-pointer rounded-lg p-1 -m-1 hover:bg-gdf-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-verde"
+                className="flex w-full items-start gap-3 text-left cursor-pointer rounded-lg p-1 -m-1 hover:bg-gdf-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-gov-blue"
                 onClick={() => setExpanded(open ? null : loc.name)}
                 aria-expanded={open}
                 aria-controls={`${rowId}-panel`}
               >
-                <div className="min-w-[22px] h-[22px] rounded-full bg-verde text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5" aria-hidden>
+                <div className="min-w-[22px] h-[22px] rounded-full bg-gov-blue text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5" aria-hidden>
                   {i + 1}
                 </div>
 
@@ -288,13 +288,13 @@ export default function LocationsMap({ locations }: Props) {
                   )}
                   {loc.hours && (
                     <div className="flex items-center gap-2 text-xs text-gray-800">
-                      <Clock size={12} className="text-verde flex-shrink-0" aria-hidden />
+                      <Clock size={12} className="text-gov-blue flex-shrink-0" aria-hidden />
                       {loc.hours}
                     </div>
                   )}
                   {loc.phone && (
                     <div className="flex items-center gap-2 text-xs text-gray-800">
-                      <Phone size={12} className="text-verde flex-shrink-0" aria-hidden />
+                      <Phone size={12} className="text-gov-blue flex-shrink-0" aria-hidden />
                       {loc.phone}
                     </div>
                   )}
@@ -328,7 +328,7 @@ export default function LocationsMap({ locations }: Props) {
                       href={googleMapsRouteUrl(loc.lat, loc.lng)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-bold bg-verde text-white px-3 py-1.5 rounded-lg hover:bg-verde-med transition-all"
+                      className="inline-flex items-center gap-1 text-xs font-bold bg-gov-blue text-white px-3 py-1.5 rounded-lg hover:bg-gov-blue-dark transition-all"
                     >
                       <Navigation size={11} aria-hidden /> Como chegar
                       <span className="sr-only"> em {loc.name}, abre em nova aba</span>
@@ -347,7 +347,7 @@ export default function LocationsMap({ locations }: Props) {
                         href={loc.online}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-semibold bg-white text-verde border border-verde px-3 py-1.5 rounded-lg hover:bg-verde-light transition-all"
+                        className="inline-flex items-center gap-1 text-xs font-semibold bg-white text-gov-blue border border-gov-blue px-3 py-1.5 rounded-lg hover:bg-gov-blue-light transition-all"
                       >
                         <ExternalLink size={11} aria-hidden /> Agendar online
                         <span className="sr-only"> em {loc.name}, abre em nova aba</span>

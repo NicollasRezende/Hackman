@@ -11,7 +11,7 @@ from loguru import logger
 from dotenv import load_dotenv
 
 from whatsapp_client import whatsapp
-from guia_cidadao_bot import GuiaCidadaoBot
+from guia_cidadao_bot_v2 import GuiaCidadaoBotV2
 
 load_dotenv()
 
@@ -32,8 +32,8 @@ app = FastAPI(title="Guia Cidadão WhatsApp Bot")
 # Config
 VERIFY_TOKEN = os.getenv("WHATSAPP_VERIFY_TOKEN", "meu_token_secreto_123")
 
-# Inicializar bot
-bot = GuiaCidadaoBot(whatsapp)
+# Inicializar bot V2 (mockado, profissional)
+bot = GuiaCidadaoBotV2(whatsapp)
 
 
 @app.get("/")
@@ -108,7 +108,8 @@ async def receive_webhook(request: Request):
                             list_reply = interactive.get("list_reply", {})
                             list_id = list_reply.get("id", "")
                             list_title = list_reply.get("title", "")
-                            await bot.handle_message(phone, list_title, "list")
+                            # Processar como botão (lista é categoria)
+                            await bot.handle_button_reply(phone, list_id, list_title)
 
                     # Outros tipos de mensagem
                     else:

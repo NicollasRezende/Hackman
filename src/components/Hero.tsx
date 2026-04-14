@@ -73,18 +73,18 @@ export default function Hero({ compact, onSend }: HeroProps) {
   return (
     <section
       aria-labelledby={compact ? undefined : 'hero-heading'}
-      className={`bg-gradient-to-b from-verde-dim to-white border-b border-verde-light text-center transition-all duration-500 ${
+      className={`bg-gradient-to-b from-gov-blue-dim to-white border-b border-gov-blue-light text-center transition-all duration-500 ${
         compact ? 'py-7 px-6' : 'py-16 px-6'
       }`}
     >
       {!compact && (
         <>
-          <div className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-verde-med bg-verde-light border border-verde-light px-4 py-1.5 rounded-full mb-5">
+          <div className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-gov-blue-dark bg-gov-blue-light border border-gov-blue-light px-4 py-1.5 rounded-full mb-5">
             <Sparkles size={12} aria-hidden />
             Assistente com Inteligência Artificial
           </div>
           <h1 id="hero-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-3">
-            Como podemos <span className="text-verde">ajudar você</span> hoje?
+            Como podemos <span className="text-gov-blue">ajudar você</span> hoje?
           </h1>
           <p className="text-sm md:text-base text-gray-600 max-w-md mx-auto mb-9 leading-relaxed">
             Serviços do GDF, documentos e agendamentos — em linguagem simples, sem burocracia.
@@ -100,7 +100,7 @@ export default function Hero({ compact, onSend }: HeroProps) {
           Pressione Enter para enviar. Shift+Enter quebra linha. Escape fecha as sugestões.
         </p>
         <div className="relative">
-          <div className="relative bg-white border-[1.5px] border-gdf-border rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,.08)] focus-within:border-verde focus-within:shadow-[0_0_0_3px_rgba(38,112,232,.18)] transition-all">
+          <div className="relative bg-white border-[1.5px] border-gdf-border rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,.08)] focus-within:border-gov-blue focus-within:shadow-[0_0_0_3px_rgba(38,112,232,.18)] transition-all">
             <textarea
               id={HERO_CONSULTA_ID}
               ref={textareaRef}
@@ -125,7 +125,7 @@ export default function Hero({ compact, onSend }: HeroProps) {
                   className={`min-h-11 min-w-11 md:min-h-0 md:min-w-0 w-11 h-11 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all border ${
                     recording
                       ? 'border-red-600 text-red-600 bg-red-50 recording'
-                      : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-verde hover:text-verde hover:bg-verde-dim'
+                      : 'border-gdf-border text-gray-600 bg-gdf-soft hover:border-gov-blue hover:text-gov-blue hover:bg-gov-blue-dim'
                   }`}
                 >
                   {recording ? <Square size={15} aria-hidden /> : <Mic size={15} aria-hidden />}
@@ -134,7 +134,7 @@ export default function Hero({ compact, onSend }: HeroProps) {
               <button
                 type="button"
                 onClick={handleSend}
-                className="min-h-11 min-w-11 md:min-h-0 md:min-w-0 w-11 h-11 md:w-10 md:h-10 rounded-xl bg-verde text-white flex items-center justify-center hover:bg-verde-med transition-all shadow-sm hover:shadow-verde/25"
+                className="min-h-11 min-w-11 md:min-h-0 md:min-w-0 w-11 h-11 md:w-10 md:h-10 rounded-xl bg-gov-blue text-white flex items-center justify-center hover:bg-gov-blue-dark transition-all shadow-sm hover:shadow-gov-blue/25"
                 aria-label="Enviar pergunta ao assistente"
               >
                 <ArrowUp size={17} strokeWidth={2.5} aria-hidden />

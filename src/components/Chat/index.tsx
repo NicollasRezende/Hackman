@@ -55,7 +55,7 @@ export default function ChatSection({ messages, onRelated, sessionId }: Props) {
             return (
               <div
                 key={msg.id}
-                className="animate-msg-in self-end max-w-[80%] bg-verde text-white text-sm font-medium px-4 py-3 rounded-2xl rounded-br-sm leading-relaxed"
+                className="animate-msg-in self-end max-w-[80%] bg-gov-blue text-white text-sm font-medium px-4 py-3 rounded-2xl rounded-br-sm leading-relaxed"
                 role="article"
                 aria-label="Você perguntou"
               >

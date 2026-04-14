@@ -21,7 +21,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6 md:px-10 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2.5 text-white font-extrabold text-base mb-3">
-            <div className="w-8 h-8 rounded-lg bg-verde flex items-center justify-center" aria-hidden>
+            <div className="w-8 h-8 rounded-lg bg-gov-blue flex items-center justify-center" aria-hidden>
               <Landmark size={16} className="text-white" />
             </div>
             Guia Cidadão

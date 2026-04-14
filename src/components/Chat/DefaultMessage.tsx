@@ -57,11 +57,11 @@ export default function DefaultMessage({ onRelated, responseId, sessionId }: Pro
     >
       <div className="p-5">
         <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-gdf-border">
-          <div className="w-8 h-8 rounded-lg bg-verde-light text-verde flex items-center justify-center" aria-hidden>
+          <div className="w-8 h-8 rounded-lg bg-gov-blue-light text-gov-blue flex items-center justify-center" aria-hidden>
             <Bot size={17} />
           </div>
           <div>
-            <h2 id={titleId} className="text-sm font-bold text-verde m-0 leading-none">
+            <h2 id={titleId} className="text-sm font-bold text-gov-blue m-0 leading-none">
               Guia Cidadão IA · GDF
             </h2>
             <p className="text-[11px] text-gray-600 mt-0.5 m-0">Assistente oficial de serviços públicos</p>
@@ -145,7 +145,7 @@ export default function DefaultMessage({ onRelated, responseId, sessionId }: Pro
               key={p.query}
               type="button"
               onClick={() => onRelated(p.query)}
-              className="inline-flex items-center gap-1 text-xs font-medium text-gray-800 bg-white border border-gdf-border px-3 py-1.5 rounded-full hover:bg-verde-light hover:border-verde hover:text-verde transition-all"
+              className="inline-flex items-center gap-1 text-xs font-medium text-gray-800 bg-white border border-gdf-border px-3 py-1.5 rounded-full hover:bg-gov-blue-light hover:border-gov-blue hover:text-gov-blue transition-all"
               aria-label={`Perguntar: ${p.label}`}
             >
               <MessageCircle size={11} aria-hidden /> {p.label}

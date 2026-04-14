@@ -22,7 +22,7 @@
 
   /* Foco visível — WCAG 2.4.7 */
   :where(a, button, input, textarea, select, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
-    outline: 3px solid #006633;
+    outline: 3px solid #1351B4;
     outline-offset: 2px;
   }
 
@@ -38,7 +38,7 @@
   top: 0;
   z-index: 100;
   padding: 0.75rem 1rem;
-  background-color: #006633;
+  background-color: #1351B4;
   color: #fff;
   font-weight: 600;
   font-size: 0.875rem;
@@ -62,7 +62,7 @@
     @apply bg-verde border-verde text-white -translate-y-0.5;
   }
   .chip:focus-visible {
-    @apply ring-2 ring-verde ring-offset-2;
+    @apply ring-2 ring-gov-blue ring-offset-2;
   }
 }
 
@@ -104,7 +104,7 @@
 
 /*
  * Alto contraste — escopo amplo (Tailwind + classes arbitrárias + HTML injetado).
- * Tokens: verde no tailwind = azul gov; gdf-dark = #071d41.
+ * Tokens: gov-blue no tailwind = azul gov; gdf-dark = #071d41.
  */
 html.a11y-high-contrast {
   background-color: #000;
@@ -168,8 +168,8 @@ html.a11y-high-contrast .text-gray-500 {
   color: #fff !important;
 }
 
-html.a11y-high-contrast .text-verde,
-html.a11y-high-contrast .text-verde-med {
+html.a11y-high-contrast .text-gov-blue,
+html.a11y-high-contrast .text-gov-blue-dark {
   color: #ff0 !important;
 }
 
@@ -181,9 +181,9 @@ html.a11y-high-contrast .text-\[\#0c326f\] {
 html.a11y-high-contrast .border-gray-200,
 html.a11y-high-contrast .border-gray-300,
 html.a11y-high-contrast .border-gdf-border,
-html.a11y-high-contrast .border-verde-light,
+html.a11y-high-contrast .border-gov-blue-light,
 html.a11y-high-contrast .border-ouro-border,
-html.a11y-high-contrast [class*="border-verde"] {
+html.a11y-high-contrast [class*="border-gov-blue"] {
   border-color: #ff0 !important;
 }
 
@@ -197,21 +197,21 @@ html.a11y-high-contrast .status-dashboard-panel {
   border-bottom: 2px solid #ff0;
 }
 
-html.a11y-high-contrast section[class*="from-verde"] {
+html.a11y-high-contrast section[class*="from-gov-blue"] {
   background-color: #000 !important;
   background-image: none !important;
   border-bottom-color: #ff0 !important;
   color: #fff !important;
 }
 
-html.a11y-high-contrast .bg-verde,
-html.a11y-high-contrast .hover\:bg-verde-med:hover {
+html.a11y-high-contrast .bg-gov-blue,
+html.a11y-high-contrast .hover\:bg-gov-blue-dark:hover {
   background-color: #001a44 !important;
   color: #fff !important;
   border: 2px solid #ff0 !important;
 }
 
-html.a11y-high-contrast .bg-verde-light {
+html.a11y-high-contrast .bg-gov-blue-light {
   background-color: #1a2332 !important;
   color: #fff !important;
 }
@@ -288,7 +288,7 @@ html.a11y-high-contrast ::placeholder {
   opacity: 1 !important;
 }
 
-html.a11y-high-contrast main article a:not([class*="bg-verde"]),
+html.a11y-high-contrast main article a:not([class*="bg-gov-blue"]),
 html.a11y-high-contrast main article .leading-relaxed a,
 html.a11y-high-contrast main article .leading-snug a {
   color: #ff0 !important;
@@ -300,7 +300,7 @@ html.a11y-high-contrast main article b {
   color: #fff !important;
 }
 
-html.a11y-high-contrast main a[class*="bg-verde"],
+html.a11y-high-contrast main a[class*="bg-gov-blue"],
 html.a11y-high-contrast main a.inline-flex[class*="text-white"] {
   background-color: #001a44 !important;
   color: #fff !important;
