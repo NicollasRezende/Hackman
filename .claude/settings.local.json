@@ -40,7 +40,9 @@
       "Bash(npm run:*)",
       "Bash(find src:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(grep -E \"\\\\.\\(tsx?|css\\)$\")",
+      "Bash(grep -E \"\\\\.\\(tsx|ts|css\\)$\")"
     ]
   }
 }
