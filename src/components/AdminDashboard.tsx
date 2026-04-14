@@ -554,6 +554,117 @@ export default function AdminDashboard({ onBack }: Props) {
     URL.revokeObjectURL(url)
   }
 
+  const downloadCSV = () => {
+    if (!metrics) return
+    const esc = (v: string | number) => {
+      const s = String(v)
+      return s.includes(',') || s.includes('"') || s.includes('\n')
+        ? `"${s.replace(/"/g, '""')}"`
+        : s
+    }
+    const row = (...cols: (string | number)[]) => cols.map(esc).join(',')
+
+    const sections: string[] = []
+
+    // ── 1. KPIs gerais ──────────────────────────────────────────
+    sections.push([
+      'SEÇÃO 1 — KPIs GERAIS',
+      row('Indicador', 'Valor'),
+      row('Total de atendimentos digitais', metrics.totalMessages),
+      row('Sessões únicas', metrics.uniqueSessions),
+      row('Latência média (ms)', metrics.avgProcessingMs),
+      row('Avaliações totais', metrics.feedbackTotal),
+      row('Avaliações positivas', metrics.feedbackPositive),
+      row('Avaliações negativas', metrics.feedbackNegative),
+    ].join('\n'))
+
+    // ── 2. Impacto fiscal ────────────────────────────────────────
+    if (metrics.fiscalImpact) {
+      const f = metrics.fiscalImpact
+      sections.push([
+        'SEÇÃO 2 — IMPACTO FISCAL',
+        row('Indicador', 'Valor'),
+        row('Interações digitais', f.digitalInteractions),
+        row('Custo presencial mín. (R$)', f.costPerVisitMinReais),
+        row('Custo presencial máx. (R$)', f.costPerVisitMaxReais),
+        row('Economia estimada mín. (R$)', f.savingsEstimateMinReais),
+        row('Economia estimada máx. (R$)', f.savingsEstimateMaxReais),
+        row('Projeção anual mín. (R$)', f.annualizedSavingsMinReais),
+        row('Projeção anual máx. (R$)', f.annualizedSavingsMaxReais),
+        row('ROI mínimo', f.roiMin ?? ''),
+        row('ROI máximo', f.roiMax ?? ''),
+        row('Investimento no sistema (R$)', f.systemInvestmentReais),
+        row('Período de dados (dias)', f.dataSpanDays),
+      ].join('\n'))
+    }
+
+    // ── 3. Demanda por RA do DF ──────────────────────────────────
+    if (metrics.regionalDemand?.length) {
+      sections.push([
+        'SEÇÃO 3 — DEMANDA POR REGIÃO ADMINISTRATIVA (DF)',
+        row('Região Administrativa', 'Interações', 'Participação (%)'),
+        ...metrics.regionalDemand.map(r => row(r.administrativeRegion, r.interactions, r.sharePercent)),
+      ].join('\n'))
+    }
+
+    // ── 4. Acesso por canal ──────────────────────────────────────
+    if (metrics.channelAccess?.length) {
+      sections.push([
+        'SEÇÃO 4 — ACESSO POR CANAL',
+        row('Canal', 'Interações', 'Participação (%)', 'Nota'),
+        ...metrics.channelAccess.map(c => row(c.channel, c.interactions, c.sharePercent, c.note)),
+      ].join('\n'))
+    }
+
+    // ── 5. Categorias de demanda ─────────────────────────────────
+    if (metrics.categoryCounts?.length) {
+      sections.push([
+        'SEÇÃO 5 — CATEGORIAS DE DEMANDA',
+        row('Categoria', 'Atendimentos'),
+        ...metrics.categoryCounts.map(c => row(c.category, c.count)),
+      ].join('\n'))
+    }
+
+    // ── 6. Ranking de órgãos ─────────────────────────────────────
+    if (metrics.orgRankingByDomain?.length) {
+      sections.push([
+        'SEÇÃO 6 — RANKING DE ÓRGÃOS POR DOMÍNIO',
+        row('Órgão', 'Interações', 'Feedback positivo', 'Feedback negativo', 'Índice de confiabilidade (%)'),
+        ...metrics.orgRankingByDomain.map(o =>
+          row(o.orgLabel, o.interactions, o.feedbackPositive, o.feedbackNegative, o.reliabilityIndexPercent ?? '')),
+      ].join('\n'))
+    }
+
+    // ── 7. Amostra de interações (auditoria) ─────────────────────
+    if (metrics.auditInteractionSample?.length) {
+      sections.push([
+        'SEÇÃO 7 — AMOSTRA DE INTERAÇÕES (AUDITORIA)',
+        row('Data/Hora (ISO)', 'Sessão (fingerprint)', 'Canal', 'Categoria', 'Órgão indicado', 'Resolução', 'Fonte legal'),
+        ...metrics.auditInteractionSample.map(a =>
+          row(a.instantIso, a.sessionFingerprint, a.channel, a.intentCategory, a.indicatedOrg, a.resolutionLabel, a.legalSourceNote)),
+      ].join('\n'))
+    }
+
+    // ── 8. Mensagens mais frequentes ─────────────────────────────
+    if (metrics.topMessages?.length) {
+      sections.push([
+        'SEÇÃO 8 — PERGUNTAS MAIS FREQUENTES',
+        row('Mensagem', 'Ocorrências'),
+        ...metrics.topMessages.map(m => row(m.message, m.count)),
+      ].join('\n'))
+    }
+
+    const bom = '\uFEFF' // BOM para Excel abrir UTF-8 corretamente
+    const csv = bom + sections.join('\n\n')
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `guia-cidadao-painel-tcu-${new Date().toISOString().slice(0, 10)}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   const announceCopy = (msg: string) => {
     setCopyFeedback(msg)
     globalThis.window.setTimeout(() => setCopyFeedback(null), 2500)
@@ -644,6 +755,17 @@ export default function AdminDashboard({ onBack }: Props) {
             )}
             <button
               type="button"
+              onClick={downloadCSV}
+              disabled={!metrics}
+              title="Exporta todas as seções do painel em CSV — abre no Excel com codificação UTF-8."
+              aria-label="Baixar painel completo em CSV / Excel"
+              className="inline-flex items-center gap-2 rounded-xl border border-emerald-400/40 bg-emerald-500/20 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-emerald-500/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-gdf-dark disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <Download size={16} aria-hidden />
+              Baixar CSV / Excel
+            </button>
+            <button
+              type="button"
               onClick={downloadAggregatedJson}
               disabled={!metrics}
               title="Exporta o JSON exibido nesta página para arquivo local."
@@ -651,7 +773,7 @@ export default function AdminDashboard({ onBack }: Props) {
               className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-md transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-gdf-dark disabled:cursor-not-allowed disabled:opacity-40"
             >
               <FileJson size={16} aria-hidden />
-              JSON (tela)
+              JSON
             </button>
             <button
               type="button"
