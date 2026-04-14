@@ -5,11 +5,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        verde: {
-          DEFAULT: '#1351b4',
-          med: '#2670e8',
-          light: '#dbe8fb',
-          dim: '#f8f8f8',
+        'gov-blue': {
+          DEFAULT: '#1351B4',
+          dark: '#0C326F',
+          light: '#DBE8FB',
+          dim: '#EEF4FD',
+        },
+        'gov-green': {
+          DEFAULT: '#168821',
         },
         ouro: {
           DEFAULT: '#ffcd07',
