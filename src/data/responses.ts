@@ -21,7 +21,7 @@ export const DB: AIResponse[] = [
       'O número central indica o total de pacientes aguardando.',
       'A lista lateral indica os pacientes por cor de triagem.'
     ],
-    tip: 'Lembre-se: Casos menos urgentes (gov-blue e azul) podem ser atendidos mais rapidamente em uma UBS.',
+    tip: 'Lembre-se: Casos menos urgentes (Verde e azul) podem ser atendidos mais rapidamente em uma UBS.',
     locations: LOCATIONS_HOSPITAIS,
   },
   {

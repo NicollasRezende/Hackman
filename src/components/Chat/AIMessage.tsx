@@ -109,7 +109,7 @@ export default function AIMessage({ data, onRelated }: Props) {
           </div>
           <div>
             <h2 id={titleId} className="text-sm font-bold text-gov-blue m-0 leading-none">
-              Guia Cidadão IA · GDF
+              Guia Cidadão IA · GOV.BR
             </h2>
             <p className="text-[11px] text-gray-600 mt-0.5 m-0">Assistente oficial de serviços públicos</p>
           </div>
