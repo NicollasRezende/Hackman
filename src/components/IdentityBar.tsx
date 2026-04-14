@@ -134,16 +134,15 @@ export default function IdentityBar() {
           <span className="hidden sm:inline">Libras</span>
         </button>
 
-        <button
-          type="button"
-          className="flex items-center gap-1 rounded-md px-2 py-1.5 opacity-70 cursor-not-allowed min-h-[44px] md:min-h-0"
-          disabled
-          aria-disabled="true"
-          title="Login disponível em breve pelo portal gov.br"
+        <a
+          href="#admin"
+          className="flex items-center gap-1 hover:text-verde transition-colors rounded-md px-2 py-1.5 min-h-[44px] md:min-h-0"
+          aria-label="Entrar no painel administrativo"
+          title="Entrar no painel administrativo"
         >
           <LogIn size={12} aria-hidden />
-          <span className="hidden sm:inline">gov.br</span>
-        </button>
+          <span className="hidden sm:inline">Entrar</span>
+        </a>
       </div>
     </nav>
   )
