@@ -1,11 +1,12 @@
 import { useId, useState, useCallback, useMemo } from 'react'
 import {
   Bot, ThumbsUp, ThumbsDown, Lightbulb, Paperclip,
-  ExternalLink, Share2, MessageCircle, MapPin, Phone, Clock, Building2,
+  ExternalLink, Share2, MessageCircle, MapPin, Phone, Clock, Building2, Flag, FileSearch,
 } from 'lucide-react'
 import { getIcon } from '../../utils/icon'
 import type { AIResponse } from '../../types'
 import LocationsMap from './LocationsMap'
+import PAIDraftPanel from './PAIDraftPanel'
 import { useAccessibility } from '../../contexts/AccessibilityContext'
 import { sendFeedback, type FeedbackVote } from '../../services/feedback'
 
@@ -29,6 +30,7 @@ export default function AIMessage({ data, onRelated }: Props) {
   const [feedbackSending, setFeedbackSending] = useState(false)
   const [feedbackSent, setFeedbackSent] = useState(false)
   const [feedbackError, setFeedbackError] = useState(false)
+  const [showPAI, setShowPAI] = useState(false)
   const titleId = useId()
   const stepsId = useId()
   const feedbackLabelId = useId()
@@ -258,7 +260,28 @@ export default function AIMessage({ data, onRelated }: Props) {
           >
             <Share2 size={13} aria-hidden /> Compartilhar
           </button>
+
+          <button
+            type="button"
+            onClick={() => setShowPAI(v => !v)}
+            aria-expanded={showPAI}
+            aria-controls="pai-draft-panel"
+            className={`inline-flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2.5 rounded-xl border transition-all ${
+              showPAI
+                ? 'bg-gov-blue-light border-gov-blue text-gov-blue'
+                : 'bg-white border-gdf-border text-gray-600 hover:border-gov-blue hover:text-gov-blue hover:bg-gov-blue-light'
+            }`}
+            aria-label="Gerar rascunho de Pedido de Acesso à Informação"
+          >
+            <FileSearch size={13} aria-hidden /> Pedir via LAI
+          </button>
         </div>
+
+        {showPAI && (
+          <div id="pai-draft-panel">
+            <PAIDraftPanel data={data} />
+          </div>
+        )}
 
         <div className="mt-5 pt-4 border-t border-gdf-border">
           <div className="flex items-center gap-2">
@@ -326,6 +349,22 @@ export default function AIMessage({ data, onRelated }: Props) {
           </nav>
         </div>
       )}
+
+      {/* Ouvidoria — rodapé fixo em toda resposta */}
+      <div className="border-t border-gdf-border px-5 py-3 flex items-center justify-between gap-2">
+        <p className="text-[11px] text-gray-500 m-0 leading-snug">
+          Encontrou irregularidade em um serviço público?
+        </p>
+        <a
+          href="https://portal.tcu.gov.br/ouvidoria"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-600 border border-indigo-200 bg-indigo-50 px-2.5 py-1.5 rounded-lg hover:bg-indigo-100 hover:border-indigo-400 transition-all flex-shrink-0"
+          aria-label="Denunciar irregularidade na Ouvidoria TCU (abre em nova aba)"
+        >
+          <Flag size={10} aria-hidden /> Denunciar ao TCU
+        </a>
+      </div>
     </article>
   )
 }

@@ -59,7 +59,7 @@
     @apply inline-flex items-center gap-1.5 text-sm font-semibold text-gdf-dark border border-gdf-dark/25 bg-white rounded-full px-3.5 py-2 cursor-pointer transition-all duration-150 shadow-sm hover:shadow-md;
   }
   .chip:hover {
-    @apply bg-verde border-verde text-white -translate-y-0.5;
+    @apply bg-gov-blue border-gov-blue text-white -translate-y-0.5;
   }
   .chip:focus-visible {
     @apply ring-2 ring-gov-blue ring-offset-2;

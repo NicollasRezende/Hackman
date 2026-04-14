@@ -7,6 +7,8 @@ import FeaturedServices from './components/FeaturedServices'
 import StatusDashboard from './components/StatusDashboard'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
+import OuvidoriaSection from './components/OuvidoriaSection'
+import WhatsAppButton from './components/WhatsAppButton'
 import ChatSection from './components/Chat'
 import BottomBar from './components/Chat/BottomBar'
 import AllServices from './components/AllServices'
@@ -237,11 +239,14 @@ export default function App() {
               onMetricClick={send}
             />
             <FAQ onQuery={send} />
+            <OuvidoriaSection />
             <Footer />
           </>
         )}
         </>)}
       </main>
+
+      {!showAdmin && <WhatsAppButton />}
     </div>
   )
 }

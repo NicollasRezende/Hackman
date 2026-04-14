@@ -14,6 +14,11 @@ export default {
         'gov-green': {
           DEFAULT: '#168821',
         },
+        verde: {
+          DEFAULT: '#168821',
+          light: '#DAF2DC',
+          med: '#0d6b18',
+        },
         ouro: {
           DEFAULT: '#ffcd07',
           bg: '#fff8db',

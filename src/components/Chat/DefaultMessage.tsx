@@ -1,5 +1,5 @@
 import { useId, useState, useCallback } from 'react'
-import { Bot, ThumbsUp, ThumbsDown, Lightbulb, MessageCircle } from 'lucide-react'
+import { Bot, ThumbsUp, ThumbsDown, Lightbulb, MessageCircle, Megaphone, AlertTriangle, FileSearch, MessageSquare } from 'lucide-react'
 import { sendFeedback, type FeedbackVote } from '../../services/feedback'
 import { useAccessibility } from '../../contexts/AccessibilityContext'
 
@@ -8,6 +8,15 @@ const POPULAR = [
   { label: 'Seguro-desemprego', query: 'fui demitido, o que faço?' },
   { label: 'Aposentadoria', query: 'quero me aposentar' },
   { label: 'Segunda via do RG', query: 'como emitir segunda via do RG?' },
+]
+
+const OUVIDORIA_URL = 'https://portal.tcu.gov.br/ouvidoria'
+
+const MANIFESTACOES = [
+  { label: 'Denúncia de irregularidade', icon: AlertTriangle, url: OUVIDORIA_URL },
+  { label: 'Reclamação de serviço', icon: MessageSquare, url: OUVIDORIA_URL },
+  { label: 'Pedido de informação (LAI)', icon: FileSearch, url: OUVIDORIA_URL },
+  { label: 'Sugestão ou elogio', icon: Megaphone, url: OUVIDORIA_URL },
 ]
 
 interface Props {
@@ -87,6 +96,31 @@ export default function DefaultMessage({ onRelated, responseId, sessionId }: Pro
         <div className="flex gap-2 items-start mt-3 p-3 bg-ouro-bg border border-ouro-border rounded-xl text-sm text-yellow-800">
           <Lightbulb size={14} className="text-ouro-DEFAULT flex-shrink-0 mt-0.5" aria-hidden />
           <p className="m-0">Ou clique em uma das categorias abaixo para ir direto ao serviço.</p>
+        </div>
+
+        {/* Ouvidoria — escalada quando a IA não resolve */}
+        <div className="mt-3 p-3.5 bg-indigo-50 border border-indigo-100 rounded-xl" role="complementary" aria-label="Registrar manifestação na Ouvidoria">
+          <div className="flex items-center gap-2 mb-2">
+            <Megaphone size={13} className="text-indigo-600 flex-shrink-0" aria-hidden />
+            <p className="text-xs font-bold text-indigo-800 m-0">Não encontrou o que precisava?</p>
+          </div>
+          <p className="text-[11px] text-indigo-700 m-0 mb-3 leading-snug">
+            Registre uma manifestação na Ouvidoria — denúncia, reclamação ou pedido de informação (Lei 13.460/2017).
+          </p>
+          <nav className="flex flex-wrap gap-1.5" aria-label="Tipos de manifestação">
+            {MANIFESTACOES.map(({ label, icon: Icon, url }) => (
+              <a
+                key={label}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[11px] font-medium text-indigo-700 bg-white border border-indigo-200 px-2.5 py-1.5 rounded-full hover:bg-indigo-100 hover:border-indigo-400 transition-all"
+                aria-label={`${label} (abre Ouvidoria TCU em nova aba)`}
+              >
+                <Icon size={10} aria-hidden /> {label}
+              </a>
+            ))}
+          </nav>
         </div>
 
         <div className="mt-5 pt-4 border-t border-gdf-border">
