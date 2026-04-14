@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { getIcon } from '../utils/icon'
-import { FEATURED_SERVICES } from '../data/services'
+import { SERVICES_BY_AUDIENCE } from '../data/services'
+import type { AudienceTab } from '../types'
 
 const BADGE_STYLES = {
   green: 'bg-gov-blue-light text-gov-blue',
@@ -8,33 +9,52 @@ const BADGE_STYLES = {
   ouro: 'bg-ouro-bg text-yellow-800 border border-ouro-border',
 }
 
+const AUDIENCE_LABELS: Record<AudienceTab, string> = {
+  cidadao: 'Serviços em destaque',
+  servidor: 'Para servidores públicos',
+  empresa: 'Para empresas e MEI',
+  turista: 'Para turistas',
+  agendamento: 'Agendamentos disponíveis',
+}
+
+const AUDIENCE_DESCS: Record<AudienceTab, string> = {
+  cidadao: 'Os serviços mais acessados pelos brasileiros',
+  servidor: 'Portais e sistemas do servidor federal',
+  empresa: 'Obrigações, abertura e gestão empresarial',
+  turista: 'Documentos, câmbio e informações para viagem',
+  agendamento: 'Agende serviços públicos federais e estaduais',
+}
+
 interface Props {
+  audience: AudienceTab
   onServiceClick: (query: string) => void
 }
 
-export default function FeaturedServices({ onServiceClick }: Props) {
+export default function FeaturedServices({ audience, onServiceClick }: Props) {
+  const services = SERVICES_BY_AUDIENCE[audience]
+
   return (
     <section className="max-w-6xl mx-auto px-6 md:px-10 py-14" aria-labelledby="featured-services-heading">
       <div className="flex items-end justify-between mb-6">
         <div>
           <h2 id="featured-services-heading" className="text-xl font-extrabold text-gray-900 tracking-tight">
-            Serviços em destaque
+            {AUDIENCE_LABELS[audience]}
           </h2>
-          <p className="text-sm text-gray-600 mt-1">Os serviços mais acessados pelos cidadãos do DF</p>
+          <p className="text-sm text-gray-600 mt-1">{AUDIENCE_DESCS[audience]}</p>
         </div>
         <a
-          href="https://www.df.gov.br"
+          href="https://www.gov.br/pt-br/servicos"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden sm:flex items-center gap-1 text-sm font-semibold text-gov-blue hover:underline whitespace-nowrap"
         >
           Ver todos <ArrowRight size={13} aria-hidden />
-          <span className="sr-only"> (abre em nova aba no site do GDF)</span>
+          <span className="sr-only"> (abre em nova aba no gov.br)</span>
         </a>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {FEATURED_SERVICES.map(s => {
+        {services.map(s => {
           const Icon = getIcon(s.icon)
           const StatIcon = getIcon(s.stat.icon)
           const label = `${s.title}. ${s.desc}. ${s.stat.text}. Ação: ${s.cta}.`
