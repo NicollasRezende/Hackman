@@ -12,7 +12,9 @@ import BottomBar from './components/Chat/BottomBar'
 import AllServices from './components/AllServices'
 import Hospitals from './components/Hospitals'
 import AdminDashboard from './components/AdminDashboard'
+import AudienceTabs from './components/AudienceTabs'
 import type { Message } from './types'
+import type { AudienceTab } from './types'
 import { BOTTOM_CHAT_INPUT_ID, HERO_CONSULTA_ID } from './a11y/constants'
 
 let msgId = 0
@@ -34,6 +36,7 @@ export default function App() {
   const [showHospitals, setShowHospitals] = useState(false)
   const [showAdmin, setShowAdmin] = useState(() => window.location.hash === '#admin')
   const [messages, setMessages] = useState<Message[]>([])
+  const [audienceTab, setAudienceTab] = useState<AudienceTab>('cidadao')
   const sessionId = useRef(getSessionId())
   const mainRef = useRef<HTMLElement>(null)
   const didFocusChatInputOnStart = useRef(false)
@@ -111,6 +114,7 @@ export default function App() {
     setShowHospitals(false)
     setShowAdmin(false)
     window.history.replaceState(null, '', window.location.pathname)
+    setAudienceTab('cidadao')
   }
 
   useEffect(() => {
@@ -124,7 +128,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    document.title = chatStarted ? 'Conversa — Guia Cidadão · GDF' : 'Guia Cidadão — GDF'
+    document.title = chatStarted ? 'Conversa — Guia Cidadão · GOV.BR' : 'Guia Cidadão — GOV.BR'
   }, [chatStarted])
 
   useEffect(() => {
@@ -208,7 +212,12 @@ export default function App() {
           <AdminDashboard onBack={handleHomeClick} />
         ) : (<>
         {!showAllServices && !showHospitals && (
-          <Hero compact={chatStarted} onSend={send} />
+          <>
+            <Hero compact={chatStarted} onSend={send} />
+            {!chatStarted && (
+              <AudienceTabs active={audienceTab} onChange={setAudienceTab} />
+            )}
+          </>
         )}
 
         {showAllServices ? (
@@ -222,7 +231,7 @@ export default function App() {
           </>
         ) : (
           <>
-            <FeaturedServices onServiceClick={send} />
+            <FeaturedServices audience={audienceTab} onServiceClick={send} />
             <StatusDashboard
               onHospitalsClick={handleNavUnitsClick}
               onMetricClick={send}
