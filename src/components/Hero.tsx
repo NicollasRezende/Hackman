@@ -74,25 +74,25 @@ export default function Hero({ compact, onSend }: HeroProps) {
     <section
       aria-labelledby={compact ? undefined : 'hero-heading'}
       className={`bg-gradient-to-b from-gov-blue-dim to-white border-b border-gov-blue-light text-center transition-all duration-500 ${
-        compact ? 'py-7 px-6' : 'py-16 px-6'
+        compact ? 'py-7 px-6' : 'py-20 md:py-28 px-6'
       }`}
     >
       {!compact && (
         <>
-          <div className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-gov-blue-dark bg-gov-blue-light border border-gov-blue-light px-4 py-1.5 rounded-full mb-5">
-            <Sparkles size={12} aria-hidden />
+          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-gov-blue-dark bg-gov-blue-light border border-gov-blue/20 px-5 py-2 rounded-full mb-7 shadow-sm">
+            <Sparkles size={14} aria-hidden />
             Assistente com Inteligência Artificial
           </div>
-          <h1 id="hero-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-3">
+          <h1 id="hero-heading" className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-5 leading-[1.1]">
             Como podemos <span className="text-gov-blue">ajudar você</span> hoje?
           </h1>
-          <p className="text-sm md:text-base text-gray-600 max-w-md mx-auto mb-9 leading-relaxed">
+          <p className="text-base md:text-lg text-gray-600 max-w-xl mx-auto mb-10 leading-relaxed">
             Serviços federais, documentos e agendamentos — para todos os brasileiros, sem burocracia.
           </p>
         </>
       )}
 
-      <div className="max-w-2xl mx-auto" ref={wrapperRef}>
+      <div className="max-w-3xl mx-auto" ref={wrapperRef}>
         <label htmlFor={HERO_CONSULTA_ID} className="sr-only">
           Digite sua dúvida ou necessidade para o assistente do Guia Cidadão
         </label>
@@ -113,7 +113,7 @@ export default function Hero({ compact, onSend }: HeroProps) {
               aria-describedby={hintId}
               aria-controls={showSuggestions ? suggestionsId : undefined}
               aria-autocomplete="list"
-              className="w-full bg-transparent border-none outline-none text-sm text-gray-800 placeholder-gray-500 px-5 pt-[18px] pb-[18px] pr-28 resize-none leading-relaxed"
+              className="w-full bg-transparent border-none outline-none text-base text-gray-800 placeholder-gray-400 px-6 pt-5 pb-5 pr-32 resize-none leading-relaxed"
             />
             <div className="absolute right-2 bottom-2 flex gap-1.5">
               {micSupported && (
@@ -238,12 +238,10 @@ export default function Hero({ compact, onSend }: HeroProps) {
         </div>
 
         {!compact && (
-          <div className="flex items-center justify-center gap-2 mt-3 text-xs text-gray-600">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-blink flex-shrink-0" aria-hidden />
-            <span>Assistente nacional · linguagem natural e voz</span>
-            <span className="text-gdf-border hidden sm:inline" aria-hidden>
-              ·
-            </span>
+          <div className="flex items-center justify-center gap-3 mt-4 text-sm text-gray-500">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-blink flex-shrink-0" aria-hidden />
+            <span className="font-medium">Assistente nacional · linguagem natural e voz</span>
+            <span className="text-gdf-border hidden sm:inline" aria-hidden>·</span>
             <span className="hidden sm:inline">Integra fontes públicas oficiais</span>
           </div>
         )}
