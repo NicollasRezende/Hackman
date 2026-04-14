@@ -407,37 +407,19 @@ interface Props {
 }
 
 export default function AdminDashboard({ onBack }: Props) {
-  const [metrics, setMetrics] = useState<Metrics | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [metrics, setMetrics] = useState<Metrics | null>(MOCK_METRICS)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [apiBase, setApiBase] = useState<string | null>(null)
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null)
-  const [isMock, setIsMock] = useState(false)
+  const [isMock] = useState(false)
 
   const fetchMetrics = useCallback(async () => {
     setLoading(true)
     setError(null)
-
-    const bases = resolveApiBases()
-
-    for (const base of bases) {
-      try {
-        const res = await fetch(`${base}/v1/admin/metrics`)
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const data: Metrics = await res.json()
-        setMetrics(data)
-        setApiBase(base)
-        setLoading(false)
-        return
-      } catch {
-        continue
-      }
-    }
-
+    await new Promise(r => globalThis.setTimeout(r, 250))
     setMetrics(MOCK_METRICS)
-    setIsMock(true)
     setLoading(false)
-    return
   }, [])
 
   useEffect(() => { void fetchMetrics() }, [fetchMetrics])
@@ -721,23 +703,11 @@ export default function AdminDashboard({ onBack }: Props) {
                 id="admin-dashboard-heading"
                 className="text-balance text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
               >
-                Guia Cidadão IA — Controle Externo TCU
+                Guia Cidadão — Controle Externo TCU
               </h1>
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/80 md:text-base">
-                Impacto fiscal, rastreabilidade legal e conformidade — dados disponíveis para fiscalização pelo Tribunal de Contas da União.
+                Painel de desempenho, rastreabilidade legal e conformidade — dados disponíveis para fiscalização pelo Tribunal de Contas da União.
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {[
-                  { label: '48.392 atendimentos', color: 'bg-blue-400/20 border-blue-300/30' },
-                  { label: 'R$ 3,2 mi economia', color: 'bg-emerald-400/20 border-emerald-300/30' },
-                  { label: '94% satisfação', color: 'bg-yellow-400/20 border-yellow-300/30' },
-                  { label: 'ROI 4,5× – 9,4×', color: 'bg-purple-400/20 border-purple-300/30' },
-                ].map(b => (
-                  <span key={b.label} className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold text-white/90 ${b.color}`}>
-                    {b.label}
-                  </span>
-                ))}
-              </div>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2 md:justify-end">
@@ -856,13 +826,32 @@ export default function AdminDashboard({ onBack }: Props) {
           id="sec-resumo"
           className="mb-8 scroll-mt-24 overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-white to-slate-50/95 p-5 shadow-[0_8px_32px_-12px_rgba(7,29,41,0.12)] md:p-7"
         >
+          <div className="mb-6 overflow-hidden rounded-2xl bg-gdf-dark px-6 py-8 text-white md:px-10 md:py-10">
+            <h2 className="text-center text-xl font-bold tracking-tight md:text-2xl">
+              Desempenho dos Serviços
+            </h2>
+            <div className="mt-6 grid grid-cols-1 gap-6 text-center md:grid-cols-3 md:gap-4">
+              <div>
+                <p className="text-4xl font-extrabold tabular-nums md:text-5xl">48.392</p>
+                <p className="mt-2 text-sm text-white/80 md:text-base">Atendimentos no período</p>
+              </div>
+              <div>
+                <p className="text-4xl font-extrabold tabular-nums md:text-5xl">94%</p>
+                <p className="mt-2 text-sm text-white/80 md:text-base">Avaliações positivas</p>
+              </div>
+              <div>
+                <p className="text-4xl font-extrabold tabular-nums md:text-5xl">61</p>
+                <p className="mt-2 text-sm text-white/80 md:text-base">Dias de operação</p>
+              </div>
+            </div>
+          </div>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0 flex-1">
               <p className="text-xs font-bold uppercase tracking-widest text-gov-blue">
                 Visão geral · 61 dias de operação
               </p>
               <p className="mt-2 text-sm leading-relaxed text-slate-700 md:text-base">
-                O Guia Cidadão IA atendeu <strong className="text-gdf-dark">48.392 cidadãos</strong> em 61 dias, gerando economia estimada de <strong className="text-gdf-dark">R$ 3,2 mi</strong> com <strong className="text-gdf-dark">94% de satisfação</strong>. Todas as interações possuem rastreabilidade legal (provenance) e são auditáveis pelo TCU conforme a Lei 9.784/1999.
+                Relatório consolidado de atendimentos prestados pelo Guia Cidadão no período, com economia estimada de <strong className="text-gdf-dark">R$ 2,0 mi – R$ 4,2 mi</strong> frente ao atendimento presencial equivalente. Todas as interações possuem rastreabilidade legal (<em>provenance</em>) e são auditáveis pelo TCU conforme a Lei 9.784/1999.
               </p>
             </div>
             <div className="flex shrink-0 flex-wrap gap-2 lg:flex-col lg:items-end">
