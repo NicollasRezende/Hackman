@@ -29,6 +29,17 @@ export default {
           border: '#ededed',
           soft: '#f8f8f8',
         },
+        trilha: {
+          DEFAULT: '#4F46E5',
+          dark: '#3730A3',
+          light: '#EEF2FF',
+          soft: '#F5F7FF',
+          border: '#C7D2FE',
+          accent: '#818CF8',
+          success: '#059669',
+          warning: '#D97706',
+          danger: '#DC2626',
+        },
       },
       fontFamily: {
         sans: ['Rawline', 'Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
