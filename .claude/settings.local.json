@@ -42,7 +42,22 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(grep -E \"\\\\.\\(tsx?|css\\)$\")",
-      "Bash(grep -E \"\\\\.\\(tsx|ts|css\\)$\")"
+      "Bash(grep -E \"\\\\.\\(tsx|ts|css\\)$\")",
+      "Bash(export PATH=\"$HOME/.nvm/versions/node/v25.9.0/bin:$PATH\")",
+      "Read(//home/vitorabreuvitorabreu/Trabalho/**)",
+      "Bash(npm create *)",
+      "Bash(npm install *)",
+      "Bash(find . -name '*.tsx' -exec sed -i \"s|/trilha-clara/aluno|/aluno|g\" {} +)",
+      "Bash(find . -name '*.tsx' -exec sed -i \"s|/trilha-clara|/|g\" {} +)",
+      "Bash(find . -name '*.tsx' -exec sed -i \"s|to=\\\\\"//|to=\\\\\"/|g\" {} +)",
+      "Bash(find . -name '*.tsx' -exec sed -i \"s|navigate\\('/'\\)|navigate\\('/'\\)|g\" {} +)",
+      "Bash(ls /home/vitorabreuvitorabreu/Trabalho/trilha-clara/tsconfig*)",
+      "Bash(sed -i 's/const \\\\[trechos, setTrechos\\\\] = useState/const [trechos] = useState/' /home/vitorabreuvitorabreu/Trabalho/trilha-clara/src/components/ExplainPassage.tsx)",
+      "Bash(sed -i 's/import { Check, X, AlertTriangle }/import { Check, AlertTriangle }/' /home/vitorabreuvitorabreu/Trabalho/trilha-clara/src/components/SourceAnalyzer.tsx)",
+      "Bash(sed -i 's/import { Settings, LogOut }/import { Settings }/' /home/vitorabreuvitorabreu/Trabalho/trilha-clara/src/components/TrilhaNav.tsx)",
+      "Bash(sed -i '/import { ChevronDown }/d' /home/vitorabreuvitorabreu/Trabalho/trilha-clara/src/components/VersionComparator.tsx)",
+      "Bash(sed -i /ArrowLeft,/d /home/vitorabreuvitorabreu/Trabalho/trilha-clara/src/pages/ResultadoAnalise.tsx)",
+      "Bash(git init *)"
     ]
   }
 }
